@@ -23,7 +23,7 @@ struct WriteView: View {
             .frame(width: 335, height: 35)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.graycolor, lineWidth: 1.2)
+                    .stroke(Color.graycolor, lineWidth: 1)
             )
             .padding(.vertical, 4)
             
@@ -61,7 +61,8 @@ struct WriteView: View {
                             .overlay {
                                 HStack {
                                     VStack {
-                                        if writeVM.contentItem.text.string.isEmpty {
+                                        if
+                                            writeVM.contentItem.text.string.isEmpty {
                                             Text("내용을 입력해주세요")
                                                 .font(.custom("Pretendard-Medium", size: 16))
                                                 .foregroundStyle(.graycolor)
@@ -74,7 +75,7 @@ struct WriteView: View {
                                     Spacer()
                                 }
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.graycolor, lineWidth: 1.2)
+                                    .stroke(Color.graycolor, lineWidth: 1)
                                     .frame(width: 335)
                                     .frame(maxHeight: .infinity)
                                 VStack {
@@ -105,7 +106,7 @@ struct WriteView: View {
             }
             
             HStack {
-                Text("공개")
+                Text("우리학교만 공개")
                     .font(.custom("Pretendard-Regular", size: 14))
                 ZStack(alignment: writeVM.request.isReleased ? .leading : .trailing) {
                     Rectangle()
@@ -127,7 +128,6 @@ struct WriteView: View {
             }
             .padding(.bottom, 4)
             .padding(.horizontal, 28)
-            
             
             .navigationBarBackButtonHidden(true)
             .toolbar {

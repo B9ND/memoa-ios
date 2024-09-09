@@ -15,6 +15,7 @@
 		651903DD2C7A162800BE52F0 /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651903DC2C7A162800BE52F0 /* ProfilView.swift */; };
 		651903DF2C7A165200BE52F0 /* BookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651903DE2C7A165200BE52F0 /* BookmarkView.swift */; };
 		651903E12C7A1C2000BE52F0 /* TabViewdesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651903E02C7A1C2000BE52F0 /* TabViewdesign.swift */; };
+		6532ABB82C8F094C00942263 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6532ABB72C8F094C00942263 /* Test.swift */; };
 		656169532C7B2F2F00CF111F /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6561694A2C7B2F2F00CF111F /* Pretendard-Thin.ttf */; };
 		656169542C7B2F2F00CF111F /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6561694B2C7B2F2F00CF111F /* Pretendard-Bold.ttf */; };
 		656169552C7B2F2F00CF111F /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6561694C2C7B2F2F00CF111F /* Pretendard-ExtraBold.ttf */; };
@@ -27,9 +28,13 @@
 		6561695D2C7C106900CF111F /* WriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6561695C2C7C106900CF111F /* WriteModel.swift */; };
 		6561695F2C7C12F500CF111F /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6561695E2C7C12F500CF111F /* WriteViewModel.swift */; };
 		656169622C7C15F700CF111F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 656169612C7C15F700CF111F /* Alamofire */; };
+		657C4E892C85EBB200FE63E1 /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C4E882C85EBB200FE63E1 /* ModifyView.swift */; };
+		657C4E8B2C87D4FE00FE63E1 /* UploadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C4E8A2C87D4FE00FE63E1 /* UploadList.swift */; };
+		657C4E8D2C87D53B00FE63E1 /* ProfilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C4E8C2C87D53B00FE63E1 /* ProfilModel.swift */; };
+		657C4E8F2C87D55400FE63E1 /* ProfilViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C4E8E2C87D55400FE63E1 /* ProfilViewmodel.swift */; };
+		657C4E912C89CFE200FE63E1 /* ModifyViewbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C4E902C89CFE200FE63E1 /* ModifyViewbutton.swift */; };
 		65994F452C7F65D30047106D /* MyFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 65994F442C7F65D30047106D /* MyFoundation */; };
 		65A8FC832C81AE2E004595FF /* UIViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8FC822C81AE2E004595FF /* UIViewRepresentable.swift */; };
-		65A8FC872C81B1A0004595FF /* PhotosPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A8FC862C81B1A0004595FF /* PhotosPickerView.swift */; };
 		65D7CD392C7359990051B7D2 /* MEMOAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D7CD382C7359990051B7D2 /* MEMOAApp.swift */; };
 		65D7CD3B2C7359990051B7D2 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D7CD3A2C7359990051B7D2 /* MainView.swift */; };
 		65D7CD3D2C73599B0051B7D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65D7CD3C2C73599B0051B7D2 /* Assets.xcassets */; };
@@ -46,6 +51,7 @@
 		651903DC2C7A162800BE52F0 /* ProfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
 		651903DE2C7A165200BE52F0 /* BookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkView.swift; sourceTree = "<group>"; };
 		651903E02C7A1C2000BE52F0 /* TabViewdesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewdesign.swift; sourceTree = "<group>"; };
+		6532ABB72C8F094C00942263 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		6561694A2C7B2F2F00CF111F /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		6561694B2C7B2F2F00CF111F /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		6561694C2C7B2F2F00CF111F /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
@@ -57,8 +63,12 @@
 		656169522C7B2F2F00CF111F /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		6561695C2C7C106900CF111F /* WriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteModel.swift; sourceTree = "<group>"; };
 		6561695E2C7C12F500CF111F /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
+		657C4E882C85EBB200FE63E1 /* ModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyView.swift; sourceTree = "<group>"; };
+		657C4E8A2C87D4FE00FE63E1 /* UploadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadList.swift; sourceTree = "<group>"; };
+		657C4E8C2C87D53B00FE63E1 /* ProfilModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilModel.swift; sourceTree = "<group>"; };
+		657C4E8E2C87D55400FE63E1 /* ProfilViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilViewmodel.swift; sourceTree = "<group>"; };
+		657C4E902C89CFE200FE63E1 /* ModifyViewbutton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyViewbutton.swift; sourceTree = "<group>"; };
 		65A8FC822C81AE2E004595FF /* UIViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewRepresentable.swift; sourceTree = "<group>"; };
-		65A8FC862C81B1A0004595FF /* PhotosPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPickerView.swift; sourceTree = "<group>"; };
 		65D7CD352C7359990051B7D2 /* MEMOA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEMOA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65D7CD382C7359990051B7D2 /* MEMOAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEMOAApp.swift; sourceTree = "<group>"; };
 		65D7CD3A2C7359990051B7D2 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -123,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				651903D72C7A160900BE52F0 /* HomeView.swift */,
+				6532ABB72C8F094C00942263 /* Test.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -174,7 +185,6 @@
 				6561695E2C7C12F500CF111F /* WriteViewModel.swift */,
 				651903D52C7A160100BE52F0 /* WriteView.swift */,
 				65A8FC822C81AE2E004595FF /* UIViewRepresentable.swift */,
-				65A8FC862C81B1A0004595FF /* PhotosPickerView.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -209,7 +219,12 @@
 		651903DB2C7A161D00BE52F0 /* Profil */ = {
 			isa = PBXGroup;
 			children = (
+				657C4E8C2C87D53B00FE63E1 /* ProfilModel.swift */,
+				657C4E8E2C87D55400FE63E1 /* ProfilViewmodel.swift */,
 				651903DC2C7A162800BE52F0 /* ProfilView.swift */,
+				657C4E8A2C87D4FE00FE63E1 /* UploadList.swift */,
+				657C4E882C85EBB200FE63E1 /* ModifyView.swift */,
+				657C4E902C89CFE200FE63E1 /* ModifyViewbutton.swift */,
 			);
 			path = Profil;
 			sourceTree = "<group>";
@@ -356,16 +371,21 @@
 				6512433F2C78A68C008E798D /* TabViewType.swift in Sources */,
 				651243412C78A6A9008E798D /* TabviewCell.swift in Sources */,
 				651903D42C7A15F600BE52F0 /* SearchView.swift in Sources */,
+				6532ABB82C8F094C00942263 /* Test.swift in Sources */,
 				651903DD2C7A162800BE52F0 /* ProfilView.swift in Sources */,
 				6561695D2C7C106900CF111F /* WriteModel.swift in Sources */,
-				65A8FC872C81B1A0004595FF /* PhotosPickerView.swift in Sources */,
 				6561695F2C7C12F500CF111F /* WriteViewModel.swift in Sources */,
 				651903DF2C7A165200BE52F0 /* BookmarkView.swift in Sources */,
 				651903E12C7A1C2000BE52F0 /* TabViewdesign.swift in Sources */,
 				651903D82C7A160900BE52F0 /* HomeView.swift in Sources */,
 				65A8FC832C81AE2E004595FF /* UIViewRepresentable.swift in Sources */,
+				657C4E8B2C87D4FE00FE63E1 /* UploadList.swift in Sources */,
+				657C4E912C89CFE200FE63E1 /* ModifyViewbutton.swift in Sources */,
 				65D7CD392C7359990051B7D2 /* MEMOAApp.swift in Sources */,
+				657C4E8D2C87D53B00FE63E1 /* ProfilModel.swift in Sources */,
+				657C4E892C85EBB200FE63E1 /* ModifyView.swift in Sources */,
 				651903D62C7A160100BE52F0 /* WriteView.swift in Sources */,
+				657C4E8F2C87D55400FE63E1 /* ProfilViewmodel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,8 +526,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,9 +536,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eunchan.MEMOA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -537,8 +561,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -547,9 +571,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eunchan.MEMOA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
