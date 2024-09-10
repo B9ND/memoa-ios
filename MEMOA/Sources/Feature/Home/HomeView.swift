@@ -1,15 +1,18 @@
-//
-//  HomeView.swift
-//  MEMOA
-//
-//  Created by dgsw30 on 8/24/24.
-//
-
 import SwiftUI
 
 struct HomeView: View {
+    @ObservedObject var HomeVM = HomeViewModel()
+    
     var body: some View {
-        Text("홈")
+        ScrollView {
+            VStack {
+                SelectitemView()
+                    .padding(.vertical, 8) 
+                Divider()
+                UploadComponentView()
+            }
+            Spacer()
+        }
     }
 }
 
