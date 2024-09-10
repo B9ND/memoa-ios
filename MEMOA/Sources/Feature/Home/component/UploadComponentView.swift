@@ -24,13 +24,16 @@ struct UploadComponentView: View {
             } label: {
                 VStack {
                     HStack {
-                        Image("exampleimage")
+                        Image(.homeprofil)
                             .padding(.leading, 24)
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("김은찬")
                                     .foregroundStyle(.black)
                                     .font(.custom("Pretendard-Medium", size: 14))
+                                Circle()
+                                    .frame(width: 5,height: 4)
+                                    .tint(Color.init(uiColor: .systemGray3))
                                 Text("2024년 8월 13일")
                                     .font(.custom("Pretendard-Medium", size: 12))
                                     .foregroundColor(.timecolor)
