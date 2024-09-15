@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailView: View {
     @State private var clickbookmark = false
     @State private var showingalert = false
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         VStack {
             HStack {
@@ -36,77 +36,70 @@ struct DetailView: View {
                 }
                 Spacer()
             }
-        }
-        .padding()
-        Divider()
-        VStack {
-            Text("기권의 특징 : 기권, 복사평형, 온실효과 기권에는 대류권, 성층권, 중간권, 열권이 있습니다.복사평형은 어떤 물체가 흡수하는 복사에너지양과 방출하는 에너지 양이 같은 상태입니다.")
-                .font(.custom("Pretendard-Light", size: 18))
-            HStack {
-                Image(.example)
-                    .padding()
-                Spacer()
-            }
-            HStack {
-                Text("기권의 특징 : 기권, 복사평형 이였습ㅣㄴ다")
-                    .font(.custom("Pretendard-Light", size: 14))
-                    .padding(.leading,14)
-                Spacer()
-            }
-            .padding(.bottom,30)
-            VStack {
-                HStack {
-                    ForEach(0..<5) {_ in
-                        Text("#국어")
-                            .font(.custom("Pretendard-Regular", size: 12))
-                            .foregroundStyle(Color.timecolor)
+            .padding()
+            Divider()
+            ScrollView {
+                VStack {
+                    Text("기권의 특징 : 기권, 복사평형, 온실효과 기권에는 대류권, 성층권, 중간권, 열권이 있습니다.복사평형은 어떤 물체가 흡수하는 복사에너지양과 방출하는 에너지 양이 같은 상태입니다.")
+                        .font(.custom("Pretendard-Light", size: 18))
+                    HStack {
+                        Image(.example)
+                            .padding()
+                        Spacer()
                     }
-                    Spacer()
-                }
-                HStack {
-                    Button {
-                        showingalert.toggle()
-                    } label: {
-                        Image(.chat)
-                        Text("\(13)")
-                            .foregroundStyle(.timecolor)
+                    HStack {
+                        Text("기권의 특징 : 기권, 복사평형 이였습ㅣㄴ다")
+                            .font(.custom("Pretendard-Light", size: 14))
+                            .padding(.leading,14)
+                        Spacer()
                     }
-                    .alert(isPresented: $showingalert, content: {
-                        Alert(title: Text("곧 추가될 예정입니다.."))
-                    })
-                    Button {
-                        clickbookmark.toggle()
-                    } label: {
-                        Image(clickbookmark ? .clickbm : .bm )
-                            .resizable()
-                            .frame(width: 13,height: 16)
-                        Text("\(1)")
-                            .foregroundStyle(.timecolor)
-                        
-                    }
-                    Spacer()
-                }
-            }
-            .padding(.leading,14)
-        }
-        .padding()
-        Spacer()
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
+                    .padding(.bottom,30)
+                    VStack {
                         HStack {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                            Text("뒤로가기")
-                                .foregroundColor(.black)
-                                .font(.custom("Pretendard-Bold", size: 16))
+                            ForEach(0..<5) {_ in
+                                Text("#국어")
+                                    .font(.custom("Pretendard-Regular", size: 12))
+                                    .foregroundStyle(Color.timecolor)
+                            }
+                            Spacer()
+                        }
+                        HStack {
+                            Button {
+                                showingalert.toggle()
+                            } label: {
+                                Image(.chat)
+                                Text("\(13)")
+                                    .foregroundStyle(.timecolor)
+                            }
+                            .alert(isPresented: $showingalert, content: {
+                                Alert(title: Text("곧 추가될 예정입니다.."))
+                            })
+                            BookmarkButton()
+                            Spacer()
+                        }
+                    }
+                    .padding(.leading,14)
+                }
+            }
+            .padding()
+            Spacer()
+                .navigationBarBackButtonHidden()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                    .foregroundColor(.black)
+                                Text("뒤로가기")
+                                    .foregroundColor(.black)
+                                    .font(.custom("Pretendard-Bold", size: 16))
+                            }
                         }
                     }
                 }
-            }
+        }
     }
 }
 #Preview {

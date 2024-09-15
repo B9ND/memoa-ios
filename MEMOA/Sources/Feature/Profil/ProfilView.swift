@@ -2,8 +2,7 @@ import SwiftUI
 
 struct ProfilView: View {
     // TODO: 프로필 뷰
-    @ObservedObject var profilMV: ProfilViewmodel = .init()
-    
+    @StateObject var profilMV: ProfilViewmodel = .init()
     @State private var modify = false
     @State private var follow = false
     
@@ -27,10 +26,16 @@ struct ProfilView: View {
                                         Circle()
                                             .fill(Color.white)
                                             .frame(width: 100, height: 100)
-                                            .padding(.top,-44)
+                                            .padding(.top, -44)
                                             .overlay {
                                                 Image(.profilimage)
                                                     .padding(.top,-44)
+//                                                AsyncImage(url: url?) { image in
+//                                                    서버에서 이미지 받아올때 이미지
+//                                                } placeholder: {
+//                                                    progressview()
+//                                                }
+
                                             }
                                     }
                                     HStack {
@@ -39,7 +44,7 @@ struct ProfilView: View {
                                         Button {
                                             modify.toggle()
                                         } label: {
-                                            Image(.pensil)
+                                            Image(.pencil)
                                         }
                                     }
                                     .padding(.bottom,4)
@@ -88,23 +93,6 @@ struct ProfilView: View {
     }
 }
 
-
-//TODO: corneradius
-extension View {
-    public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners))
-    }
-}
-
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
-}
 
 #Preview {
     ProfilView()

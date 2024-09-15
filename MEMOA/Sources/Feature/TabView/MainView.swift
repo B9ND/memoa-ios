@@ -44,7 +44,7 @@ struct MainView: View {
                             )
                     }
                 }
-                .edgesIgnoringSafeArea(.bottom)
+                .ignoresSafeArea(edges: .bottom)
             }
             .navigationDestination(isPresented: $isNavigatingToWriteView) {
                 WriteView()

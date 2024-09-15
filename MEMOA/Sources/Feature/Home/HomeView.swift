@@ -1,17 +1,21 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var HomeVM = HomeViewModel()
+    @StateObject var HomeVM = HomeViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack {
-                SelectitemView()
-                    .padding(.vertical, 8) 
-                Divider()
-                UploadComponentView()
+        VStack {
+            SelectitemView()
+            Divider()
+            ScrollView {
+                VStack {
+                    UploadComponentView()
+                }
+                Spacer()
             }
-            Spacer()
+            .refreshable {
+                
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 class ProfilViewmodel: ObservableObject {
     @Published var request: ProfilModel

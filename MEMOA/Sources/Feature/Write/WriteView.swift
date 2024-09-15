@@ -3,9 +3,9 @@ import MyFoundation
 import PhotosUI
 
 struct WriteView: View {
-    @ObservedObject var writeVM = WriteViewModel()
+    @StateObject var writeVM = WriteViewModel()
     @State private var clickedTags: [Bool]
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     init() {
         _clickedTags = State(initialValue: Array(repeating: false, count: WriteViewModel().request.tags.count))
@@ -49,6 +49,7 @@ struct WriteView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 4)
             }
+            .scrollIndicators(.hidden)
             
             ZStack {
                 ScrollView {
@@ -146,7 +147,7 @@ struct WriteView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        print(writeVM.request.tags)
+                        print(writeVM.request.content)
                     } label: {
                         Text("완료")
                             .font(.custom("Pretendard-Bold", size: 16))
@@ -157,7 +158,7 @@ struct WriteView: View {
             }
         }
     }
-    
+    //TODO: 이미지 넣는 함수
     func insertImage(_ image: UIImage) {
         let mutableAttributedText = NSMutableAttributedString(attributedString: writeVM.contentItem.text)
         
@@ -166,15 +167,28 @@ struct WriteView: View {
         imageAttachment.bounds = CGRect(x: 0, y: 0, width: 150, height: 150)
         let imageAttributedString = NSAttributedString(attachment: imageAttachment)
         
+        //없애는게 나을려나..
+        //TODO: 이미지 넣었을때 자동 줄내림임
         let selectedRange = NSMakeRange(mutableAttributedText.length, 0)
         
-        mutableAttributedText.insert(imageAttributedString, at: selectedRange.location)
+        mutableAttributedText.insert(NSAttributedString(string: "\n"), at: selectedRange.location)
+        
+        mutableAttributedText.insert(imageAttributedString, at: selectedRange.location + 1)
+        
+        mutableAttributedText.insert(NSAttributedString(string: "\n"), at: selectedRange.location + 1)
+        //이미지 사이의 간격임
+        //없애는게 나을려나..
         
         mutableAttributedText.addAttributes([
             .font: UIFont(name: "Pretendard-Medium", size: 15)!
         ], range: NSMakeRange(0, mutableAttributedText.length))
         
         writeVM.contentItem.text = mutableAttributedText
+        
+        writeVM.request.content.append(writeVM.contentItem)
+        
+        // 새로운 contentItem으로 초기화 (새로운 이미지나 텍스트 입력을 위해)
+//        writeVM.contentItem = ContentItem(selectedItem: nil, text: NSMutableAttributedString())
     }
 }
 

@@ -38,5 +38,4 @@ struct TabviewCell: View {
             return isSelected ? 6 : 8
         }
     }
-    
 }

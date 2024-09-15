@@ -1,4 +1,4 @@
-import SwiftUI 
+import Foundation
 
 
 struct schoolitem: Encodable {
@@ -17,8 +17,15 @@ struct gradeitem: Encodable {
     }
 }
 
-
 struct HomeModel {
     var school: [schoolitem]
     var grade: [gradeitem]
+}
+
+
+
+// upload 이미지
+struct Imagecard: Identifiable, Hashable {
+    var id: UUID = .init()
+    var image: String
 }

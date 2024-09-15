@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SelectitemView: View {
-    @ObservedObject var HomeVM = HomeViewModel()
+    @StateObject var HomeVM = HomeViewModel()
     var body: some View {
         HStack {
             // 학교 선택 Menu
@@ -14,7 +14,6 @@ struct SelectitemView: View {
                             Text(schoolItem.school)
                                 .foregroundColor(HomeVM.selectedSchool == schoolItem.school ? .white : .black)
                                 .padding()
-                                .background(HomeVM.selectedSchool == schoolItem.school ? Color.blue : Color.clear)
                                 .cornerRadius(5)
                         }
                     }
@@ -45,7 +44,6 @@ struct SelectitemView: View {
                             Text("\(gradeItem.grade)학년")
                                 .foregroundColor(HomeVM.selectedGrade == gradeItem.grade ? .white : .black)
                                 .padding()
-                                .background(HomeVM.selectedGrade == gradeItem.grade ? Color.blue : Color.clear)
                                 .cornerRadius(5)
                         }
                     }

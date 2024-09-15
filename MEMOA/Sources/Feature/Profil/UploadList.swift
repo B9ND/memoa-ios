@@ -4,6 +4,7 @@ import SwiftUI
 struct UploadList: View {
     @ObservedObject var profilMV: ProfilViewmodel = .init()
     @State private var isRefreshing = false
+    @State private var error = false
     
     var body: some View {
         ScrollView {
@@ -23,15 +24,6 @@ struct UploadList: View {
                                             .resizable()
                                             .frame(width: 120, height: 130)
                                             .clipped()
-                                    } else if phase.error != nil {
-                                        VStack {
-                                            Image(.errorimage)
-                                                .resizable()
-                                                .frame(width: 130, height: 130)
-                                            Text("삐용삐용 에러입니다!")
-                                                .font(.custom("Pretendard-Light", size: 16))
-                                                .foregroundColor(.black)
-                                        }
                                     } else {
                                         ProgressView()
                                             .frame(width: 120, height: 130)
@@ -44,22 +36,21 @@ struct UploadList: View {
             }
             .padding()
         }
-//        .refreshable {
-//            await refreshData()
-//        }
-        //새로고침 기능
     }
+    //        .refreshable {
+    //            await refreshData()
+    //        }
+    //새로고침 기능
     
-//    func refreshData() async {
-//        isRefreshing = true
-//        try? await Task.sleep(nanoseconds: 2 * 2_000_000_000)
-//        profilMV.shuffleImages()
-//        isRefreshing = false
-//    }
+    //    func refreshData() async {
+    //        isRefreshing = true
+    //        try? await Task.sleep(nanoseconds: 2 * 2_000_000_000)
+    //        profilMV.shuffleImages()
+    //        isRefreshing = false
+    //    }
     // 새로고침 함수
 }
 
 #Preview {
     UploadList()
 }
-

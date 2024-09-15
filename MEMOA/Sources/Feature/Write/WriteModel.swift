@@ -27,7 +27,7 @@ struct WriteModel {
     var postBody: [String: Any] {
         [
             "title": title,
-            "content": [ContentItem](),
+            "content": content, 
             "tags": tags.map { $0.name }
             
         ]

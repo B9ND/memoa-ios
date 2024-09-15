@@ -5,8 +5,8 @@ struct ModifyView: View {
     @ObservedObject var profilMV: ProfilViewmodel = .init()
     
     @State private var showAlert = false
-    @Environment(\.dismiss) var dismiss
-    @Environment(\.openURL) var openURL
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     
     var body: some View {
         ZStack {
@@ -39,7 +39,7 @@ struct ModifyView: View {
                                     Button {
                                         print("수정하기")
                                     } label: {
-                                        Image(.pensil)
+                                        Image(.pencil)
                                     }
                                 }
                                 .padding(.bottom,4)

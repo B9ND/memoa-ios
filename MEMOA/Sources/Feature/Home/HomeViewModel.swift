@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 class HomeViewModel: ObservableObject {
     @Published var request: HomeModel = .init(school: [
@@ -14,4 +14,12 @@ class HomeViewModel: ObservableObject {
     
     @Published var selectedSchool: String = "대구소프트웨어마이스터고"
     @Published var selectedGrade: Int = 1
+    
+    var imagecard: [Imagecard] = [
+        .init(image: "example1"),
+        .init(image: "example1"),
+        .init(image: "example1"),
+        .init(image: "example1"),
+        .init(image: "example1")
+    ]
 }
