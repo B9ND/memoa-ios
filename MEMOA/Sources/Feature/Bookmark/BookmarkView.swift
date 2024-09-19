@@ -15,8 +15,9 @@ struct BookmarkView: View {
                 Text("선택된 북마크가 없어요!")
                     .font(.custom("Pretendard-Bold", size: 20))
             } else {
-                ForEach(showingbookmarkVM.bookmarks) { bookmark in
-                    bookmark.view
+                ForEach(showingbookmarkVM.bookmarks) {
+                    bookmark in
+                    bookmark.bookmarkview
                 }
             }
         }

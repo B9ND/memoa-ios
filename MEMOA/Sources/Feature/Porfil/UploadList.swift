@@ -2,7 +2,7 @@ import SwiftUI
 
 // TODO: 프로필에 나타나는 리스트
 struct UploadList: View {
-    @ObservedObject var profilMV: ProfilViewmodel = .init()
+    @ObservedObject var profilMV: ProfilViewModel = .init()
     @State private var isRefreshing = false
     @State private var error = false
     
@@ -14,7 +14,8 @@ struct UploadList: View {
             }
             
             VStack(alignment: .leading) {
-                ForEach(0..<profilMV.request.image.count, id: \.self) { index in
+                    ForEach(0..<profilMV.request.image.count, id: \.self) {
+                        index in
                     if index % 3 == 0 {
                         HStack {
                             ForEach(index..<min(index + 3, profilMV.request.image.count), id: \.self) { innerIndex in
@@ -54,3 +55,4 @@ struct UploadList: View {
 #Preview {
     UploadList()
 }
+

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TabviewCell: View {
+struct TabViewCell: View {
     
     let type: TabViewType
     let isSelected: Bool

@@ -22,7 +22,7 @@ struct WriteModel {
     var content: [ContentItem] = [] // 새글 넣는 리스트
     var tags: [TagData] // 태그
     var isReleased: Bool = true // 공개 비공개
-    
+    var createdAt: Int = 2024-09-19
     
     var postBody: [String: Any] {
         [

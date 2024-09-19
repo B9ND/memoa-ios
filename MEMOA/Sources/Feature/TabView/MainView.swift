@@ -15,7 +15,7 @@ struct MainView: View {
                 case .bookmark:
                     BookmarkView()
                 case .profil:
-                    ProfilView()
+                    MyProfilView()
                 case .plus:
                     EmptyView()
                 }
@@ -35,7 +35,7 @@ struct MainView: View {
                                                 selectedtab = tab
                                             }
                                         }) {
-                                            TabviewCell(type: tab, isSelected: selectedtab == tab)
+                                            TabViewCell(type: tab, isSelected: selectedtab == tab)
                                         }
                                         .frame(maxWidth: .infinity)
                                     }

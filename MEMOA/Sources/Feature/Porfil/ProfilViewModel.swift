@@ -1,6 +1,6 @@
 import Foundation
 
-class ProfilViewmodel: ObservableObject {
+class ProfilViewModel: ObservableObject {
     @Published var request: ProfilModel
     
     init() {
@@ -9,11 +9,7 @@ class ProfilViewmodel: ObservableObject {
             Uploadimage(imageurl: exampleurlimage),
             Uploadimage(imageurl: exampleurlimage),
             Uploadimage(imageurl: exampleurlimage),
-            Uploadimage(imageurl: exampleurlimage),
             Uploadimage(imageurl: exampleurlimage)
         ])
     }
-//    func shuffleImages() {
-//           request.image.shuffle()
-//       }
 }

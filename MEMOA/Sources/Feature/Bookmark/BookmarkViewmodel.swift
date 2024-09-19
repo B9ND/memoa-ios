@@ -6,7 +6,7 @@ class BookmarkViewModel: ObservableObject {
     @Published var bookmarks: [BookmarkModel] = []
     
     func addBookmark<T: View>(view: T) {
-        let newBookmark = BookmarkModel(view: AnyView(view))
+        let newBookmark = BookmarkModel(bookmarkview: AnyView(view))
         bookmarks.append(newBookmark)
     }
     

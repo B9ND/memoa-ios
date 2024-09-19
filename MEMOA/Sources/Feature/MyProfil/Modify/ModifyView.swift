@@ -2,11 +2,12 @@ import SwiftUI
 
 // TODO: 프로필 수정
 struct ModifyView: View {
-    @ObservedObject var profilMV: ProfilViewmodel = .init()
+    @ObservedObject var profilMV: MyProfilViewModel = .init()
     
     @State private var showAlert = false
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @State private var changename = false
+    @State private var changingdepartment = false
     
     var body: some View {
         ZStack {
@@ -37,7 +38,7 @@ struct ModifyView: View {
                                     Text(profilMV.request.name)
                                         .font(.custom("Pretendard-Medium", size: 16))
                                     Button {
-                                        print("수정하기")
+                                        changename.toggle()
                                     } label: {
                                         Image(.pencil)
                                     }
@@ -51,39 +52,41 @@ struct ModifyView: View {
                                     .padding(.bottom,14)
                                 
                                 VStack {
-                                    ModifyViewbutton(text: "이름변경", action: {
-                                        
-                                    }, color: .black)
-                                    
-                                    ModifyViewbutton(text: "이메일 변경", action: {
-                                        
-                                    }, color: .black)
                                     
                                     ModifyViewbutton(text: "소속 변경", action: {
-                                        openURL(URL(string: "https://www.naver.com")!)
-                                        
+                                        changingdepartment.toggle()
                                     }, color: .black)
                                     
                                     ModifyViewbutton(text: "개인 정보 이용 약관", action: {
                                         
                                     }, color: .black)
-                                    
-                                    ModifyViewbutton(text: "회원탈퇴", action: {
-                                        showAlert = true
-                                    }, color: .red)
-                                    .alert(isPresented: $showAlert) {
-                                        Alert(
-                                            title: Text("정말 회원탈퇴 하시겠습니까?"),
-                                            primaryButton: .default(Text("취소"))
-                                            {
-                                            },
-                                            secondaryButton: .destructive(Text("탈퇴")) {
-                                            }
-                                        )
-                                    }
                                     ModifyViewbutton(text: "로그아웃", action: {
                                         
                                     }, color: .red)
+
+                                    HStack {
+                                        Spacer()
+                                        Button {
+                                            showAlert = true
+                                        } label: {
+                                            Text("회원탈퇴")
+                                                .underline()
+                                                .foregroundStyle(.red)
+                                                .font(.custom("Pretendard-Regular", size: 12))
+                                        }
+                                        .alert(isPresented: $showAlert) {
+                                            Alert(
+                                                title: Text("정말 회원탈퇴 하시겠습니까?"),
+                                                primaryButton: .default(Text("취소"))
+                                                {
+                                                },
+                                                secondaryButton: .destructive(Text("탈퇴")) {
+                                                }
+                                            )
+                                        }
+                                    }
+                                    .padding(.vertical,14)
+                                    .padding(.trailing,23)
                                 }
                                 
                                 .padding()
@@ -91,24 +94,16 @@ struct ModifyView: View {
                             }
                         }
                 }
+                .navigationDestination(isPresented: $changename, destination: {
+                    ChangeNameView()
+                })
+                
+                .navigationDestination(isPresented: $changingdepartment, destination: {
+                    ChangingDepartmentView()
+                })
                 .ignoresSafeArea()
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                            Text("뒤로가기")
-                                .foregroundColor(.black)
-                                .font(.custom("Pretendard-Bold", size: 16))
-                        }
-                    }
-                }
-            }
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left")
         }
     }
 }

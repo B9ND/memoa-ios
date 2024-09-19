@@ -14,7 +14,9 @@ struct DetailView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(.detailProfilimage)
+                NavigationLink(destination: ProfilView()) {
+                    Image(.detailProfilimage)
+                }
                     .padding(.leading, 4)
                 VStack(alignment: .leading) {
                     HStack {
@@ -68,7 +70,6 @@ struct DetailView: View {
                                 showingalert.toggle()
                             } label: {
                                 Image(.chat)
-                                Text("\(13)")
                                     .foregroundStyle(.timecolor)
                             }
                             .alert(isPresented: $showingalert, content: {
@@ -83,22 +84,7 @@ struct DetailView: View {
             }
             .padding()
             Spacer()
-                .navigationBarBackButtonHidden()
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            HStack {
-                                Image(systemName: "chevron.left")
-                                    .foregroundColor(.black)
-                                Text("뒤로가기")
-                                    .foregroundColor(.black)
-                                    .font(.custom("Pretendard-Bold", size: 16))
-                            }
-                        }
-                    }
-                }
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left")
         }
     }
 }

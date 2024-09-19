@@ -1,5 +1,4 @@
 import SwiftUI
-import MyFoundation
 import PhotosUI
 
 struct WriteView: View {
@@ -130,31 +129,9 @@ struct WriteView: View {
             .padding(.bottom, 4)
             .padding(.horizontal, 28)
             
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                            Text("뒤로가기")
-                                .foregroundColor(.black)
-                                .font(.custom("Pretendard-Bold", size: 16))
-                        }
-                    }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        print(writeVM.request.content)
-                    } label: {
-                        Text("완료")
-                            .font(.custom("Pretendard-Bold", size: 16))
-                            .foregroundColor(.maincolor)
-                            .padding(.trailing, 14)
-                    }
-                }
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+            CompleteButton {
+                print("완료")
             }
         }
     }

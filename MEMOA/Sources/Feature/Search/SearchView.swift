@@ -78,12 +78,11 @@ struct SearchView: View {
                     }
                 }
             }
-            Spacer()
+            .padding(.bottom,63)
         }
         .onAppear {
             searchVM.loadSearches()
         }
-        .frame(height: .infinity)
     }
 }
 
