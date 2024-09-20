@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		176BF1042C9D41ED00DE2EDB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 176BF1032C9D41ED00DE2EDB /* Alamofire */; };
 		17765A532C855D0800DDC0DE /* LoginModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17765A522C855D0800DDC0DE /* LoginModelView.swift */; };
 		17765A552C855D2600DDC0DE /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17765A542C855D2600DDC0DE /* LoginModel.swift */; };
 		17765A572C855D3D00DDC0DE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17765A562C855D3D00DDC0DE /* LoginView.swift */; };
