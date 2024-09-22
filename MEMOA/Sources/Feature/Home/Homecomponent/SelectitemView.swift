@@ -21,7 +21,7 @@ struct SelectitemView: View {
             } label: {
                 HStack {
                     Text(HomeVM.selectedSchool)
-                        .font(.custom("Pretendard-Regular", size: 14))
+                        .font(.regular(14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 4)
                     Image(.pickerItem)
@@ -51,7 +51,7 @@ struct SelectitemView: View {
             } label: {
                 HStack {
                     Text("\(HomeVM.selectedGrade)학년")
-                        .font(.custom("Pretendard-Regular", size: 14))
+                        .font(.regular(14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 2)
                     Image(.pickerItem)

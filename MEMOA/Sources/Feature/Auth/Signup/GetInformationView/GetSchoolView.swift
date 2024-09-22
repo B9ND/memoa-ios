@@ -24,12 +24,12 @@ struct GetSchoolView: View {
                 VStack {
                     Text("회원가입")
                         .foregroundColor(.white)
-                        .font(.custom("Pretendard-Bold", size: 30))
+                        .font(.bold(30))
                         .padding(.top, 130)
                         .padding(.bottom, 25)
                     Text("학년을 선택해주세요")
                         .foregroundColor(.white)
-                        .font(.custom("Pretendard-SemiBold", size: 16))
+                        .font(.bold(16))
                         .padding(.bottom, 15)
                     
                     HStack {
@@ -40,7 +40,7 @@ struct GetSchoolView: View {
                         }, label: {
                             Text("1학년")
                                 .foregroundColor(.black)
-                                .font(.custom("Pretendard-Bold", size: 20))
+                                .font(.bold(20))
                                 .frame(width: 82, height: 78)
                                 .background(.white)
                                 .cornerRadius(10)
@@ -58,7 +58,7 @@ struct GetSchoolView: View {
                         }, label: {
                             Text("2학년")
                                 .foregroundColor(.black)
-                                .font(.custom("Pretendard-Bold", size: 20))
+                                .font(.bold(20))
                                 .frame(width: 82, height: 78)
                                 .background(.white)
                                 .cornerRadius(10)
@@ -77,7 +77,7 @@ struct GetSchoolView: View {
                         }, label: {
                             Text("3학년")
                                 .foregroundColor(.black)
-                                .font(.custom("Pretendard-Bold", size: 20))
+                                .font(.bold(20))
                                 .frame(width: 82, height: 78)
                                 .background(.white)
                                 .cornerRadius(10)
@@ -126,7 +126,7 @@ struct GetSchoolView: View {
                             .foregroundColor(.white)
                         Text("뒤로가기")
                             .foregroundColor(.white)
-                            .font(.custom("Pretendard-Bold", size: 16))
+                            .font(.bold(16))
                     }
                 }
             }

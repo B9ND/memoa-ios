@@ -4,7 +4,7 @@ import SwiftUI
 struct FirstView: View {
     
     @State private var loginboolean = false
-    @State private var Signupboolean = false
+    @State private var signupboolean = false
     
     var body: some View {
         NavigationStack {
@@ -23,10 +23,10 @@ struct FirstView: View {
                         VStack(alignment: .leading) {
                             Text("우리 학교 필기 공유")
                                 .foregroundStyle(.white)
-                                .font(.custom("Pretendard-SemiBold", size: 18))
+                                .font(.semibold(18))
                             Text("MEMOA")
                                 .foregroundStyle(.white)
-                                .font(.custom("Pretendard-Bold", size: 36))
+                                .font(.bold(36))
                         }
                         .padding(.top, 100)
                         Spacer()
@@ -39,14 +39,14 @@ struct FirstView: View {
                         loginboolean.toggle()
                     }
                     LongButton(text: "회원가입", color: .white) {
-                        Signupboolean.toggle()
+                        signupboolean.toggle()
                     }
                     .padding(.bottom, 60)
                 }
                 .navigationDestination(isPresented: $loginboolean) {
                     LoginView()
                         }
-                .navigationDestination(isPresented: $Signupboolean) {
+                .navigationDestination(isPresented: $signupboolean) {
                     GetEmailView()
                         }
                 }

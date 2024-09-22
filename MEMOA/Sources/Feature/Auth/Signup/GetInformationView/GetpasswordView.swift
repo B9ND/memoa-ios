@@ -1,10 +1,12 @@
 import SwiftUI
 
-struct LoginView: View {
-    @StateObject var LoginMV: LoginModelView = .init()
+struct GetpasswordView: View {
+    @StateObject var SignupMV: SignupModelView = .init()
     @Environment(\.dismiss) var dismiss
+    @State private var GetNicnameViewboolean = false
     
     var body: some View {
+        NavigationStack {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
                                startPoint: .top, endPoint: .bottom)
@@ -16,27 +18,25 @@ struct LoginView: View {
                         .offset(y:300)
                 )
                 VStack {
-                    Text("로그인")
+                    Text("회원가입")
                         .foregroundColor(.white)
-                        .font(.custom("Pretendard-Bold", size: 30))
+                        .font(.bold(30))
                         .padding(.top, 130)
                         .padding(.bottom, 46)
-                    CustomTextField(text: $LoginMV.request.email, placeholder: "이메일을 입력하세요")
-                        .padding(.bottom, 2)
                     HStack {
                         Image(.textfieldBook)
                             .padding(.leading, 11)
-                        if LoginMV.request.isSecure {
-                            SecureField("비밀번호를 입력하세요", text: $LoginMV.request.password)
+                        if SignupMV.isSecure {
+                            SecureField("비밀번호를 입력하세요", text: $SignupMV.password)
                                 .foregroundColor(.black)
                         } else {
-                            TextField("비밀번호를 입력하세요", text: $LoginMV.request.password)
+                            TextField("비밀번호를 입력하세요", text: $SignupMV.password)
                                 .foregroundColor(.black)
                                         }
                         Button(action: {
-                            LoginMV.request.isSecure.toggle()})
+                            SignupMV.isSecure.toggle()})
                         {
-                            Image(LoginMV.request.isSecure ? "openeye" : "closeeye")
+                            Image(SignupMV.isSecure ? "openeye" : "closeeye")
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 11)
@@ -45,8 +45,13 @@ struct LoginView: View {
                     .background(.white)
                     .cornerRadius(8)
                     Spacer()
-                    LongButton(text: "로그인", color: .buttoncolor) {
-                        print("sldfkjsdf")
+                    Image("TermsOfUse")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 274)
+                        .padding(.bottom, 5)
+                    LongButton(text: "다음", color: .buttoncolor) {
+                        GetNicnameViewboolean.toggle()
                     }
                     .padding(.bottom, 60)
                 }
@@ -54,21 +59,25 @@ struct LoginView: View {
             .edgesIgnoringSafeArea(.all)
             .navigationBarBackButtonHidden(true)
             .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.white)
-                    Text("뒤로가기")
-                        .foregroundColor(.white)
-                        .font(.custom("Pretendard-Bold", size: 16))
-                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.white)
+                        Text("뒤로가기")
+                            .foregroundColor(.white)
+                            .font(.bold(16))
+                    }
                 }
             }
+            .navigationDestination(isPresented: $GetNicnameViewboolean) {
+                GetNicnameView()
+                    }
+        }
     }
 }
 
 #Preview {
-    LoginView()
+    GetpasswordView()
 }

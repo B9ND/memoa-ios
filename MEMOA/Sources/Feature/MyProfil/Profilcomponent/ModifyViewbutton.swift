@@ -21,7 +21,7 @@ struct ModifyViewbutton: View {
                 HStack {
                     Text(text)
                         .foregroundColor(color)
-                        .font(.custom("Pretendard-Regular", size: 16))
+                        .font(.regular(16))
                         .padding()
                     Spacer()
                     Image(systemName: "chevron.right")

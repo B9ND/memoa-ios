@@ -19,7 +19,7 @@ struct LongButton: View {
             action()
         } label: {
             Text(text)
-                .font(.custom("Pretendard-Medium", size: 18))
+                .font(.medium(18))
                 .foregroundStyle(.black)
                 .frame(width: 304, height: 55)
                 .background(color)

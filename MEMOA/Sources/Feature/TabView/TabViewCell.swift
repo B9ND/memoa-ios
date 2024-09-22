@@ -19,7 +19,7 @@ struct TabViewCell: View {
                 .padding(.bottom, paddingbottom)
             Text(type.text)
                 .foregroundColor(isSelected ?  Color.maincolor : Color.black)
-                .font(.custom("Pretendard-Regular", size: 10))
+                .font(.regular(10))
                 .padding(.bottom, textbottom)
         }
     }

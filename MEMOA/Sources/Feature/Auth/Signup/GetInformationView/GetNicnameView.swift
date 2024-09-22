@@ -20,7 +20,7 @@ struct GetNicnameView: View {
                 VStack {
                     Text("회원가입")
                         .foregroundColor(.white)
-                        .font(.custom("Pretendard-Bold", size: 30))
+                        .font(.bold(30))
                         .padding(.top, 130)
                         .padding(.bottom, 46)
                     CustomTextField(text: $SignupMV.nickname, placeholder: "닉네임을 입력하세요")
@@ -47,7 +47,7 @@ struct GetNicnameView: View {
                             .foregroundColor(.white)
                         Text("뒤로가기")
                             .foregroundColor(.white)
-                            .font(.custom("Pretendard-Bold", size: 16))
+                            .font(.bold(16))
                     }
                 }
             }

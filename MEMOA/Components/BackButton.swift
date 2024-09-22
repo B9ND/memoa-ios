@@ -9,7 +9,7 @@ struct BackButton: View {
         HStack {
             EmptyView()
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -20,7 +20,7 @@ struct BackButton: View {
                             .foregroundColor(.black)
                         Text(text)
                             .foregroundColor(.black)
-                            .font(.custom("Pretendard-Bold", size: 16))
+                            .font(.bold(16))
                     }
                 }
             }

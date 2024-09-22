@@ -36,7 +36,7 @@ struct ModifyView: View {
                                 }
                                 HStack {
                                     Text(profilMV.request.name)
-                                        .font(.custom("Pretendard-Medium", size: 16))
+                                        .font(.medium(16))
                                     Button {
                                         changename.toggle()
                                     } label: {
@@ -48,7 +48,7 @@ struct ModifyView: View {
                                 .padding(.leading,20)
                                 Text(profilMV.request.email)
                                     .foregroundStyle(.black)
-                                    .font(.custom("Pretendard-Regular", size: 12))
+                                    .font(.regular(12))
                                     .padding(.bottom,14)
                                 
                                 VStack {
@@ -72,7 +72,7 @@ struct ModifyView: View {
                                             Text("회원탈퇴")
                                                 .underline()
                                                 .foregroundStyle(.red)
-                                                .font(.custom("Pretendard-Regular", size: 12))
+                                                .font(.regular(12))
                                         }
                                         .alert(isPresented: $showAlert) {
                                             Alert(

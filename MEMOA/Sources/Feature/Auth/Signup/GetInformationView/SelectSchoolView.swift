@@ -27,7 +27,7 @@ struct SelectSchoolView: View {
                     HStack {
                         Text(school.schoolname)
                             .foregroundColor(.black)
-                            .font(.custom("Pretendard-Light", size: 16))
+                            .font(.light(16))
                             .padding(.leading, 17)
                         Spacer()
                     }

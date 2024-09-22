@@ -14,7 +14,7 @@ struct WriteView: View {
         VStack {
             VStack {
                 TextField("제목을 입력하세요", text: $writeVM.request.title)
-                    .font(.custom("Pretendard-Medium", size: 16))
+                    .font(.medium(16))
                     .padding(.leading, 11)
                     .frame(height: 60)
                     .tint(.maincolor)
@@ -36,7 +36,7 @@ struct WriteView: View {
                             Text(writeVM.request.tags[tags].getName())
                                 .frame(width: 44, height: 29)
                                 .cornerRadius(8)
-                                .font(.custom("Pretendard-Regular", size: 14))
+                                .font(.regular(14))
                                 .foregroundColor(.black)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
@@ -64,7 +64,7 @@ struct WriteView: View {
                                         if
                                             writeVM.contentItem.text.string.isEmpty {
                                             Text("내용을 입력해주세요")
-                                                .font(.custom("Pretendard-Medium", size: 16))
+                                                .font(.medium(16))
                                                 .foregroundStyle(.graycolor)
                                                 .padding()
                                             Spacer()
@@ -107,7 +107,7 @@ struct WriteView: View {
             
             HStack {
                 Text("우리학교만 공개")
-                    .font(.custom("Pretendard-Regular", size: 14))
+                    .font(.regular(14))
                 ZStack(alignment: writeVM.request.isReleased ? .leading : .trailing) {
                     Rectangle()
                         .frame(width: 34, height: 14)

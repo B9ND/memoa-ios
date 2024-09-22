@@ -35,13 +35,13 @@ struct ProfilView: View {
                                     }
                                     HStack {
                                         Text(MyprofilMV.request.name)
-                                            .font(.custom("Pretendard-Medium", size: 16))
+                                            .font(.medium(16))
                                     }
                                     .padding(.bottom,4)
                                     .padding(.leading,2)
                                     Text(MyprofilMV.request.email)
                                         .foregroundStyle(.black)
-                                        .font(.custom("Pretendard-Regular", size: 12))
+                                        .font(.regular(12))
                                         .padding(.bottom,14)
                                     
                                     
@@ -49,7 +49,7 @@ struct ProfilView: View {
                                         follow.toggle()
                                     } label: {
                                         Text(follow ? "팔로우 취소" : "팔로우")
-                                            .font(.custom("Pretendard-Medium", size: 14))
+                                            .font(.medium(14))
                                             .frame(width: 186, height: 30)
                                             .background(follow ?  Color.white : Color.maincolor)
                                             .cornerRadius(8)

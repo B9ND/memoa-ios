@@ -24,7 +24,7 @@ struct BookmarkButton: View {
                 .resizable()
                 .frame(width: 13, height: 16)
             Text("\(bookmarkcount)")
-                .font(.custom("Pretendard-Medium", size: 16))
+                .font(.medium(16))
                 .foregroundStyle(.timecolor)
                 .alert(isPresented: $showingalert) {
                     Alert(title: Text("북마크가 추가되었습니다"))

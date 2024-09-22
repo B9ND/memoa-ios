@@ -41,7 +41,7 @@ struct MyProfilView: View {
                                     }
                                     HStack {
                                         Text(MyprofilMV.request.name)
-                                            .font(.custom("Pretendard-Medium", size: 16))
+                                            .font(.medium(16))
                                         Button {
                                             changename.toggle()
                                         } label: {
@@ -53,7 +53,7 @@ struct MyProfilView: View {
                                     .padding(.leading,20)
                                     Text(MyprofilMV.request.email)
                                         .foregroundStyle(.black)
-                                        .font(.custom("Pretendard-Regular", size: 12))
+                                        .font(.regular(12))
                                         .padding(.bottom,14)
                                     
                                     
@@ -61,7 +61,7 @@ struct MyProfilView: View {
                                         print("MY")
                                     } label: {
                                         Text("MY")
-                                            .font(.custom("Pretendard-Medium", size: 14))
+                                            .font(.medium(14))
                                             .foregroundStyle(.black)
                                             .frame(width: 186, height: 30)
                                             .overlay {

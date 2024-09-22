@@ -14,7 +14,7 @@ struct CompleteButton: View {
         HStack {
             EmptyView()
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
@@ -22,7 +22,7 @@ struct CompleteButton: View {
                 }) {
                     HStack {
                         Text("완료")
-                        .font(.custom("Pretendard-Bold", size: 16))
+                        .font(.bold(16))
                         .foregroundColor(.maincolor)
                         .padding(.trailing, 14)
                     }
