@@ -2,7 +2,7 @@ import SwiftUI
 
 // TODO: 프로필에 나타나는 리스트
 struct UploadList: View {
-    @StateObject var profilMV: ProfilViewModel = .init()
+    @StateObject var profilMV: ProfileViewModel = .init()
     @State private var isRefreshing = false
     @State private var error = false
     

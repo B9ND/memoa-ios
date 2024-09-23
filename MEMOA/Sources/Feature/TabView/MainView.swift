@@ -15,7 +15,7 @@ struct MainView: View {
                 case .bookmark:
                     BookmarkView()
                 case .profil:
-                    MyProfilView()
+                    MyProfileView()
                 case .plus:
                     EmptyView()
                 }

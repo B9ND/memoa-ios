@@ -1,11 +1,11 @@
 import Foundation
 
-class MyProfilViewModel: ObservableObject {
-    @Published var request: MyProfilModel
+class MyProfileViewModel: ObservableObject {
+    @Published var request: MyProfileModel
     
     init() {
         let exampleurlimage = "https://picsum.photos/200"
-        self.request = MyProfilModel(image: [
+        self.request = MyProfileModel(image: [
             UploadMyimage(imageurl: exampleurlimage),
             UploadMyimage(imageurl: exampleurlimage),
             UploadMyimage(imageurl: exampleurlimage),

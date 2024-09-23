@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct ProfilView: View {
+struct ProfileView: View {
     // TODO: 프로필 뷰
-    @StateObject var MyprofilMV: ProfilViewModel = .init()
+    @StateObject var MyprofilMV: ProfileViewModel = .init()
     @State private var modify = false
     @State private var follow = false
     @State private var changename = false
@@ -72,7 +72,7 @@ struct ProfilView: View {
 }
 
 #Preview {
-    ProfilView()
+    ProfileView()
 }
 
 

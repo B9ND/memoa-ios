@@ -2,7 +2,7 @@ import SwiftUI
 
 // TODO: 프로필 수정
 struct ModifyView: View {
-    @ObservedObject var profilMV: MyProfilViewModel = .init()
+    @ObservedObject var profilMV: MyProfileViewModel = .init()
     
     @State private var showAlert = false
     @Environment(\.openURL) private var openURL

@@ -8,7 +8,7 @@ struct Uploadimage: Hashable {
     }
 }
 
-struct ProfilModel {
+struct ProfileModel {
     var name: String = "김은찬"
     var email: String = "kimeunchan2815@gmail.com"
     var image: [Uploadimage]

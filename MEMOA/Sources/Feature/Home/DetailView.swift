@@ -14,7 +14,7 @@ struct DetailView: View {
     var body: some View {
         VStack {
             HStack {
-                NavigationLink(destination: ProfilView()) {
+                NavigationLink(destination: ProfileView()) {
                     Image(icon: .mediumprofile)
                 }
                     .padding(.leading, 4)

@@ -26,12 +26,12 @@
 		17A4394A2C9DAB1E00B071CA /* ModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438E82C9DAB1E00B071CA /* ModifyView.swift */; };
 		17A4394B2C9DAB1E00B071CA /* ModifyViewbutton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438EA2C9DAB1E00B071CA /* ModifyViewbutton.swift */; };
 		17A4394C2C9DAB1E00B071CA /* MyUploadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438EB2C9DAB1E00B071CA /* MyUploadList.swift */; };
-		17A4394D2C9DAB1E00B071CA /* MyProfilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438ED2C9DAB1E00B071CA /* MyProfilModel.swift */; };
-		17A4394E2C9DAB1E00B071CA /* MyProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438EE2C9DAB1E00B071CA /* MyProfilView.swift */; };
-		17A4394F2C9DAB1E00B071CA /* MyProfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438EF2C9DAB1E00B071CA /* MyProfilViewModel.swift */; };
-		17A439502C9DAB1E00B071CA /* ProfilModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F12C9DAB1E00B071CA /* ProfilModel.swift */; };
-		17A439512C9DAB1E00B071CA /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F22C9DAB1E00B071CA /* ProfilView.swift */; };
-		17A439522C9DAB1E00B071CA /* ProfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F32C9DAB1E00B071CA /* ProfilViewModel.swift */; };
+		17A4394D2C9DAB1E00B071CA /* MyProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438ED2C9DAB1E00B071CA /* MyProfileModel.swift */; };
+		17A4394E2C9DAB1E00B071CA /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438EE2C9DAB1E00B071CA /* MyProfileView.swift */; };
+		17A4394F2C9DAB1E00B071CA /* MyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438EF2C9DAB1E00B071CA /* MyProfileViewModel.swift */; };
+		17A439502C9DAB1E00B071CA /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F12C9DAB1E00B071CA /* ProfileModel.swift */; };
+		17A439512C9DAB1E00B071CA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F22C9DAB1E00B071CA /* ProfileView.swift */; };
+		17A439522C9DAB1E00B071CA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F32C9DAB1E00B071CA /* ProfileViewModel.swift */; };
 		17A439532C9DAB1E00B071CA /* UploadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F42C9DAB1E00B071CA /* UploadList.swift */; };
 		17A439542C9DAB1E00B071CA /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F62C9DAB1E00B071CA /* SearchModel.swift */; };
 		17A439552C9DAB1E00B071CA /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438F72C9DAB1E00B071CA /* SearchView.swift */; };
@@ -97,12 +97,12 @@
 		17A438E82C9DAB1E00B071CA /* ModifyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyView.swift; sourceTree = "<group>"; };
 		17A438EA2C9DAB1E00B071CA /* ModifyViewbutton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyViewbutton.swift; sourceTree = "<group>"; };
 		17A438EB2C9DAB1E00B071CA /* MyUploadList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyUploadList.swift; sourceTree = "<group>"; };
-		17A438ED2C9DAB1E00B071CA /* MyProfilModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilModel.swift; sourceTree = "<group>"; };
-		17A438EE2C9DAB1E00B071CA /* MyProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilView.swift; sourceTree = "<group>"; };
-		17A438EF2C9DAB1E00B071CA /* MyProfilViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfilViewModel.swift; sourceTree = "<group>"; };
-		17A438F12C9DAB1E00B071CA /* ProfilModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilModel.swift; sourceTree = "<group>"; };
-		17A438F22C9DAB1E00B071CA /* ProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
-		17A438F32C9DAB1E00B071CA /* ProfilViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilViewModel.swift; sourceTree = "<group>"; };
+		17A438ED2C9DAB1E00B071CA /* MyProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileModel.swift; sourceTree = "<group>"; };
+		17A438EE2C9DAB1E00B071CA /* MyProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
+		17A438EF2C9DAB1E00B071CA /* MyProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfileViewModel.swift; sourceTree = "<group>"; };
+		17A438F12C9DAB1E00B071CA /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		17A438F22C9DAB1E00B071CA /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		17A438F32C9DAB1E00B071CA /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		17A438F42C9DAB1E00B071CA /* UploadList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadList.swift; sourceTree = "<group>"; };
 		17A438F62C9DAB1E00B071CA /* SearchModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		17A438F72C9DAB1E00B071CA /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -245,27 +245,27 @@
 			path = Profilcomponent;
 			sourceTree = "<group>";
 		};
-		17A438F02C9DAB1E00B071CA /* MyProfil */ = {
+		17A438F02C9DAB1E00B071CA /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
 				17A438E92C9DAB1E00B071CA /* Modify */,
 				17A438EC2C9DAB1E00B071CA /* Profilcomponent */,
-				17A438ED2C9DAB1E00B071CA /* MyProfilModel.swift */,
-				17A438EE2C9DAB1E00B071CA /* MyProfilView.swift */,
-				17A438EF2C9DAB1E00B071CA /* MyProfilViewModel.swift */,
+				17A438ED2C9DAB1E00B071CA /* MyProfileModel.swift */,
+				17A438EE2C9DAB1E00B071CA /* MyProfileView.swift */,
+				17A438EF2C9DAB1E00B071CA /* MyProfileViewModel.swift */,
 			);
-			path = MyProfil;
+			path = MyProfile;
 			sourceTree = "<group>";
 		};
-		17A438F52C9DAB1E00B071CA /* Porfil */ = {
+		17A438F52C9DAB1E00B071CA /* Porfile */ = {
 			isa = PBXGroup;
 			children = (
-				17A438F12C9DAB1E00B071CA /* ProfilModel.swift */,
-				17A438F22C9DAB1E00B071CA /* ProfilView.swift */,
-				17A438F32C9DAB1E00B071CA /* ProfilViewModel.swift */,
+				17A438F12C9DAB1E00B071CA /* ProfileModel.swift */,
+				17A438F22C9DAB1E00B071CA /* ProfileView.swift */,
+				17A438F32C9DAB1E00B071CA /* ProfileViewModel.swift */,
 				17A438F42C9DAB1E00B071CA /* UploadList.swift */,
 			);
-			path = Porfil;
+			path = Porfile;
 			sourceTree = "<group>";
 		};
 		17A438F92C9DAB1E00B071CA /* Search */ = {
@@ -306,8 +306,8 @@
 				6550D6192CA048940032A908 /* Auth */,
 				17A438DD2C9DAB1E00B071CA /* Bookmark */,
 				17A438E52C9DAB1E00B071CA /* Home */,
-				17A438F02C9DAB1E00B071CA /* MyProfil */,
-				17A438F52C9DAB1E00B071CA /* Porfil */,
+				17A438F02C9DAB1E00B071CA /* MyProfile */,
+				17A438F52C9DAB1E00B071CA /* Porfile */,
 				17A438F92C9DAB1E00B071CA /* Search */,
 				17A438FE2C9DAB1E00B071CA /* TabView */,
 				17A439032C9DAB1E00B071CA /* Write */,
@@ -534,13 +534,13 @@
 				17A439402C9DAB1E00B071CA /* BookmarkView.swift in Sources */,
 				17A4397E2C9DAB1E00B071CA /* LoginView.swift in Sources */,
 				17A439452C9DAB1E00B071CA /* HomeModel.swift in Sources */,
-				17A4394F2C9DAB1E00B071CA /* MyProfilViewModel.swift in Sources */,
+				17A4394F2C9DAB1E00B071CA /* MyProfileViewModel.swift in Sources */,
 				17A439702C9DAB1E00B071CA /* CustomTextField.swift in Sources */,
 				17A439592C9DAB1E00B071CA /* TabViewdesign.swift in Sources */,
 				17A439422C9DAB1E00B071CA /* SelectitemView.swift in Sources */,
 				17A439762C9DAB1E00B071CA /* SelectSchoolView.swift in Sources */,
 				17A439752C9DAB1E00B071CA /* GetSchoolView.swift in Sources */,
-				17A439512C9DAB1E00B071CA /* ProfilView.swift in Sources */,
+				17A439512C9DAB1E00B071CA /* ProfileView.swift in Sources */,
 				17A4396F2C9DAB1E00B071CA /* TermsOfUseButton.swift in Sources */,
 				17A4397A2C9DAB1E00B071CA /* SignupModelView.swift in Sources */,
 				17A439602C9DAB1E00B071CA /* RoundedCornerShape.swift in Sources */,
@@ -557,13 +557,13 @@
 				17A439482C9DAB1E00B071CA /* ChangeNameView.swift in Sources */,
 				17A4394C2C9DAB1E00B071CA /* MyUploadList.swift in Sources */,
 				17A4395E2C9DAB1E00B071CA /* WriteViewModel.swift in Sources */,
-				17A4394D2C9DAB1E00B071CA /* MyProfilModel.swift in Sources */,
+				17A4394D2C9DAB1E00B071CA /* MyProfileModel.swift in Sources */,
 				17A4395C2C9DAB1E00B071CA /* WriteModel.swift in Sources */,
 				17A4397B2C9DAB1E00B071CA /* FirstView.swift in Sources */,
 				17A439742C9DAB1E00B071CA /* GetpasswordView.swift in Sources */,
-				17A439522C9DAB1E00B071CA /* ProfilViewModel.swift in Sources */,
+				17A439522C9DAB1E00B071CA /* ProfileViewModel.swift in Sources */,
 				17A4395B2C9DAB1E00B071CA /* UIViewRepresentable.swift in Sources */,
-				17A439502C9DAB1E00B071CA /* ProfilModel.swift in Sources */,
+				17A439502C9DAB1E00B071CA /* ProfileModel.swift in Sources */,
 				17A439552C9DAB1E00B071CA /* SearchView.swift in Sources */,
 				17A4393D2C9DAB1E00B071CA /* CompleteButton.swift in Sources */,
 				17A439712C9DAB1E00B071CA /* LongButton.swift in Sources */,
@@ -577,7 +577,7 @@
 				17A4393F2C9DAB1E00B071CA /* BookmarkModel.swift in Sources */,
 				17A439572C9DAB1E00B071CA /* MainView.swift in Sources */,
 				17A4394A2C9DAB1E00B071CA /* ModifyView.swift in Sources */,
-				17A4394E2C9DAB1E00B071CA /* MyProfilView.swift in Sources */,
+				17A4394E2C9DAB1E00B071CA /* MyProfileView.swift in Sources */,
 				17A439412C9DAB1E00B071CA /* BookmarkViewmodel.swift in Sources */,
 				6550D61B2CA06F080032A908 /* Iconography.swift in Sources */,
 			);
