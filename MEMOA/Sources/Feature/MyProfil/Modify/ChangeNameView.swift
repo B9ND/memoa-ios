@@ -22,7 +22,7 @@ struct ChangeNameView: View {
         }
         .padding()
         Spacer()
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton {
             print("완료")
         }

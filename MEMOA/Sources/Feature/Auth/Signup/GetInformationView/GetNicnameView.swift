@@ -11,7 +11,7 @@ struct GetNicnameView: View {
                 LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
                                startPoint: .top, endPoint: .bottom)
                 .overlay (
-                    Image("cloud")
+                    Image(icon: .cloud)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 1075)
@@ -37,20 +37,7 @@ struct GetNicnameView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.white)
-                        Text("뒤로가기")
-                            .foregroundColor(.white)
-                            .font(.bold(16))
-                    }
-                }
-            }
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
             .navigationDestination(isPresented: $GetSchoolViewboolean) {
                 GetSchoolView()
                     }

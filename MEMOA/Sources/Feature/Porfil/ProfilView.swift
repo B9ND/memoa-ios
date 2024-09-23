@@ -29,7 +29,7 @@ struct ProfilView: View {
                                             .frame(width: 100, height: 100)
                                             .padding(.top, -44)
                                             .overlay {
-                                                Image(.profilimage)
+                                                Image(icon: .bigprofile)
                                                     .padding(.top,-44)
                                             }
                                     }
@@ -67,7 +67,7 @@ struct ProfilView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }
 

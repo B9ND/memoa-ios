@@ -24,7 +24,7 @@ struct SelectitemView: View {
                         .font(.regular(14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 4)
-                    Image(.pickerItem)
+                    Image(icon: .pickshcool)
                         .resizable()
                         .frame(width: 10, height: 9)
                 }

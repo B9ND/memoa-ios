@@ -30,7 +30,7 @@ struct ModifyView: View {
                                         .frame(width: 100, height: 100)
                                         .padding(.top,-44)
                                         .overlay {
-                                            Image(.profilimage)
+                                            Image(icon: .bigprofile)
                                                 .padding(.top,-44)
                                         }
                                 }
@@ -40,7 +40,7 @@ struct ModifyView: View {
                                     Button {
                                         changename.toggle()
                                     } label: {
-                                        Image(.pencil)
+                                        Image(icon: .pencil)
                                     }
                                 }
                                 .padding(.bottom,4)
@@ -103,7 +103,7 @@ struct ModifyView: View {
                 })
                 .ignoresSafeArea()
             }
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
     }
 }

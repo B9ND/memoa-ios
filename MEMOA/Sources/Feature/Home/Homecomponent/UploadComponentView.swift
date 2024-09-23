@@ -11,7 +11,7 @@ struct UploadComponentView: View {
         } label: {
             VStack {
                 HStack {
-                    Image(.homeprofil)
+                    Image(icon: .smallprofile)
                         .padding(.leading, 24)
                     VStack(alignment: .leading) {
                         HStack {
@@ -61,7 +61,7 @@ struct UploadComponentView: View {
                         Button {
                             showingalert.toggle()
                         } label: {
-                            Image(.chat)
+                            Image(icon: .chating)
                                 .foregroundStyle(.timecolor)
                         }
                         .alert(isPresented: $showingalert, content: {

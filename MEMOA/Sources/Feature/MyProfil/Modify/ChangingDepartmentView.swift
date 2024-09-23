@@ -12,7 +12,7 @@ struct ChangingDepartmentView: View {
         VStack {
             Text("z")
         }
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton {
             print("완료")
         }

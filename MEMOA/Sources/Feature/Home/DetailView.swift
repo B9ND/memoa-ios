@@ -15,7 +15,7 @@ struct DetailView: View {
         VStack {
             HStack {
                 NavigationLink(destination: ProfilView()) {
-                    Image(.detailProfilimage)
+                    Image(icon: .mediumprofile)
                 }
                     .padding(.leading, 4)
                 VStack(alignment: .leading) {
@@ -84,7 +84,7 @@ struct DetailView: View {
             }
             .padding()
             Spacer()
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
     }
 }

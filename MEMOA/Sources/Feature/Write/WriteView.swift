@@ -83,7 +83,7 @@ struct WriteView: View {
                                     HStack {
                                         Spacer()
                                         PhotosPicker(selection: $writeVM.contentItem.selectedItem, matching: .images, photoLibrary: .shared()) {
-                                            Image(.selectimage)
+                                            Image(icon: .selectimage)
                                                 .resizable()
                                                 .frame(width: 30,height: 30)
                                         }
@@ -129,7 +129,7 @@ struct WriteView: View {
             .padding(.bottom, 4)
             .padding(.horizontal, 28)
             
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left")
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton {
                 print("완료")
             }

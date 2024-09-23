@@ -13,7 +13,7 @@ struct SearchView: View {
         GeometryReader { geometry in
             VStack {
                 HStack {
-                    Image(.searchbutton)
+                    Image(icon: .search)
                         .resizable()
                         .frame(width: 22,height: 22)
                         .padding(.leading,12)

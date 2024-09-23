@@ -3,6 +3,7 @@ import SwiftUI
 struct BackButton: View {
     let text: String
     let systemImageName: String
+    let fontcolor: Color
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -17,9 +18,9 @@ struct BackButton: View {
                 }) {
                     HStack {
                         Image(systemName: systemImageName)
-                            .foregroundColor(.black)
+                            .foregroundColor(fontcolor)
                         Text(text)
-                            .foregroundColor(.black)
+                            .foregroundColor(fontcolor)
                             .font(.bold(16))
                     }
                 }

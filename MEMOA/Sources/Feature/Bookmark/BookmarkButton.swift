@@ -20,7 +20,7 @@ struct BookmarkButton: View {
             clickbookmark.toggle()
             saveBookmark() // 클릭 시 북마크 상태 저장
         } label: {
-            Image(clickbookmark ? .clickbm : .bm )
+            Image(icon: clickbookmark ? .clickbookmark : .bookmark)
                 .resizable()
                 .frame(width: 13, height: 16)
             Text("\(bookmarkcount)")

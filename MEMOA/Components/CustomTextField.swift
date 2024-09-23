@@ -6,11 +6,12 @@ struct CustomTextField: View {
 
     var body: some View {
         HStack {
-            Image(.textfieldBook)
+            Image(icon: .textfiledimage)
                 .padding(.leading, 11)
             TextField(placeholder, text: $text)
                 .foregroundColor(.black)
         }
+        .tint(.maincolor)
         .frame(width: 304, height: 46)
         .background(.white)
         .cornerRadius(8)

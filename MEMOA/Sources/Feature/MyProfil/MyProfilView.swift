@@ -29,7 +29,7 @@ struct MyProfilView: View {
                                             .frame(width: 100, height: 100)
                                             .padding(.top, -44)
                                             .overlay {
-                                                Image(.profilimage)
+                                                Image(icon: .bigprofile)
                                                     .padding(.top,-44)
                                                 //                                                AsyncImage(url: url?) { image in
                                                 //                                                    서버에서 이미지 받아올때 이미지
@@ -45,7 +45,7 @@ struct MyProfilView: View {
                                         Button {
                                             changename.toggle()
                                         } label: {
-                                            Image(.pencil)
+                                            Image(icon: .pencil)
                                         }
                                     }
                                     .padding(.bottom,4)
@@ -90,7 +90,7 @@ struct MyProfilView: View {
                 Button {
                     modify.toggle()
                 } label: {
-                    Image(.setting)
+                    Image(icon: .setting)
                 }
             }
         }

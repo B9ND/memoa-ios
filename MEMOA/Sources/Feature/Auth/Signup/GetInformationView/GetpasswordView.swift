@@ -11,7 +11,7 @@ struct GetpasswordView: View {
                 LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
                                startPoint: .top, endPoint: .bottom)
                 .overlay (
-                    Image("cloud")
+                    Image(icon: .cloud)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 1075)
@@ -24,7 +24,7 @@ struct GetpasswordView: View {
                         .padding(.top, 130)
                         .padding(.bottom, 46)
                     HStack {
-                        Image(.textfieldBook)
+                        Image(icon: .textfiledimage)
                             .padding(.leading, 11)
                         if SignupMV.isSecure {
                             SecureField("비밀번호를 입력하세요", text: $SignupMV.password)
@@ -36,7 +36,7 @@ struct GetpasswordView: View {
                         Button(action: {
                             SignupMV.isSecure.toggle()})
                         {
-                            Image(SignupMV.isSecure ? "openeye" : "closeeye")
+                            Image(icon: SignupMV.isSecure ? .openeyes : .closeeyes)
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 11)
@@ -45,7 +45,7 @@ struct GetpasswordView: View {
                     .background(.white)
                     .cornerRadius(8)
                     Spacer()
-                    Image("TermsOfUse")
+                    Image(icon: .termsofuse)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 274)
@@ -57,20 +57,7 @@ struct GetpasswordView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.white)
-                        Text("뒤로가기")
-                            .foregroundColor(.white)
-                            .font(.bold(16))
-                    }
-                }
-            }
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
             .navigationDestination(isPresented: $GetNicnameViewboolean) {
                 GetNicnameView()
                     }

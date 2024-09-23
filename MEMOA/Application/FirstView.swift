@@ -12,7 +12,7 @@ struct FirstView: View {
                 LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
                                startPoint: .top, endPoint: .bottom)
                 .overlay (
-                    Image("cloud")
+                    Image(icon: .cloud)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 1075)
@@ -32,7 +32,7 @@ struct FirstView: View {
                         Spacer()
                     }
                     .padding(.leading, 40)
-                    Image("computer")
+                    Image(icon: .computer)
                         .padding(.top, 70)
                     Spacer()
                     LongButton(text: "로그인", color: .buttoncolor) {
