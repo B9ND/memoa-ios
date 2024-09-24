@@ -257,7 +257,7 @@
 			path = MyProfile;
 			sourceTree = "<group>";
 		};
-		17A438F52C9DAB1E00B071CA /* Porfile */ = {
+		17A438F52C9DAB1E00B071CA /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				17A438F12C9DAB1E00B071CA /* ProfileModel.swift */,
@@ -265,7 +265,7 @@
 				17A438F32C9DAB1E00B071CA /* ProfileViewModel.swift */,
 				17A438F42C9DAB1E00B071CA /* UploadList.swift */,
 			);
-			path = Porfile;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		17A438F92C9DAB1E00B071CA /* Search */ = {
@@ -307,7 +307,7 @@
 				17A438DD2C9DAB1E00B071CA /* Bookmark */,
 				17A438E52C9DAB1E00B071CA /* Home */,
 				17A438F02C9DAB1E00B071CA /* MyProfile */,
-				17A438F52C9DAB1E00B071CA /* Porfile */,
+				17A438F52C9DAB1E00B071CA /* Profile */,
 				17A438F92C9DAB1E00B071CA /* Search */,
 				17A438FE2C9DAB1E00B071CA /* TabView */,
 				17A439032C9DAB1E00B071CA /* Write */,
@@ -723,12 +723,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.hs.dgsw.MEMOA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eunchan.MEMOA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -755,12 +756,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.hs.dgsw.MEMOA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eunchan.MEMOA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

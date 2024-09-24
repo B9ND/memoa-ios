@@ -131,7 +131,7 @@ struct WriteView: View {
             
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton {
-                print("완료")
+                print(writeVM.request.content)
             }
         }
     }

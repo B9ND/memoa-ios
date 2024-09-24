@@ -11,7 +11,9 @@ struct UploadComponentView: View {
         } label: {
             VStack {
                 HStack {
-                    Image(icon: .smallprofile)
+                    NavigationLink(destination: ProfileView(), label: {
+                        Image(icon: .smallprofile)
+                    })
                         .padding(.leading, 24)
                     VStack(alignment: .leading) {
                         HStack {
