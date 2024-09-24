@@ -12,6 +12,7 @@ struct MEMOAApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+            //fix
         }
     }
 }
