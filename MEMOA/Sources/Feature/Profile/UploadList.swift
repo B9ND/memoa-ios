@@ -14,12 +14,12 @@ struct UploadList: View {
             }
             
             VStack(alignment: .leading) {
-                    ForEach(0..<profilMV.request.image.count, id: \.self) {
+                    ForEach(0..<profilMV.image.count, id: \.self) {
                         index in
                     if index % 3 == 0 {
                         HStack {
-                            ForEach(index..<min(index + 3, profilMV.request.image.count), id: \.self) { innerIndex in
-                                AsyncImage(url: URL(string: profilMV.request.image[innerIndex].imageurl)) { phase in
+                            ForEach(index..<min(index + 3, profilMV.image.count), id: \.self) { innerIndex in
+                                AsyncImage(url: URL(string: profilMV.image[innerIndex].imageurl)) { phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()

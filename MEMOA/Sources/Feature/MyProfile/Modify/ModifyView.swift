@@ -1,13 +1,13 @@
 import SwiftUI
 
-// TODO: 프로필 수정
+//MARK: 프로필 수정
 struct ModifyView: View {
     @ObservedObject var profilMV: MyProfileViewModel = .init()
     
     @State private var showAlert = false
     @Environment(\.openURL) private var openURL
-    @State private var changename = false
-    @State private var changingdepartment = false
+    @State private var changeName = false
+    @State private var changeSchool = false
     
     var body: some View {
         ZStack {
@@ -28,33 +28,33 @@ struct ModifyView: View {
                                     Circle()
                                         .fill(Color.white)
                                         .frame(width: 100, height: 100)
-                                        .padding(.top,-44)
+                                        .padding(.top, -44)
                                         .overlay {
                                             Image(icon: .bigprofile)
-                                                .padding(.top,-44)
+                                                .padding(.top, -44)
                                         }
                                 }
                                 HStack {
-                                    Text(profilMV.request.name)
+                                    Text(profilMV.name)
                                         .font(.medium(16))
                                     Button {
-                                        changename.toggle()
+                                        changeName = true
                                     } label: {
                                         Image(icon: .pencil)
                                     }
                                 }
-                                .padding(.bottom,4)
+                                .padding(.bottom, 4)
                                 
-                                .padding(.leading,20)
-                                Text(profilMV.request.email)
+                                .padding(.leading, 20)
+                                Text(profilMV.email)
                                     .foregroundStyle(.black)
                                     .font(.regular(12))
-                                    .padding(.bottom,14)
+                                    .padding(.bottom, 14)
                                 
                                 VStack {
                                     
                                     ModifyViewbutton(text: "소속 변경", action: {
-                                        changingdepartment.toggle()
+                                        changeSchool = true
                                     }, color: .black)
                                     
                                     ModifyViewbutton(text: "개인 정보 이용 약관", action: {
@@ -85,8 +85,8 @@ struct ModifyView: View {
                                             )
                                         }
                                     }
-                                    .padding(.vertical,14)
-                                    .padding(.trailing,23)
+                                    .padding(.vertical, 14)
+                                    .padding(.trailing, 23)
                                 }
                                 
                                 .padding()
@@ -94,11 +94,11 @@ struct ModifyView: View {
                             }
                         }
                 }
-                .navigationDestination(isPresented: $changename, destination: {
+                .navigationDestination(isPresented: $changeName, destination: {
                     ChangeNameView()
                 })
                 
-                .navigationDestination(isPresented: $changingdepartment, destination: {
+                .navigationDestination(isPresented: $changeSchool, destination: {
                     ChangingDepartmentView()
                 })
                 .ignoresSafeArea()

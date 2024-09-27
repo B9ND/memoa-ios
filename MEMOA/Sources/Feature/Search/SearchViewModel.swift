@@ -2,39 +2,39 @@ import SwiftUI
 
 class SearchViewModel: ObservableObject {
     @Published var searchItem: String = ""
-    @Published var recentSearcheslist: [RecentSearches]
+    @Published var recentSearchesList: [RecentSearches]
     
     init() {
-        self.recentSearcheslist = []
+        self.recentSearchesList = []
     }
     // 최근검색어
     func addSearchItem() {
-        let newSearch = RecentSearches(RecentSearch: searchItem)
+        let newSearch = RecentSearches(recentSearch: searchItem)
         
-        if !newSearch.RecentSearch.isEmpty{
-            recentSearcheslist.append(newSearch)
+        if !newSearch.recentSearch.isEmpty{
+            recentSearchesList.append(newSearch)
             searchItem = ""
         }
-        if recentSearcheslist.count > 6 {
-            recentSearcheslist.remove(at: 0)
+        if recentSearchesList.count > 6 {
+            recentSearchesList.remove(at: 0)
         }
     }
     
     // 검색어 지우기
     func clearSearches() {
-        recentSearcheslist.removeAll()
+        recentSearchesList.removeAll()
     }
     
     // 유저디폴트
     func saveSearches() {
-        let searches = recentSearcheslist.map { $0.RecentSearch }
+        let searches = recentSearchesList.map { $0.recentSearch }
         UserDefaults.standard.set(searches, forKey: "recentSearches")
     }
     
     // 유저디폴트
     func loadSearches() {
         if let savedSearches = UserDefaults.standard.array(forKey: "recentSearches") as? [String] {
-            self.recentSearcheslist = savedSearches.map { RecentSearches(RecentSearch: $0 )}
+            self.recentSearchesList = savedSearches.map { RecentSearches(recentSearch: $0 )}
         }
     }
 }

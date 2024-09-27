@@ -7,13 +7,13 @@ struct WriteView: View {
     @Environment(\.dismiss) private var dismiss
     
     init() {
-        _clickedTags = State(initialValue: Array(repeating: false, count: WriteViewModel().request.tags.count))
+        _clickedTags = State(initialValue: Array(repeating: false, count: WriteViewModel().tags.count))
     }
     
     var body: some View {
         VStack {
             VStack {
-                TextField("제목을 입력하세요", text: $writeVM.request.title)
+                TextField("제목을 입력하세요", text: $writeVM.title)
                     .font(.medium(16))
                     .padding(.leading, 11)
                     .frame(height: 60)
@@ -28,12 +28,12 @@ struct WriteView: View {
             
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(0..<writeVM.request.tags.count, id: \.self) { tags in
+                    ForEach(0..<writeVM.tags.count, id: \.self) { tags in
                         Button {
                             clickedTags[tags].toggle()
-                            writeVM.Tagselection.append(writeVM.request.tags[tags])
+                            writeVM.Tagselection.append(writeVM.tags[tags])
                         } label: {
-                            Text(writeVM.request.tags[tags].getName())
+                            Text(writeVM.tags[tags].getName())
                                 .frame(width: 44, height: 29)
                                 .cornerRadius(8)
                                 .font(.regular(14))
@@ -96,7 +96,7 @@ struct WriteView: View {
                                         }
                                     }
                                     .padding()
-                                    .padding(.trailing,4)
+                                    .padding(.trailing, 4)
                                 }
                                 Spacer()
                             }
@@ -108,20 +108,20 @@ struct WriteView: View {
             HStack {
                 Text("우리학교만 공개")
                     .font(.regular(14))
-                ZStack(alignment: writeVM.request.isReleased ? .leading : .trailing) {
+                ZStack(alignment: writeVM.isReleased ? .leading : .trailing) {
                     Rectangle()
                         .frame(width: 34, height: 14)
-                        .foregroundStyle(writeVM.request.isReleased ? Color.gray.opacity(0.2) : Color.purple.opacity(0.5))
+                        .foregroundStyle(writeVM.isReleased ? Color.gray.opacity(0.2) : Color.purple.opacity(0.5))
                         .clipShape(RoundedRectangle(cornerRadius: 7))
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.25)) {
-                                writeVM.request.isReleased.toggle()
+                                writeVM.isReleased.toggle()
                             }
                         }
                     
                     Circle()
                         .frame(width: 20, height: 20)
-                        .foregroundStyle(writeVM.request.isReleased ? .white : Color.togglecolor)
+                        .foregroundStyle(writeVM.isReleased ? .white : Color.togglecolor)
                         .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 1)
                 }
                 Spacer()
@@ -131,11 +131,11 @@ struct WriteView: View {
             
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton {
-                print(writeVM.request.content)
+                print(writeVM.content)
             }
         }
     }
-    //TODO: 이미지 넣는 함수
+    //MARK: 이미지 넣는 함수
     func insertImage(_ image: UIImage) {
         let mutableAttributedText = NSMutableAttributedString(attributedString: writeVM.contentItem.text)
         
@@ -162,7 +162,7 @@ struct WriteView: View {
         
         writeVM.contentItem.text = mutableAttributedText
         
-        writeVM.request.content.append(writeVM.contentItem)
+        writeVM.content.append(writeVM.contentItem)
         
         // 새로운 contentItem으로 초기화 (새로운 이미지나 텍스트 입력을 위해)
 //        writeVM.contentItem = ContentItem(selectedItem: nil, text: NSMutableAttributedString())

@@ -16,7 +16,7 @@ struct SearchView: View {
                     Image(icon: .search)
                         .resizable()
                         .frame(width: 22,height: 22)
-                        .padding(.leading,12)
+                        .padding(.leading, 12)
                     TextField("검색어를 입력하세요", text: $searchVM.searchItem) {
                         searchVM.addSearchItem()
                         searchVM.saveSearches()
@@ -41,15 +41,15 @@ struct SearchView: View {
                             .font(.regular(12))
                             .foregroundStyle(.recently)
                     }
-                    .padding(.trailing,30)
+                    .padding(.trailing, 30)
                     
                 }
-                .padding(.leading,40)
+                .padding(.leading, 40)
                 ScrollView(.horizontal) {
                     HStack {
-                        ForEach(searchVM.recentSearcheslist
+                        ForEach(searchVM.recentSearchesList
                                 , id: \.self) { recentitem in
-                            Text(recentitem.RecentSearch)
+                            Text(recentitem.recentSearch)
                                 .font(.regular(14))
                                 .frame(width: 102,height: 29)
                                 .overlay {
@@ -67,10 +67,9 @@ struct SearchView: View {
                             .foregroundStyle(.recently)
                         Spacer()
                     }
-                    .padding(.leading,40)
+                    .padding(.leading, 40)
                     ScrollView {
                         ForEach(0..<5) { recommend in
-                            UploadComponentView()
                         }
                     }
                     .refreshable {
@@ -78,7 +77,7 @@ struct SearchView: View {
                     }
                 }
             }
-            .padding(.bottom,63)
+            .padding(.bottom, 63)
         }
         .onAppear {
             searchVM.loadSearches()

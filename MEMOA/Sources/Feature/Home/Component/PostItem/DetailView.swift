@@ -8,31 +8,35 @@
 import SwiftUI
 
 struct DetailView: View {
-    @State private var clickbookmark = false
-    @State private var showingalert = false
+    @State private var showingAlert = false
+    @State private var toProfile = false
     @Environment(\.dismiss) private var dismiss
+    var board: BoardModel
+    
     var body: some View {
         VStack {
             HStack {
-                NavigationLink(destination: ProfileView()) {
-                    Image(icon: .mediumprofile)
-                }
+                Button(action: {
+                    toProfile.toggle()
+                }, label: {
+                    Image(icon: .smallprofile)
+                })
                     .padding(.leading, 4)
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("김은찬")
+                        Text(board.nickname)
                             .foregroundStyle(.black)
                             .font(.medium(16))
                         Circle()
                             .frame(width: 5,height: 4)
                             .tint(Color.init(uiColor: .systemGray3))
-                        Text("2024년 8월 13일")
+                        Text(board.time)
                             .font(.medium(14))
                             .foregroundColor(.timecolor)
                     }
                     .padding(.vertical, 1)
                     
-                    Text("국어, 과학 필기 공유합니다!")
+                    Text(board.title)
                         .foregroundColor(.timecolor)
                         .font(.light(16))
                 }
@@ -52,10 +56,10 @@ struct DetailView: View {
                     HStack {
                         Text("기권의 특징 : 기권, 복사평형 이였습ㅣㄴ다")
                             .font(.light(14))
-                            .padding(.leading,14)
+                            .padding(.leading, 14)
                         Spacer()
                     }
-                    .padding(.bottom,30)
+                    .padding(.bottom, 30)
                     VStack {
                         HStack {
                             ForEach(0..<5) {_ in
@@ -67,27 +71,27 @@ struct DetailView: View {
                         }
                         HStack {
                             Button {
-                                showingalert.toggle()
+                                showingAlert = true
                             } label: {
                                 Image(.chat)
                                     .foregroundStyle(.timecolor)
                             }
-                            .alert(isPresented: $showingalert, content: {
+                            .alert(isPresented: $showingAlert, content: {
                                 Alert(title: Text("곧 추가될 예정입니다.."))
                             })
                             BookmarkButton()
                             Spacer()
                         }
                     }
-                    .padding(.leading,14)
+                    .padding(.leading, 14)
                 }
             }
             .padding()
             Spacer()
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
+        .navigationDestination(isPresented: $toProfile) {
+            ProfileView(board: BoardModel(nickname: board.nickname, time: board.time, image: [Imagelist(image: "example")], title: board.title, tag: board.tag, email: board.email))
+        }
     }
-}
-#Preview {
-    DetailView()
 }

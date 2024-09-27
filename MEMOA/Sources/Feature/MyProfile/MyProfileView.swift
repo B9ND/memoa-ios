@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct MyProfileView: View {
-    // TODO: 프로필 뷰
+    //MARK: 프로필 뷰
     @StateObject var MyprofilMV: MyProfileViewModel = .init()
     @State private var modify = false
     @State private var follow = false
-    @State private var changename = false
+    @State private var changeName = false
     
     var body: some View {
         NavigationView {
@@ -30,7 +30,7 @@ struct MyProfileView: View {
                                             .padding(.top, -44)
                                             .overlay {
                                                 Image(icon: .bigprofile)
-                                                    .padding(.top,-44)
+                                                    .padding(.top, -44)
                                                 //                                                AsyncImage(url: url?) { image in
                                                 //                                                    서버에서 이미지 받아올때 이미지
                                                 //                                                } placeholder: {
@@ -40,21 +40,21 @@ struct MyProfileView: View {
                                             }
                                     }
                                     HStack {
-                                        Text(MyprofilMV.request.name)
+                                        Text(MyprofilMV.name)
                                             .font(.medium(16))
                                         Button {
-                                            changename.toggle()
+                                            changeName = true
                                         } label: {
                                             Image(icon: .pencil)
                                         }
                                     }
-                                    .padding(.bottom,4)
+                                    .padding(.bottom, 4)
                                     
-                                    .padding(.leading,20)
-                                    Text(MyprofilMV.request.email)
+                                    .padding(.leading, 20)
+                                    Text(MyprofilMV.email)
                                         .foregroundStyle(.black)
                                         .font(.regular(12))
-                                        .padding(.bottom,14)
+                                        .padding(.bottom, 14)
                                     
                                     
                                     Button {
@@ -74,7 +74,7 @@ struct MyProfileView: View {
                                 }
                             }
                     }
-                    .navigationDestination(isPresented: $changename) {
+                    .navigationDestination(isPresented: $changeName) {
                         ChangeNameView()
                     }
                     .navigationDestination(isPresented: $modify) {
@@ -88,7 +88,7 @@ struct MyProfileView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    modify.toggle()
+                    modify = true
                 } label: {
                     Image(icon: .setting)
                 }

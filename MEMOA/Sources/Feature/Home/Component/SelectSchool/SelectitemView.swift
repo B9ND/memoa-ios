@@ -1,18 +1,18 @@
 import SwiftUI
 
 struct SelectitemView: View {
-    @StateObject var HomeVM = HomeViewModel()
+    @StateObject var selectVM = SelectSchoolViewModel()
     var body: some View {
         HStack {
             // 학교 선택 Menu
             Menu {
-                ForEach(HomeVM.request.school, id: \.school) { schoolItem in
+                ForEach(selectVM.school, id: \.school) { schoolItem in
                     Button(action: {
-                        HomeVM.selectedSchool = schoolItem.school
+                        selectVM.selectedSchool = schoolItem.school
                     }) {
                         HStack {
                             Text(schoolItem.school)
-                                .foregroundColor(HomeVM.selectedSchool == schoolItem.school ? .white : .black)
+                                .foregroundColor(selectVM.selectedSchool == schoolItem.school ? .white : .black)
                                 .padding()
                                 .cornerRadius(5)
                         }
@@ -20,7 +20,7 @@ struct SelectitemView: View {
                 }
             } label: {
                 HStack {
-                    Text(HomeVM.selectedSchool)
+                    Text(selectVM.selectedSchool)
                         .font(.regular(14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 4)
@@ -36,13 +36,13 @@ struct SelectitemView: View {
             
             // 학년 선택 Menu
             Menu {
-                ForEach(HomeVM.request.grade, id: \.grade) { gradeItem in
+                ForEach(selectVM.grade, id: \.grade) { gradeItem in
                     Button(action: {
-                        HomeVM.selectedGrade = gradeItem.grade
+                        selectVM.selectedGrade = gradeItem.grade
                     }) {
                         HStack {
                             Text("\(gradeItem.grade)학년")
-                                .foregroundColor(HomeVM.selectedGrade == gradeItem.grade ? .white : .black)
+                                .foregroundColor(selectVM.selectedGrade == gradeItem.grade ? .white : .black)
                                 .padding()
                                 .cornerRadius(5)
                         }
@@ -50,7 +50,7 @@ struct SelectitemView: View {
                 }
             } label: {
                 HStack {
-                    Text("\(HomeVM.selectedGrade)학년")
+                    Text("\(selectVM.selectedGrade)학년")
                         .font(.regular(14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 2)

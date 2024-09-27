@@ -1,8 +1,8 @@
 import SwiftUI
 
-// TODO: 프로필에 나타나는 리스트
+//MARK: 프로필에 나타나는 리스트
 struct MyUploadList: View {
-    @StateObject var MyprofilMV: MyProfileViewModel = .init()
+    @StateObject var myprofilMV: MyProfileViewModel = .init()
     @State private var isRefreshing = false
     @State private var error = false
     
@@ -14,12 +14,11 @@ struct MyUploadList: View {
             }
             
             VStack(alignment: .leading) {
-                    ForEach(0..<MyprofilMV.request.image.count, id: \.self) {
-                        index in
+                ForEach(0..<myprofilMV.image.count, id: \.self) { index in
                     if index % 3 == 0 {
                         HStack {
-                            ForEach(index..<min(index + 3, MyprofilMV.request.image.count), id: \.self) { innerIndex in
-                                AsyncImage(url: URL(string: MyprofilMV.request.image[innerIndex].imageurl)) { phase in
+                            ForEach(index..<min(index + 3, myprofilMV.image.count), id: \.self) { innerIndex in
+                                AsyncImage(url: URL(string: myprofilMV.image[innerIndex].imageurl)) { phase in
                                     if let image = phase.image {
                                         image
                                             .resizable()
@@ -38,20 +37,7 @@ struct MyUploadList: View {
             .padding()
         }
     }
-    //        .refreshable {
-    //            await refreshData()
-    //        }
-    //새로고침 기능
-    
-    //    func refreshData() async {
-    //        isRefreshing = true
-    //        try? await Task.sleep(nanoseconds: 2 * 2_000_000_000)
-    //        profilMV.shuffleImages()
-    //        isRefreshing = false
-    //    }
-    // 새로고침 함수
 }
-
 #Preview {
     MyUploadList()
 }

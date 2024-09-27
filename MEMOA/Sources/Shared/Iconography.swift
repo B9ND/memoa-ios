@@ -4,7 +4,7 @@
 //
 //  Created by dgsw30 on 9/23/24.
 //
-// TODO: 추가해야함
+
 import Foundation
 import SwiftUI
 
@@ -20,7 +20,7 @@ enum Iconography: String {
     // home
     case bookmark = "bm"
     case chating = "chat"
-    case clickbookmark = "clickbm"
+    case clickbookmark = "Clickbm"
     // 프로필
     case mediumprofile = "DetailProfilimage"
     case smallprofile = "homeprofil"

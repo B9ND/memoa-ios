@@ -1,5 +1,9 @@
 import Foundation
 
+struct SelectSchoolModel {
+    var school: [schoolitem]
+    var grade: [gradeitem]
+}
 
 struct schoolitem: Encodable {
     var school: String
@@ -15,17 +19,4 @@ struct gradeitem: Encodable {
     init(grade: Int) {
         self.grade = grade
     }
-}
-
-struct HomeModel {
-    var school: [schoolitem]
-    var grade: [gradeitem]
-}
-
-
-
-// upload 이미지
-struct Imagecard: Identifiable, Hashable {
-    var id: UUID = .init()
-    var image: String
 }

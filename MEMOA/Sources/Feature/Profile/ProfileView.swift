@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct ProfileView: View {
-    // TODO: 프로필 뷰
+    // MARK: 프로필 뷰
     @StateObject var MyprofilMV: ProfileViewModel = .init()
-    @State private var modify = false
     @State private var follow = false
-    @State private var changename = false
+    var board: BoardModel
     
     var body: some View {
         NavigationView {
@@ -30,19 +29,19 @@ struct ProfileView: View {
                                             .padding(.top, -44)
                                             .overlay {
                                                 Image(icon: .bigprofile)
-                                                    .padding(.top,-44)
+                                                    .padding(.top, -44)
                                             }
                                     }
                                     HStack {
-                                        Text(MyprofilMV.request.name)
+                                        Text(board.nickname)
                                             .font(.medium(16))
                                     }
-                                    .padding(.bottom,4)
-                                    .padding(.leading,2)
-                                    Text(MyprofilMV.request.email)
+                                    .padding(.bottom, 4)
+                                    .padding(.leading, 2)
+                                    Text(board.email)
                                         .foregroundStyle(.black)
                                         .font(.regular(12))
-                                        .padding(.bottom,14)
+                                        .padding(.bottom, 14)
                                     
                                     
                                     Button {
@@ -70,10 +69,5 @@ struct ProfileView: View {
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }
-
-#Preview {
-    ProfileView()
-}
-
 
 

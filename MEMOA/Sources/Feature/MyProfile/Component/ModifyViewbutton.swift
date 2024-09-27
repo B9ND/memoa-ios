@@ -36,7 +36,7 @@ struct ModifyViewbutton: View {
                     radius: 0.5, x: 0.5, y: 1
                 )
             }
-            .padding(.vertical,5)
+            .padding(.vertical, 5)
         }
     }
 }
