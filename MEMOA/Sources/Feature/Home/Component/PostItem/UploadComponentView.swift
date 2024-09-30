@@ -87,10 +87,10 @@ struct UploadComponentView: View {
             }
         }
         .navigationDestination(isPresented: $toDetail) {
-            DetailView(board: BoardModel(nickname: board.nickname, time: board.time, image: [Imagelist(image: "example")], title: board.title, tag: board.tag, email: board.email))
+            DetailView(board: board)
         }
         .navigationDestination(isPresented: $toProfile) {
-            ProfileView(board: BoardModel(nickname: board.nickname, time: board.time, image: [Imagelist(image: "example")], title: board.title, tag: board.tag, email: board.email))
+            ProfileView(board: board)
         }
     }
 }

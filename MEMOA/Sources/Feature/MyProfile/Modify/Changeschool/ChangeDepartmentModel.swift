@@ -1,10 +1,10 @@
 import Foundation
 
 struct ChangeDepartmentModel {
-    var selectschangechool = [ShowsChoolList]()
+    var selectschangechool: [ShowsChoolList]
 }
 
-struct ShowsChoolList: Identifiable, Hashable {
+struct ShowsChoolList: Identifiable {
     var id: UUID
     var schoolName : String
     

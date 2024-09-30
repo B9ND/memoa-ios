@@ -62,8 +62,8 @@ struct DetailView: View {
                     .padding(.bottom, 30)
                     VStack {
                         HStack {
-                            ForEach(0..<5) {_ in
-                                Text("#국어")
+                            ForEach(board.tag.split(separator: ","), id: \.self) { tag in
+                                Text("#\(tag)")
                                     .font(.regular(12))
                                     .foregroundStyle(Color.timecolor)
                             }
@@ -91,7 +91,8 @@ struct DetailView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
         .navigationDestination(isPresented: $toProfile) {
-            ProfileView(board: BoardModel(nickname: board.nickname, time: board.time, image: [Imagelist(image: "example")], title: board.title, tag: board.tag, email: board.email))
+            ProfileView(board: board)
         }
+        //프로필은 다른 보드로 하면 좋을듯?
     }
 }

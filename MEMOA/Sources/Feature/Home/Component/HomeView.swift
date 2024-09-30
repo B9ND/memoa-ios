@@ -2,19 +2,20 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        VStack {
-            SelectitemView()
-            Divider()
-            ScrollView {
-                LazyVStack {
-                    UploadComponentView(board: BoardModel(nickname: "유을", time: "시발몇시야", image: [Imagelist(image: "example")], title: "tlqkf", tag: "tlqkf", email: "eunchan2815@gmail.com")) {
-                        print("hello")
+        NavigationStack {
+            VStack {
+                SelectitemView()
+                Divider()
+                ScrollView {
+                    LazyVStack {
+                        UploadComponentView(board: BoardModel(nickname: "유을", time: "2024-09-29", image: [Imagelist(image: "example")], title: "과학수학필기 공유합니다", tag: "공부하기싫다", email: "eunchan2815@gmail.com")) {
+                            print("정보주기")
+                        }
                     }
+                    Spacer()
                 }
-                Spacer()
-            }
-            .refreshable {
-                
+                .refreshable {
+                }
             }
         }
     }
