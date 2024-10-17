@@ -2,12 +2,12 @@ import SwiftUI
 
 struct SelectSchoolView: View {
     @StateObject var SchoolMV: SchoolModelView = .init()
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.dismiss) var presentation
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Image(.search)
+                Image(.searchbutton)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 22)
@@ -21,7 +21,7 @@ struct SelectSchoolView: View {
             .shadow(radius: 2, y: 1)
             .padding(.top, 38)
             .padding(.bottom, 18)
-            ForEach(SchoolMV.request.selectschool, id: \.self) { school in
+            ForEach(SchoolMV.request.selectSchool, id: \.self) { school in
                 Button(action: {
                 }, label: {
                     HStack {

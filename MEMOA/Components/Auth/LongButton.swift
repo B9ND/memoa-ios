@@ -4,16 +4,7 @@ struct LongButton: View {
     let text: String
     let color: Color
     let action: () -> Void
-//    init(
-//        _ text: String,
-//        color: Color = .buttoncolor,
-//        action: @escaping () -> Void
-//    ) {
-//        self.text = text
-//        self.color = color
-//        self.action = action
-//    }
-//    
+  
     var body: some View {
         Button {
             action()
@@ -32,14 +23,3 @@ struct LongButton: View {
 
     }
 }
-
-//#Preview {
-//    VStack(spacing: 30) {
-//        LongButton(text: "회원가입", color: .white) {
-//            print("회원가입")
-//        }
-//        LongButton(text: "회원가입 후 기다리기", color: .buttoncolor) {
-//            print("회원가입 후 기다리기")
-//        }
-//    }
-//}

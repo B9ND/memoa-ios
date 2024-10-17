@@ -8,21 +8,9 @@ struct GetpasswordView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
-                               startPoint: .top, endPoint: .bottom)
-                .overlay (
-                    Image(icon: .cloud)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 1075)
-                        .offset(y:300)
-                )
+                AuthBackground()
                 VStack {
-                    Text("회원가입")
-                        .foregroundColor(.white)
-                        .font(.bold(30))
-                        .padding(.top, 130)
-                        .padding(.bottom, 46)
+                    AuthText(text: "회원가입")
                     HStack {
                         Image(icon: .textfiledimage)
                             .padding(.leading, 11)
@@ -36,7 +24,7 @@ struct GetpasswordView: View {
                         Button(action: {
                             SignupMV.isSecure.toggle()})
                         {
-                            Image(icon: SignupMV.isSecure ? .openeyes : .closeeyes)
+                            Image(icon: SignupMV.isSecure ? .closeeye : .openeye)
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 11)
@@ -45,13 +33,9 @@ struct GetpasswordView: View {
                     .background(.white)
                     .cornerRadius(8)
                     Spacer()
-                    Image(icon: .termsofuse)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 274)
-                        .padding(.bottom, 5)
+                    TermsOfUseButton()
                     LongButton(text: "다음", color: .buttoncolor) {
-                        GetNicnameViewboolean.toggle()
+                        GetNicnameViewboolean = true
                     }
                     .padding(.bottom, 60)
                 }

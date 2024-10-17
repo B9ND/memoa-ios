@@ -8,47 +8,45 @@ struct GetEmailView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
-                               startPoint: .top, endPoint: .bottom)
-                .overlay (
-                    Image(icon: .cloud)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 1075)
-                        .offset(y:300)
-                )
+                AuthBackground()
                 VStack {
-                    Text("회원가입")
-                        .foregroundColor(.white)
-                        .font(.bold(30))
-                        .padding(.top, 130)
-                        .padding(.bottom, 46)
+                    AuthText(text: "회원가입")
                     HStack {
                         Image(icon: .textfiledimage)
                             .padding(.leading, 11)
                         TextField("이메일을 입력하세요", text: $SignupMV.email)
                             .tint(.maincolor)
                             .foregroundColor(.black)
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                            Text("인증")
-                                .foregroundStyle(.maincolor)
+                        
+                        // 인증 -> 300초
+                        if SignupMV.isTimerRunning {
+                            Text("\(SignupMV.remainingTime)초")
+                                .foregroundStyle(.gray) // 남은 시간을 표시하는 텍스트
                                 .font(.medium(16))
                                 .padding(.horizontal, 11)
-                        })
+                        } else {
+                            Button(action: {
+                                SignupMV.sendEmailToServer()
+                                SignupMV.startCountdown() // 타이머 함수 호출
+                            }, label: {
+                                Text("인증")
+                                    .foregroundStyle(.maincolor)
+                                    .font(.medium(16))
+                                    .padding(.horizontal, 11)
+                            })
+                        }
                     }
                     .frame(width: 304, height: 46)
                     .background(.white)
                     .cornerRadius(8)
                     .padding(.bottom, 2)
+                    
                     CustomTextField(text: $SignupMV.code, placeholder: "인증번호 6자리를 입력하세요")
+                    
                     Spacer()
-                    Image("TermsOfUse")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 274)
-                        .padding(.bottom, 5)
+                    TermsOfUseButton()
                     LongButton(text: "다음", color: .buttoncolor) {
-                        GetpasswordViewboolean.toggle()
+                        GetpasswordViewboolean = true
                     }
                     .padding(.bottom, 60)
                 }

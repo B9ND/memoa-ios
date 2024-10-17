@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		175A9D352CA41F10001BF9B7 /* AuthBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175A9D342CA41F10001BF9B7 /* AuthBackground.swift */; };
+		175A9D372CA4244C001BF9B7 /* AuthText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175A9D362CA4244C001BF9B7 /* AuthText.swift */; };
+		175A9D392CA4E75F001BF9B7 /* GradeSelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175A9D382CA4E75F001BF9B7 /* GradeSelectButton.swift */; };
+		1797F0442CBD347C00C181A9 /* RefreshAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1797F0432CBD347C00C181A9 /* RefreshAccessToken.swift */; };
+		1797F0462CBD349100C181A9 /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1797F0452CBD349000C181A9 /* TokenResponse.swift */; };
+		1797F04D2CBFF38100C181A9 /* ServerUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1797F04C2CBFF38100C181A9 /* ServerUrl.swift */; };
 		17A438D32C9DAB0F00B071CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17A438D22C9DAB0F00B071CA /* Assets.xcassets */; };
 		17A4393B2C9DAB1E00B071CA /* MEMOAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438D42C9DAB1E00B071CA /* MEMOAApp.swift */; };
 		17A4393C2C9DAB1E00B071CA /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A438D62C9DAB1E00B071CA /* BackButton.swift */; };
@@ -64,19 +70,26 @@
 		17A439752C9DAB1E00B071CA /* GetSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439242C9DAB1E00B071CA /* GetSchoolView.swift */; };
 		17A439762C9DAB1E00B071CA /* SelectSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439252C9DAB1E00B071CA /* SelectSchoolView.swift */; };
 		17A439772C9DAB1E00B071CA /* SchoolModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439272C9DAB1E00B071CA /* SchoolModel.swift */; };
-		17A439782C9DAB1E00B071CA /* SchoolModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439282C9DAB1E00B071CA /* SchoolModelView.swift */; };
+		17A439782C9DAB1E00B071CA /* SchoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439282C9DAB1E00B071CA /* SchoolViewModel.swift */; };
 		17A439792C9DAB1E00B071CA /* SignupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439292C9DAB1E00B071CA /* SignupModel.swift */; };
-		17A4397A2C9DAB1E00B071CA /* SignupModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392A2C9DAB1E00B071CA /* SignupModelView.swift */; };
+		17A4397A2C9DAB1E00B071CA /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392A2C9DAB1E00B071CA /* SignupViewModel.swift */; };
 		17A4397B2C9DAB1E00B071CA /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392C2C9DAB1E00B071CA /* FirstView.swift */; };
 		17A4397C2C9DAB1E00B071CA /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392D2C9DAB1E00B071CA /* LoginModel.swift */; };
-		17A4397D2C9DAB1E00B071CA /* LoginModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392E2C9DAB1E00B071CA /* LoginModelView.swift */; };
+		17A4397D2C9DAB1E00B071CA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392E2C9DAB1E00B071CA /* LoginViewModel.swift */; };
 		17A4397E2C9DAB1E00B071CA /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392F2C9DAB1E00B071CA /* LoginView.swift */; };
-		6550D6122CA002030032A908 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6550D6112CA002030032A908 /* Alamofire */; };
+		17DFC14E2CB903E3008D1B65 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 17DFC14D2CB903E3008D1B65 /* Alamofire */; };
+		17DFC1502CB903E3008D1B65 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 17DFC14F2CB903E3008D1B65 /* AlamofireDynamic */; };
 		6550D61B2CA06F080032A908 /* Iconography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550D61A2CA06F080032A908 /* Iconography.swift */; };
 		6550D6202CA0766F0032A908 /* FontExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6550D61F2CA0766F0032A908 /* FontExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		175A9D342CA41F10001BF9B7 /* AuthBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBackground.swift; sourceTree = "<group>"; };
+		175A9D362CA4244C001BF9B7 /* AuthText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthText.swift; sourceTree = "<group>"; };
+		175A9D382CA4E75F001BF9B7 /* GradeSelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeSelectButton.swift; sourceTree = "<group>"; };
+		1797F0432CBD347C00C181A9 /* RefreshAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshAccessToken.swift; sourceTree = "<group>"; };
+		1797F0452CBD349000C181A9 /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
+		1797F04C2CBFF38100C181A9 /* ServerUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerUrl.swift; sourceTree = "<group>"; };
 		17A438AB2C9DA9F000B071CA /* MEMOA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEMOA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17A438D22C9DAB0F00B071CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17A438D42C9DAB1E00B071CA /* MEMOAApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEMOAApp.swift; sourceTree = "<group>"; };
@@ -135,12 +148,12 @@
 		17A439242C9DAB1E00B071CA /* GetSchoolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetSchoolView.swift; sourceTree = "<group>"; };
 		17A439252C9DAB1E00B071CA /* SelectSchoolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSchoolView.swift; sourceTree = "<group>"; };
 		17A439272C9DAB1E00B071CA /* SchoolModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolModel.swift; sourceTree = "<group>"; };
-		17A439282C9DAB1E00B071CA /* SchoolModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolModelView.swift; sourceTree = "<group>"; };
+		17A439282C9DAB1E00B071CA /* SchoolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolViewModel.swift; sourceTree = "<group>"; };
 		17A439292C9DAB1E00B071CA /* SignupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupModel.swift; sourceTree = "<group>"; };
-		17A4392A2C9DAB1E00B071CA /* SignupModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupModelView.swift; sourceTree = "<group>"; };
+		17A4392A2C9DAB1E00B071CA /* SignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		17A4392C2C9DAB1E00B071CA /* FirstView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		17A4392D2C9DAB1E00B071CA /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
-		17A4392E2C9DAB1E00B071CA /* LoginModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModelView.swift; sourceTree = "<group>"; };
+		17A4392E2C9DAB1E00B071CA /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		17A4392F2C9DAB1E00B071CA /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6550D61A2CA06F080032A908 /* Iconography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iconography.swift; sourceTree = "<group>"; };
 		6550D61F2CA0766F0032A908 /* FontExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExt.swift; sourceTree = "<group>"; };
@@ -151,18 +164,49 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6550D6122CA002030032A908 /* Alamofire in Frameworks */,
+				17DFC14E2CB903E3008D1B65 /* Alamofire in Frameworks */,
+				17DFC1502CB903E3008D1B65 /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		175A9D302CA41E54001BF9B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		175A9D332CA41E9F001BF9B7 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				17A4391E2C9DAB1E00B071CA /* CustomTextField.swift */,
+				17A4391D2C9DAB1E00B071CA /* TermsOfUseButton.swift */,
+				17A4391F2C9DAB1E00B071CA /* LongButton.swift */,
+				175A9D342CA41F10001BF9B7 /* AuthBackground.swift */,
+				175A9D362CA4244C001BF9B7 /* AuthText.swift */,
+				175A9D382CA4E75F001BF9B7 /* GradeSelectButton.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		1797F0422CBD343400C181A9 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				1797F0432CBD347C00C181A9 /* RefreshAccessToken.swift */,
+				1797F0452CBD349000C181A9 /* TokenResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		17A438A22C9DA9F000B071CA = {
 			isa = PBXGroup;
 			children = (
 				17A438AD2C9DA9F000B071CA /* MEMOA */,
 				17A438AC2C9DA9F000B071CA /* Products */,
+				175A9D302CA41E54001BF9B7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -387,16 +431,14 @@
 		17A439202C9DAB1E00B071CA /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				175A9D332CA41E9F001BF9B7 /* Auth */,
 				17A438D72C9DAB1E00B071CA /* CompleteButton.swift */,
 				17A438D62C9DAB1E00B071CA /* BackButton.swift */,
-				17A4391D2C9DAB1E00B071CA /* TermsOfUseButton.swift */,
-				17A4391E2C9DAB1E00B071CA /* CustomTextField.swift */,
-				17A4391F2C9DAB1E00B071CA /* LongButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		17A439262C9DAB1E00B071CA /* GetInformationView */ = {
+		17A439262C9DAB1E00B071CA /* GetInformation */ = {
 			isa = PBXGroup;
 			children = (
 				17A439212C9DAB1E00B071CA /* GetEmailView.swift */,
@@ -405,17 +447,18 @@
 				17A439242C9DAB1E00B071CA /* GetSchoolView.swift */,
 				17A439252C9DAB1E00B071CA /* SelectSchoolView.swift */,
 			);
-			path = GetInformationView;
+			path = GetInformation;
 			sourceTree = "<group>";
 		};
 		17A4392B2C9DAB1E00B071CA /* Signup */ = {
 			isa = PBXGroup;
 			children = (
-				17A439262C9DAB1E00B071CA /* GetInformationView */,
+				17A439262C9DAB1E00B071CA /* GetInformation */,
 				17A439272C9DAB1E00B071CA /* SchoolModel.swift */,
-				17A439282C9DAB1E00B071CA /* SchoolModelView.swift */,
+				17A439282C9DAB1E00B071CA /* SchoolViewModel.swift */,
 				17A439292C9DAB1E00B071CA /* SignupModel.swift */,
-				17A4392A2C9DAB1E00B071CA /* SignupModelView.swift */,
+				17A4392A2C9DAB1E00B071CA /* SignupViewModel.swift */,
+				1797F04C2CBFF38100C181A9 /* ServerUrl.swift */,
 			);
 			path = Signup;
 			sourceTree = "<group>";
@@ -424,7 +467,7 @@
 			isa = PBXGroup;
 			children = (
 				17A4392D2C9DAB1E00B071CA /* LoginModel.swift */,
-				17A4392E2C9DAB1E00B071CA /* LoginModelView.swift */,
+				17A4392E2C9DAB1E00B071CA /* LoginViewModel.swift */,
 				17A4392F2C9DAB1E00B071CA /* LoginView.swift */,
 			);
 			path = Login;
@@ -433,6 +476,7 @@
 		6550D6192CA048940032A908 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				1797F0422CBD343400C181A9 /* Response */,
 				17A4392B2C9DAB1E00B071CA /* Signup */,
 				17A439302C9DAB1E00B071CA /* Login */,
 			);
@@ -456,7 +500,8 @@
 			);
 			name = MEMOA;
 			packageProductDependencies = (
-				6550D6112CA002030032A908 /* Alamofire */,
+				17DFC14D2CB903E3008D1B65 /* Alamofire */,
+				17DFC14F2CB903E3008D1B65 /* AlamofireDynamic */,
 			);
 			productName = MEMOA;
 			productReference = 17A438AB2C9DA9F000B071CA /* MEMOA.app */;
@@ -488,7 +533,7 @@
 			);
 			mainGroup = 17A438A22C9DA9F000B071CA;
 			packageReferences = (
-				6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */,
+				17DFC14C2CB903E3008D1B65 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 17A438AC2C9DA9F000B071CA /* Products */;
 			projectDirPath = "";
@@ -528,7 +573,7 @@
 				17A4397C2C9DAB1E00B071CA /* LoginModel.swift in Sources */,
 				17A439792C9DAB1E00B071CA /* SignupModel.swift in Sources */,
 				17A4395F2C9DAB1E00B071CA /* ViewExt.swift in Sources */,
-				17A4397D2C9DAB1E00B071CA /* LoginModelView.swift in Sources */,
+				17A4397D2C9DAB1E00B071CA /* LoginViewModel.swift in Sources */,
 				17A4394B2C9DAB1E00B071CA /* ModifyViewbutton.swift in Sources */,
 				17A439432C9DAB1E00B071CA /* UploadComponentView.swift in Sources */,
 				17A439402C9DAB1E00B071CA /* BookmarkView.swift in Sources */,
@@ -536,19 +581,21 @@
 				17A439452C9DAB1E00B071CA /* HomeModel.swift in Sources */,
 				17A4394F2C9DAB1E00B071CA /* MyProfileViewModel.swift in Sources */,
 				17A439702C9DAB1E00B071CA /* CustomTextField.swift in Sources */,
+				175A9D372CA4244C001BF9B7 /* AuthText.swift in Sources */,
 				17A439592C9DAB1E00B071CA /* TabViewdesign.swift in Sources */,
 				17A439422C9DAB1E00B071CA /* SelectitemView.swift in Sources */,
 				17A439762C9DAB1E00B071CA /* SelectSchoolView.swift in Sources */,
 				17A439752C9DAB1E00B071CA /* GetSchoolView.swift in Sources */,
 				17A439512C9DAB1E00B071CA /* ProfileView.swift in Sources */,
+				175A9D352CA41F10001BF9B7 /* AuthBackground.swift in Sources */,
 				17A4396F2C9DAB1E00B071CA /* TermsOfUseButton.swift in Sources */,
-				17A4397A2C9DAB1E00B071CA /* SignupModelView.swift in Sources */,
+				17A4397A2C9DAB1E00B071CA /* SignupViewModel.swift in Sources */,
 				17A439602C9DAB1E00B071CA /* RoundedCornerShape.swift in Sources */,
 				17A439442C9DAB1E00B071CA /* DetailView.swift in Sources */,
 				17A4393C2C9DAB1E00B071CA /* BackButton.swift in Sources */,
 				17A4393E2C9DAB1E00B071CA /* BookmarkButton.swift in Sources */,
 				17A439732C9DAB1E00B071CA /* GetNicnameView.swift in Sources */,
-				17A439782C9DAB1E00B071CA /* SchoolModelView.swift in Sources */,
+				17A439782C9DAB1E00B071CA /* SchoolViewModel.swift in Sources */,
 				17A439722C9DAB1E00B071CA /* GetEmailView.swift in Sources */,
 				17A439492C9DAB1E00B071CA /* ChangingDepartmentView.swift in Sources */,
 				17A4393B2C9DAB1E00B071CA /* MEMOAApp.swift in Sources */,
@@ -557,15 +604,19 @@
 				17A439482C9DAB1E00B071CA /* ChangeNameView.swift in Sources */,
 				17A4394C2C9DAB1E00B071CA /* MyUploadList.swift in Sources */,
 				17A4395E2C9DAB1E00B071CA /* WriteViewModel.swift in Sources */,
+				175A9D392CA4E75F001BF9B7 /* GradeSelectButton.swift in Sources */,
 				17A4394D2C9DAB1E00B071CA /* MyProfileModel.swift in Sources */,
 				17A4395C2C9DAB1E00B071CA /* WriteModel.swift in Sources */,
 				17A4397B2C9DAB1E00B071CA /* FirstView.swift in Sources */,
 				17A439742C9DAB1E00B071CA /* GetpasswordView.swift in Sources */,
+				1797F0462CBD349100C181A9 /* TokenResponse.swift in Sources */,
 				17A439522C9DAB1E00B071CA /* ProfileViewModel.swift in Sources */,
 				17A4395B2C9DAB1E00B071CA /* UIViewRepresentable.swift in Sources */,
 				17A439502C9DAB1E00B071CA /* ProfileModel.swift in Sources */,
 				17A439552C9DAB1E00B071CA /* SearchView.swift in Sources */,
 				17A4393D2C9DAB1E00B071CA /* CompleteButton.swift in Sources */,
+				1797F04D2CBFF38100C181A9 /* ServerUrl.swift in Sources */,
+				1797F0442CBD347C00C181A9 /* RefreshAccessToken.swift in Sources */,
 				17A439712C9DAB1E00B071CA /* LongButton.swift in Sources */,
 				17A439772C9DAB1E00B071CA /* SchoolModel.swift in Sources */,
 				17A439532C9DAB1E00B071CA /* UploadList.swift in Sources */,
@@ -794,9 +845,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */ = {
+		17DFC14C2CB903E3008D1B65 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/alamofire/alamofire";
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.9.1;
@@ -805,10 +856,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6550D6112CA002030032A908 /* Alamofire */ = {
+		17DFC14D2CB903E3008D1B65 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */;
+			package = 17DFC14C2CB903E3008D1B65 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		17DFC14F2CB903E3008D1B65 /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17DFC14C2CB903E3008D1B65 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

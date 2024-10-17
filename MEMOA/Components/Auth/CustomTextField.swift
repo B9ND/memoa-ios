@@ -15,5 +15,6 @@ struct CustomTextField: View {
         .frame(width: 304, height: 46)
         .background(.white)
         .cornerRadius(8)
+        
     }
 }

@@ -2,10 +2,10 @@ import SwiftUI
 
 struct SchoolModel {
     var school : String = ""
-    var selectschool = [schoollist]()
+    var selectSchool = [schooLlist]()
 }
 
-struct schoollist: Identifiable, Hashable {
+struct schooLlist: Identifiable, Hashable {
     var id: UUID
     var schoolname: String
     
