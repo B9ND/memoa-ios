@@ -1,6 +1,7 @@
 import SwiftUI
 import UIKit
 
+//MARK: 커스텀 textfield
 struct TextView: UIViewRepresentable {
     @Binding var text: NSMutableAttributedString
     
@@ -36,13 +37,3 @@ struct TextView: UIViewRepresentable {
         uiView.attributedText = text
     }
 }
-
-extension NSAttributedString {
-    static func withImage(_ image: UIImage, bounds: CGRect) -> NSAttributedString {
-        let attachment = NSTextAttachment()
-        attachment.image = image
-        attachment.bounds = bounds
-        return NSAttributedString(attachment: attachment)
-    }
-}
-

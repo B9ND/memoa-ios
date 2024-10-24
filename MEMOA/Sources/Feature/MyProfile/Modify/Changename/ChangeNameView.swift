@@ -23,9 +23,9 @@ struct ChangeNameView: View {
         .padding()
         Spacer()
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
-        CompleteButton {
-            print("완료")
-        }
+        CompleteButton(action: {
+            print("이름변경")
+        }, bool: changeName.isEmpty)
     }
 }
 

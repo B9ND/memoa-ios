@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//MARK: 검색뷰
 struct SearchView: View {
     @StateObject var searchVM = SearchViewModel()
     var body: some View {

@@ -1,5 +1,6 @@
 import SwiftUI
 
+//MARK: 최근검색어
 class SearchViewModel: ObservableObject {
     @Published var searchItem: String = ""
     @Published var recentSearchesList: [RecentSearches]

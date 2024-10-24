@@ -1,5 +1,6 @@
 import SwiftUI
 
+//MARK: 북마크 추가버튼
 struct BookmarkButton: View {
     @StateObject private var addbookmarkVM = BookmarkViewModel()
     @State private var clickbookmark = false
@@ -14,7 +15,7 @@ struct BookmarkButton: View {
             clickbookmark.toggle()
             saveBookmark()
         } label: {
-            Image(icon: clickbookmark ? .clickbookmark : .bookmark)
+            Image(icon: clickbookmark ? .clickbookmark : .bookMark)
                 .resizable()
                 .frame(width: 13, height: 16)
                 .alert(isPresented: $showingalert) {

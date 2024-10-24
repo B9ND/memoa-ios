@@ -30,7 +30,7 @@ struct ModifyView: View {
                                         .frame(width: 100, height: 100)
                                         .padding(.top, -44)
                                         .overlay {
-                                            Image(icon: .bigprofile)
+                                            Image(icon: .bigProfile)
                                                 .padding(.top, -44)
                                         }
                                 }
@@ -58,7 +58,9 @@ struct ModifyView: View {
                                     }, color: .black)
                                     
                                     ModifyViewbutton(text: "개인 정보 이용 약관", action: {
-                                        
+                                        if let url = URL(string: "링크") {
+                                            openURL(url)
+                                        }
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
                                         

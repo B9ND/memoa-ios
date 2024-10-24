@@ -18,9 +18,9 @@ struct BackButton: View {
                 }) {
                     HStack {
                         Image(systemName: systemImageName)
-                            .foregroundColor(fontcolor)
+                            .foregroundStyle(fontcolor)
                         Text(text)
-                            .foregroundColor(fontcolor)
+                            .foregroundStyle(fontcolor)
                             .font(.bold(16))
                     }
                 }

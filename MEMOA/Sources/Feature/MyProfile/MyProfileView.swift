@@ -3,8 +3,9 @@ import SwiftUI
 struct MyProfileView: View {
     //MARK: 프로필 뷰
     @StateObject var MyprofilMV: MyProfileViewModel = .init()
-    @State private var modify = false
+    //MARK: 이거 mvvm 하면 하기
     @State private var follow = false
+    @State private var modify = false
     @State private var changeName = false
     
     var body: some View {
@@ -28,14 +29,8 @@ struct MyProfileView: View {
                                         .frame(width: 100, height: 100)
                                         .padding(.top, -44)
                                         .overlay {
-                                            Image(icon: .bigprofile)
+                                            Image(icon: .bigProfile)
                                                 .padding(.top, -44)
-                                            //                                                AsyncImage(url: url?) { image in
-                                            //                                                    서버에서 이미지 받아올때 이미지
-                                            //                                                } placeholder: {
-                                            //                                                    progressview()
-                                            //                                                }
-                                            
                                         }
                                 }
                                 HStack {
@@ -56,20 +51,25 @@ struct MyProfileView: View {
                                     .padding(.bottom, 14)
                                 
                                 
-                                Button {
-                                    print("MY")
-                                } label: {
-                                    Text("MY")
-                                        .font(.medium(14))
-                                        .foregroundStyle(.black)
-                                        .frame(width: 186, height: 30)
-                                        .overlay {
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .stroke(Color.graycolor, lineWidth: 1)
-                                        }
+                                HStack {
+                                    VStack {
+                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로워")
+                                            .padding(.horizontal, 16)
+                                    }
+                                    VStack {
+                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로잉")
+                                            .padding(.horizontal, 16)
+                                    }
                                 }
-                                Spacer()
-                                MyUploadList()
+                                .padding(.bottom, 15)
+                                
+                                Divider()
+                                ScrollView {
+                                    Spacer()
+//                                    UploadComponentView(board: BoardModel(nickname: "유을", time: "2024-09-29", image: [Imagelist(image: "example")], title: "과학수학필기 공유합니다", tag: "공부하기싫다", email: "eunchan2815@gmail.com")) {
+//                                        print("정보주기")
+//                                    }
+                                }
                             }
                         }
                 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//MARK: 학교변경
 
 struct ChangingDepartmentView: View {
     @StateObject var changeVM = ChangeDepartmentViewModel()
@@ -46,9 +47,10 @@ struct ChangingDepartmentView: View {
         }
         Spacer()
         BackButton(text: "소속변경", systemImageName: "chevron.left", fontcolor: .black)
-        CompleteButton {
-            print("완료")
-        }
+        CompleteButton(action: {
+            print("소속변경")
+        }, bool: changeVM.findSchool.isEmpty)
+        //이거 수정
     }
 }
 

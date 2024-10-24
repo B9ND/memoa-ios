@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: 북마크뷰
 struct Bookmark {
     let title: String
     let content: String

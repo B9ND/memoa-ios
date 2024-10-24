@@ -5,13 +5,13 @@
 //  Created by dgsw30 on 9/5/24.
 //
 
+//MARK: 설정 이용약관등 이동 버튼
 import SwiftUI
 
 struct ModifyViewbutton: View {
     let text: String
     let action: () -> Void
     let color: Color
-    
     
     var body: some View {
         Button {

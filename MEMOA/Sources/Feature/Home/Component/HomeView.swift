@@ -1,26 +1,49 @@
 import SwiftUI
 
+// MARK: 홈뷰
 struct HomeView: View {
+    @StateObject var getPostVM = GetPostViewModel()
+
     var body: some View {
         NavigationStack {
             VStack {
                 SelectitemView()
                 Divider()
                 ScrollView {
-                    LazyVStack {
-                        UploadComponentView(board: BoardModel(nickname: "유을", time: "2024-09-29", image: [Imagelist(image: "example")], title: "과학수학필기 공유합니다", tag: "공부하기싫다", email: "eunchan2815@gmail.com")) {
-                            print("정보주기")
+                    ForEach(getPostVM.posts, id: \.id) { post in
+                        LazyVStack {
+                            UploadComponentView(post: post) {
+                                print("성공")
+                            }
+                        }
+                        if getPostVM.isLoading {
+                            ProgressView()
+                        } else {
+                            GeometryReader { geometry in
+                                Color.clear
+                                    .onAppear {
+                                        if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
+                                            if getPostVM.canLoadMore {
+                                                getPostVM.post()
+                                            }
+                                        }
+                                    }
+                            }
+                            .frame(height: 50)
                         }
                     }
                     Spacer()
                 }
+                .onAppear {
+                    getPostVM.post()
+                }
                 .refreshable {
+                    getPostVM.page = 0
+                    getPostVM.posts.removeAll()
+                    getPostVM.canLoadMore = true
+                    getPostVM.post()
                 }
             }
         }
     }
-}
-
-#Preview {
-    HomeView()
 }
