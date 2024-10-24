@@ -7,7 +7,7 @@ struct TabViewdesign: View {
                 .fill(.white)
                 .frame(width: 100, height: 120)
                 .shadow(radius: 1)
-                .padding(.bottom,25)
+                .padding(.bottom, 25)
             
             RoundedRectangle(cornerRadius: 20)
                 .fill(.white)
@@ -17,7 +17,7 @@ struct TabViewdesign: View {
             RoundedRectangle(cornerRadius: 100)
                 .fill(.white)
                 .frame(width: 120, height: 90)
-                .padding(.bottom,15)
+                .padding(.bottom, 15)
         }
     }
 }

@@ -1,11 +1,8 @@
 import SwiftUI
 
 struct ProfileView: View {
-    // TODO: 프로필 뷰
-    @StateObject var MyprofilMV: ProfileViewModel = .init()
-    @State private var modify = false
-    @State private var follow = false
-    @State private var changename = false
+    // MARK: 프로필 뷰
+    var board: BoardModel
     
     var body: some View {
         NavigationView {
@@ -29,36 +26,40 @@ struct ProfileView: View {
                                             .frame(width: 100, height: 100)
                                             .padding(.top, -44)
                                             .overlay {
-                                                Image(icon: .bigprofile)
-                                                    .padding(.top,-44)
+                                                Image(icon: .bigProfile)
+                                                    .padding(.top, -44)
                                             }
                                     }
                                     HStack {
-                                        Text(MyprofilMV.request.name)
+                                        Text(board.nickname)
                                             .font(.medium(16))
                                     }
-                                    .padding(.bottom,4)
-                                    .padding(.leading,2)
-                                    Text(MyprofilMV.request.email)
+                                    .padding(.bottom, 4)
+                                    .padding(.leading, 2)
+                                    Text(board.email)
                                         .foregroundStyle(.black)
                                         .font(.regular(12))
-                                        .padding(.bottom,14)
+                                        .padding(.bottom, 14)
                                     
-                                    
-                                    Button {
-                                        follow.toggle()
-                                    } label: {
-                                        Text(follow ? "팔로우 취소" : "팔로우")
-                                            .font(.medium(14))
-                                            .frame(width: 186, height: 30)
-                                            .background(follow ?  Color.white : Color.maincolor)
-                                            .cornerRadius(8)
-                                            .foregroundStyle(follow ? Color.black : Color.white)
-                                            .shadow(radius: 1)
-                                        
+                                    HStack {
+                                        VStack {
+                                            Myfollower(board: followModel(nickname: board.nickname, number: "123"), text: "팔로워")
+                                                .padding(.horizontal, 16)
+                                        }
+                                        VStack {
+                                            Myfollowing(board: followModel(nickname: board.nickname, number: "144"), text: "팔로잉")
+                                                .padding(.horizontal, 16)
+                                        }
                                     }
+                                    .padding(.bottom , 5)
+                                    VStack {
+                                        FollowButton {
+                                            print("클릭")
+                                        }
+                                    }
+                                    .padding(.bottom ,10)
                                     Spacer()
-                                    MyUploadList()
+                                    
                                 }
                             }
                     }
@@ -70,10 +71,3 @@ struct ProfileView: View {
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }
-
-#Preview {
-    ProfileView()
-}
-
-
-

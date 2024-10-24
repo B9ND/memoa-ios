@@ -1,14 +1,14 @@
 import Foundation
 
 struct SearchModel {
-    var RecentSearch: [RecentSearches]
-    var searchitem: String = ""
+    var recentSearch: [RecentSearches]
+    var searchItem: String = ""
 }
 
 struct RecentSearches: Hashable {
-    var RecentSearch: String
+    var recentSearch: String
     
-    init(RecentSearch: String) {
-        self.RecentSearch = RecentSearch
+    init(recentSearch: String) {
+        self.recentSearch = recentSearch
     }
 }

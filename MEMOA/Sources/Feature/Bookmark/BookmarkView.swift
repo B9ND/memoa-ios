@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+//MARK: 북마크뷰
+struct Bookmark {
+    let title: String
+    let content: String
+}
+
 struct BookmarkView: View {
     @StateObject private var showingbookmarkVM = BookmarkViewModel()
     var body: some View {
@@ -17,8 +23,9 @@ struct BookmarkView: View {
             } else {
                 ForEach(showingbookmarkVM.bookmarks) {
                     bookmark in
-                    bookmark.bookmarkview
+                    bookmark.bookmarkview   
                 }
+                //뷰를 보여주고 그에대한 데이터 이거 하지말고
             }
         }
     }

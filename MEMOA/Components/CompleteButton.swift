@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CompleteButton: View {
     let action: () -> Void
+    let bool: Bool
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         HStack {
@@ -23,10 +24,11 @@ struct CompleteButton: View {
                     HStack {
                         Text("완료")
                         .font(.bold(16))
-                        .foregroundColor(.maincolor)
+                        .foregroundStyle(bool ? Color.graycolor : .maincolor)
                         .padding(.trailing, 14)
                     }
                 }
+                .disabled(bool)
             }
         }
     }

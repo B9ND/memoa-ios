@@ -4,7 +4,7 @@
 //
 //  Created by dgsw30 on 9/23/24.
 //
-// TODO: 추가해야함
+
 import Foundation
 import SwiftUI
 
@@ -18,13 +18,15 @@ enum Iconography: String {
     case termsofuse = "termofuse"
     case textfiledimage = "TextfieldBook"
     // home
-    case bookmark = "bm"
+    case bookMark = "bm"
     case chating = "chat"
-    case clickbookmark = "clickbm"
+    case clickbookmark = "Clickbm"
     // 프로필
-    case mediumprofile = "DetailProfilimage"
+    case mediumProfile = "DetailProfilimage"
     case smallprofile = "homeprofil"
-    case bigprofile = "Profilimage"
+    case bigProfile = "Profilimage"
+    case largeprofile = "55sizeProfile"
+    
     // 학교선택
     case pickshcool = "PickerItem"
     //설정
@@ -33,7 +35,9 @@ enum Iconography: String {
     // 검색
     case search = "searchbutton"
     // 글쓰기
-    case selectimage = "selectimage"
+    case selectImage = "selectimage"
+    
+    case uploadChat = "chatpost"
     
 }
 
@@ -45,6 +49,6 @@ extension Image {
 
 struct MyView: View {
     var body: some View {
-        Image(icon: .bookmark)
+        Image(icon: .bookMark)
     }
 }
