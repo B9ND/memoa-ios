@@ -1,11 +1,17 @@
+//
+//  GetDetailPost.swift
+//  MEMOA
+//
+//  Created by dgsw30 on 10/24/24.
+//
+
 import Foundation
 
-//MARK: 게시글(홈화면)
-struct GetPostModel: Codable {
+//MARK: 게시글(detail)
+struct GetDetailPost: Codable {
     let id: Int
     let title: String
-//    let content: String
-    //MARK: home에서 content필요없을듯?
+    let content: String
     let author: String
     let tags: [String]
     let createdAt: String

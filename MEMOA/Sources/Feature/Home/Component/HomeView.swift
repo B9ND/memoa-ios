@@ -1,9 +1,11 @@
 import SwiftUI
+import UIKit
 
 // MARK: 홈뷰
 struct HomeView: View {
     @StateObject var getPostVM = GetPostViewModel()
-
+    @State private var toDetail = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -13,36 +15,44 @@ struct HomeView: View {
                     ForEach(getPostVM.posts, id: \.id) { post in
                         LazyVStack {
                             UploadComponentView(post: post) {
-                                print("성공")
+                                getPostVM.id = post.id
+                                getPostVM.getDetailPost()
+                                toDetail = true
                             }
-                        }
-                        if getPostVM.isLoading {
-                            ProgressView()
-                        } else {
-                            GeometryReader { geometry in
-                                Color.clear
-                                    .onAppear {
-                                        if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
-                                            if getPostVM.canLoadMore {
-                                                getPostVM.post()
+                            if getPostVM.isLoading {
+                                ProgressView()
+                            } else {
+                                GeometryReader { geometry in
+                                    Color.clear
+                                        .onAppear {
+                                            if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
+                                                if getPostVM.canLoadMore {
+                                                    getPostVM.page += 1
+                                                    getPostVM.post()
+                                                }
                                             }
                                         }
-                                    }
+                                }
+                                .frame(height: 50)
                             }
-                            .frame(height: 50)
                         }
                     }
                     Spacer()
                 }
-                .onAppear {
+                .onAppear {                    
                     getPostVM.post()
                 }
                 .refreshable {
                     getPostVM.page = 0
-                    getPostVM.posts.removeAll()
                     getPostVM.canLoadMore = true
+                    getPostVM.posts.removeAll()
                     getPostVM.post()
                 }
+            }
+        }
+        .navigationDestination(isPresented: $toDetail) {
+            if let detailPost = getPostVM.detailPosts.first {
+                DetailView(getPost: detailPost)
             }
         }
     }

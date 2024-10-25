@@ -13,20 +13,8 @@ class WriteViewModel: ObservableObject {
     @Published var showAlert = false
     let serverUrl = ServerUrl.shared
     
-    // MARK: 포스트 목록
-//    @Published var posts: [GetPostModel] = []
-    
-//    // MARK: GET
-//    @Published var id: Int = 300
-//    @Published var author: String = ""
-//    @Published var getContent: String = ""
-//    @Published var getTitle: String = ""
-//    @Published var getTags: [String] = []
-//    @Published var createdAt = ""
-//    @Published var getImages: [String] = []
-//    var getImageUrl: [URL] {
-//        getImages.compactMap { URL(string: $0) }
-//    }
+    let tokenUrl = TokenUrl.shared
+    //MARK: 임시방편
     
     var disabled: Bool {
         return title.isEmpty || content.text.string.isEmpty || tags.isEmpty
@@ -35,7 +23,7 @@ class WriteViewModel: ObservableObject {
     func post() {
         let url = serverUrl.getUrl(for: "/post")
         
-        let token = "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia2ltZXVuY2hhbjI4MTVAZ21haWwuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImRldmljZSI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMjguMC4wLjAgU2FmYXJpLzUzNy4zNl8yMjEuMTY4LjIyLjIwNSIsImlhdCI6MTcyOTczMzYwOSwiZXhwIjoxNzI5NzM0MjA5fQ.uRjR4k5g-d6l4MVU8LfqyPPQG2WR4TLlLXy9eQg_4D0"
+        let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
@@ -62,40 +50,6 @@ class WriteViewModel: ObservableObject {
                 }
             }
     }
-    
-    //MARK: 아이디로 받아옴
-    //get postitem
-//    func getPost() {
-//        let url = serverUrl.getUrl(for: "/post/\(id)")
-//
-//        
-//        let token = "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoibGVlZ2VoMTIxM0BnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiZGV2aWNlIjoiTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTVfNykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEyOC4wLjAuMCBTYWZhcmkvNTM3LjM2XzIyMS4xNjguMjIuMjA1IiwiaWF0IjoxNzI5NTk5MTY0LCJleHAiOjE3Mjk1OTk3NjR9.fOs9qzcA4RI15XwK04mUUBKoPY-zMXSCDv7O8TweDJ0"
-//        
-//        let headers: HTTPHeaders = [
-//            "Authorization": "Bearer \(token)",
-//        ]
-//        
-//        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers)
-//            .responseDecodable(of: GetPostModel.self) { reponse in
-//                switch reponse.result {
-//                case .success(let response):
-//                    let newPost = GetPostModel(
-//                        id: response.id,
-//                        title: response.title,
-//                        content: response.content,
-//                        author: response.author,
-//                        tags: response.tags,
-//                        createdAt: response.createdAt,
-//                        images: response.images
-//                    )
-//                    self.id = response.id
-//                    self.posts.append(newPost)
-//                    print(response)
-//                case .failure(let error):
-//                    print(error)
-//                }
-//            }
-//    }
 }
 
 

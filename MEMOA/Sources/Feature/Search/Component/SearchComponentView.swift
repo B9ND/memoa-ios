@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct UploadComponentView: View {
+struct SearchComponentView: View {
     @State private var toDetail = false
     @State private var showingAlert = false
     @State private var toProfile = false
-    var post: GetPostModel
+    var post: SearchModel
     var action: () -> Void
     
     var body: some View {
@@ -83,3 +83,4 @@ struct UploadComponentView: View {
         }
     }
 }
+

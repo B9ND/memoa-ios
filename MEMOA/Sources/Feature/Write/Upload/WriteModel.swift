@@ -2,11 +2,11 @@ import SwiftUI
 import PhotosUI
 
 struct WriteModel {
-    var title: String
-    var content: [ContentItem]
-    var tags: [String]
-    var images: [ImageItem]
-    var isReleased: Bool
+    let title: String
+    let content: [ContentItem]
+    let tags: [String]
+    let images: [ImageItem]
+    let isReleased: Bool
 }
 
 struct ContentItem {

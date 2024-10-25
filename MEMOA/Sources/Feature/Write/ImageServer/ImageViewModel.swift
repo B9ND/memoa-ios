@@ -7,6 +7,8 @@ class ImageViewModel: ObservableObject {
     @Published var image: UIImage?
     @Published var imageUrl: String?
     let serverUrl = ServerUrl.shared
+    let tokenUrl = TokenUrl.shared
+    //MARK: 임시방편
     
     func getImageUrl(completion: @escaping(String?) -> Void) {
         let url = serverUrl.getUrl(for: "/image/upload")
@@ -22,7 +24,7 @@ class ImageViewModel: ObservableObject {
         }
         
         
-        let token = "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia2ltZXVuY2hhbjI4MTVAZ21haWwuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImRldmljZSI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMjguMC4wLjAgU2FmYXJpLzUzNy4zNl8yMjEuMTY4LjIyLjIwNSIsImlhdCI6MTcyOTczMzYwOSwiZXhwIjoxNzI5NzM0MjA5fQ.uRjR4k5g-d6l4MVU8LfqyPPQG2WR4TLlLXy9eQg_4D0"
+        let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)"

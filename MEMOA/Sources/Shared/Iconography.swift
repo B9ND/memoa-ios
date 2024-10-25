@@ -34,6 +34,7 @@ enum Iconography: String {
     case pencil = "Pencil"
     // 검색
     case search = "searchbutton"
+    case loading = "loading"
     // 글쓰기
     case selectImage = "selectimage"
     
