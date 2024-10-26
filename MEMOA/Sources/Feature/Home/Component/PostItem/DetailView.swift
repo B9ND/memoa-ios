@@ -54,11 +54,12 @@ struct DetailView: View {
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .frame(width: 220, height: 240)
                                         .cornerRadius(8, corners: .topLeft)
                                         .cornerRadius(8, corners: .bottomLeft)
                                         .cornerRadius(8, corners: .topRight)
                                         .cornerRadius(8, corners: .bottomRight)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 220,height: 240)
                                         .padding(.leading, 10)
                                 }
                             }
@@ -88,7 +89,5 @@ struct DetailView: View {
             Spacer()
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
-
-        //프로필은 다른 보드로 하면 좋을듯?
     }
 }

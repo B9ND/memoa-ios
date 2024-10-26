@@ -47,11 +47,12 @@ struct SearchComponentView: View {
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .frame(width: 220, height: 240)
                                         .cornerRadius(8, corners: .topLeft)
                                         .cornerRadius(8, corners: .bottomLeft)
                                         .cornerRadius(8, corners: .topRight)
                                         .cornerRadius(8, corners: .bottomRight)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 220,height: 240)
                                         .padding(.leading, 10)
                                 }
                             }

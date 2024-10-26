@@ -28,7 +28,7 @@ struct HomeView: View {
                                             if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
                                                 if getPostVM.canLoadMore {
                                                     getPostVM.page += 1
-                                                    getPostVM.post()
+                                                    getPostVM.loadPost()
                                                 }
                                             }
                                         }
@@ -40,13 +40,13 @@ struct HomeView: View {
                     Spacer()
                 }
                 .onAppear {                    
-                    getPostVM.post()
+                    getPostVM.loadPost()
                 }
                 .refreshable {
                     getPostVM.page = 0
                     getPostVM.canLoadMore = true
                     getPostVM.posts.removeAll()
-                    getPostVM.post()
+                    getPostVM.loadPost()
                 }
             }
         }

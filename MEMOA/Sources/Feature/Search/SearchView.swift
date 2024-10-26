@@ -13,6 +13,7 @@ struct SearchView: View {
                     searchVM.getPost()
                     searchVM.addSearchItem()
                     searchVM.saveSearches()
+                    searchVM.posts.removeAll()
                 } label: {
                     Image(icon: .search)
                         .resizable()
@@ -65,7 +66,7 @@ struct SearchView: View {
                 }
             }
             HStack {
-                if searchVM.noLoading {
+                if searchVM.noPost {
                     Text("태그를 재입력해주세요!")
                         .font(.regular(14))
                         .foregroundStyle(.recently)

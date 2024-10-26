@@ -10,9 +10,23 @@ class SearchViewModel: ObservableObject {
     //검색 목록
     @Published var posts: [SearchModel] = []
     @Published var id = 0
-    var noLoading = false
+    
+    var page = 0
+    
+    //MARK: 검색어 목록없음
+    var noPost = false
+    
+    //MARK: 게시글 로딩
+    var isLoading = false
+    
+    //MARK: 더이상 로드할 게시물 x
+    var canLoadMore = false
+    
+    
+    //MARK: 서버url
     let serverUrl = ServerUrl.shared
     
+    //MARK: 임시
     let tokenUrl = TokenUrl.shared
     
     init() {
@@ -22,8 +36,8 @@ class SearchViewModel: ObservableObject {
     func addSearchItem() {
         let newSearch = RecentSearches(recentSearch: searchItem)
         
-        if !newSearch.recentSearch.isEmpty{
-            recentSearchesList.append(newSearch)
+        if !newSearch.recentSearch.isEmpty {
+            recentSearchesList.insert(newSearch, at: 0)
             searchItem = ""
         }
         if recentSearchesList.count > 6 {
@@ -36,13 +50,13 @@ class SearchViewModel: ObservableObject {
         recentSearchesList.removeAll()
     }
     
-    // 유저디폴트
+    // 유저디폴트로 저장
     func saveSearches() {
         let searches = recentSearchesList.map { $0.recentSearch }
         UserDefaults.standard.set(searches, forKey: "recentSearches")
     }
     
-    // 유저디폴트
+    // 유저디폴트로 저장
     func loadSearches() {
         if let savedSearches = UserDefaults.standard.array(forKey: "recentSearches") as? [String] {
             self.recentSearchesList = savedSearches.map { RecentSearches(recentSearch: $0 )}
@@ -64,7 +78,7 @@ class SearchViewModel: ObservableObject {
             "tags": [
                 searchItem
             ],
-            "page": 1,
+            "page": page,
             "size": 10
         ]
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers)
@@ -73,12 +87,17 @@ class SearchViewModel: ObservableObject {
                 switch response.result {
                 case .success(let data):
                     if data.isEmpty {
-                        self.noLoading = true
+                        self.noPost = true
+                        self.canLoadMore = true
                     } else {
-                        self.posts = data
+                        self.noPost = false
+                        self.posts.append(contentsOf: data)
+                        self.page += 1
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    self.canLoadMore = false
+                    self.isLoading = true
                 }
             }
     }

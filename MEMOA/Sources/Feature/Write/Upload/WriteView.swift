@@ -142,11 +142,11 @@ struct WriteView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton(action: {
                 writeVM.post()
-                getPostVM.post()
+                getPostVM.loadPost()
             }, bool: writeVM.disabled)
             .alert(isPresented: $writeVM.showAlert) {
                 Alert(title: Text("업로드 성공"), message: Text("게시글이 성공적으로 업로드되었어요!"), dismissButton: .default(Text("확인")){
-                    getPostVM.post()
+                    getPostVM.loadPost()
                     dismiss()
                 })
             }

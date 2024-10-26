@@ -18,7 +18,7 @@ class GetPostViewModel: ObservableObject {
     @Published var detailPosts: [GetDetailPost] = []
     
     //MARK: 게시글 불러오기
-    func post() {
+    func loadPost() {
         guard !isLoading, canLoadMore else { return }
         isLoading = true
         let url = serverUrl.getUrl(for: "/post")
@@ -57,7 +57,7 @@ class GetPostViewModel: ObservableObject {
             }
     }
     
-    //MARK: 아이디로 받아옴
+    //MARK: 아이디로 받아옴 게시물 자세히 보기
     func getDetailPost() {
         let url = serverUrl.getUrl(for: "/post/\(id)")
         

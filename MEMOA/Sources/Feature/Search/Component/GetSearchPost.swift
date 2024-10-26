@@ -1,10 +1,3 @@
-//
-//  GetSearchPost.swift
-//  MEMOA
-//
-//  Created by dgsw30 on 10/25/24.
-//
-
 import SwiftUI
 
 struct GetSearchPost: View {
@@ -15,18 +8,36 @@ struct GetSearchPost: View {
     var body: some View {
         VStack(alignment: .leading) {
             ScrollView {
-                if searchVM.noLoading {
-                        Image(icon: .loading)
-                            .resizable()
-                            .frame(width: 136, height: 136)
-                            .padding(.vertical, 4)
-                        Text("검색결과가 없어요!")
+                if searchVM.noPost {
+                    Image(icon: .loading)
+                        .resizable()
+                        .frame(width: 136, height: 136)
+                        .padding(.vertical, 4)
+                    Text("검색결과가 없어요!")
                 } else {
-                    ForEach(searchVM.posts, id: \.id) { post in
-                        SearchComponentView(post: post) {
-                            getPostVM.id = post.id
-                            getPostVM.getDetailPost()
-                            toDetail = true
+                    LazyVStack {
+                        ForEach(searchVM.posts, id: \.id) { post in
+                            SearchComponentView(post: post) {
+                                getPostVM.id = post.id
+                                getPostVM.getDetailPost()
+                                toDetail = true
+                            }
+                            if searchVM.isLoading {
+                                ProgressView()
+                            } else {
+                                GeometryReader { geometry in
+                                    Color.clear
+                                        .onAppear {
+                                            if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
+                                                if searchVM.canLoadMore {
+                                                    searchVM.page += 1
+                                                    searchVM.getPost()
+                                                }
+                                            }
+                                        }
+                                }
+                                .frame(height: 50)
+                            }
                         }
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity)
@@ -34,6 +45,7 @@ struct GetSearchPost: View {
                 }
             }
             .refreshable {
+                searchVM.page = 0
                 searchVM.getPost()
             }
         }
