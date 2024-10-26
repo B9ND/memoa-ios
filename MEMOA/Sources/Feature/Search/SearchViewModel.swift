@@ -20,8 +20,7 @@ class SearchViewModel: ObservableObject {
     var isLoading = false
     
     //MARK: 더이상 로드할 게시물 x
-    var canLoadMore = false
-    
+    var canLoadMore = true
     
     //MARK: 서버url
     let serverUrl = ServerUrl.shared
@@ -38,7 +37,6 @@ class SearchViewModel: ObservableObject {
         
         if !newSearch.recentSearch.isEmpty {
             recentSearchesList.insert(newSearch, at: 0)
-            searchItem = ""
         }
         if recentSearchesList.count > 6 {
             recentSearchesList.remove(at: 0)
@@ -88,7 +86,7 @@ class SearchViewModel: ObservableObject {
                 case .success(let data):
                     if data.isEmpty {
                         self.noPost = true
-                        self.canLoadMore = true
+                        self.canLoadMore = false
                     } else {
                         self.noPost = false
                         self.posts.append(contentsOf: data)
@@ -96,9 +94,8 @@ class SearchViewModel: ObservableObject {
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    self.canLoadMore = false
-                    self.isLoading = true
                 }
+                self.isLoading = false
             }
     }
 }

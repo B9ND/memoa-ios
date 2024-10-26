@@ -10,10 +10,11 @@ struct SearchView: View {
         VStack {
             HStack {
                 Button {
+                    searchVM.posts.removeAll()
+                    searchVM.page = 0
                     searchVM.getPost()
                     searchVM.addSearchItem()
                     searchVM.saveSearches()
-                    searchVM.posts.removeAll()
                 } label: {
                     Image(icon: .search)
                         .resizable()
