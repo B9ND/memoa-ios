@@ -12,6 +12,7 @@ struct SearchView: View {
                 Button {
                     searchVM.posts.removeAll()
                     searchVM.page = 0
+                    searchVM.canLoadMore = true
                     searchVM.getPost()
                     searchVM.addSearchItem()
                     searchVM.saveSearches()

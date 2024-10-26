@@ -60,16 +60,26 @@ class SearchViewModel: ObservableObject {
             self.recentSearchesList = savedSearches.map { RecentSearches(recentSearch: $0 )}
         }
     }
-    
     func getPost() {
-        let url = serverUrl.getUrl(for: "/post")
+        //MARK: 새로운 검색어로 검색할 때 초기화
+        if searchItem.isEmpty {
+            self.noPost = true
+            self.canLoadMore = false
+            return
+        }
         
+        //MARK: 페이지를 0으로 초기화
+        if page == 0 {
+            self.posts.removeAll()
+            self.canLoadMore = true
+        }
+        
+        let url = serverUrl.getUrl(for: "/post")
         let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
         ]
-        
         
         let parameters: [String: Any] = [
             "search": "",
@@ -79,6 +89,8 @@ class SearchViewModel: ObservableObject {
             "page": page,
             "size": 10
         ]
+        
+        isLoading = true
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers)
             .validate(statusCode: 200..<300)
             .responseDecodable(of: [SearchModel].self) { response in
@@ -98,4 +110,6 @@ class SearchViewModel: ObservableObject {
                 self.isLoading = false
             }
     }
+    
 }
+
