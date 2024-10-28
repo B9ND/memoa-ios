@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct MEMOAApp: App {
+    @AppStorage("access")
+    private var accessToken: String?
     var body: some Scene {
         WindowGroup {
-            FirstView()
+            if accessToken == nil {
+                FirstView()
+            } else {
+                MainView()
+            }
         }
     }
 }

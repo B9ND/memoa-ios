@@ -87,4 +87,33 @@ class SignupModelView: ObservableObject {
     }
     
     
+    func verifyCode() async -> Bool {
+        guard !email.isEmpty, !code.isEmpty else { return false }
+        
+        let url = serverUrl.getUrl(for: "/auth/verify-code")
+        
+        return await withCheckedContinuation { continuation in
+            AF.request (
+                url,
+                method: .post,
+                parameters: SignupModel(
+                    email: email,
+                    code: code
+                ),
+                encoder: JSONParameterEncoder.default
+            )
+            .validate(statusCode: 200..<300)
+            .response { response in
+                switch response.result {
+                case .success:
+                    print("인증번호 확인 성공")
+                    continuation.resume(returning: true)
+                case .failure(let error):
+                    print("인증번호 확인 실패: \(error.localizedDescription)")
+                    continuation.resume(returning: false)
+                }
+            }
+        }
+    }
+    
 }

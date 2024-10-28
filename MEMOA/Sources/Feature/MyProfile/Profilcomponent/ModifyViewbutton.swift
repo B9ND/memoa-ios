@@ -35,6 +35,12 @@ struct ModifyViewbutton: View {
                     color: Color(.sRGBLinear, white: 0, opacity: 0.1),
                     radius: 0.5, x: 0.5, y: 1
                 )
+//                .shadow(
+//                            color: Color.black.opacity(0.1), // 색상과 투명도 조정
+//                            radius: 2, // 반경을 늘려 부드럽게
+//                            x: 0, // x 위치 조정
+//                            y: 2 // y 위치 조정
+//                        )
             }
             .padding(.vertical,5)
         }

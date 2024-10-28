@@ -61,7 +61,9 @@ struct ModifyView: View {
                                         
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
-                                        
+                                        withAnimation {
+                                            UserDefaults.standard.removeObject(forKey: "access")
+                                        }
                                     }, color: .red)
 
                                     HStack {

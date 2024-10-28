@@ -8,7 +8,6 @@ struct SignupModel: Encodable {
     
     var isSecure: Bool = true
     
-    // 타이머 상태 관리 변수
-    var isTimerRunning = false // 타이머 실행 여부
-    var remainingTime = 0 // 남은 시간 (초 단위)
+    var isTimerRunning = false
+    var remainingTime = 0
 }

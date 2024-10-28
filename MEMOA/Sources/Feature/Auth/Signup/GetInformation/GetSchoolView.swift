@@ -1,16 +1,13 @@
 import SwiftUI
 
 struct GetSchoolView: View {
-    @StateObject var SchoolMV: SchoolModelView = .init()
+    @StateObject var SchoolMV = SchoolModelView ()
     @StateObject var SignupMV: SignupModelView = .init()
     @Environment(\.dismiss) var dismiss
     @State private var ModalViewboolean = false
     @State private var isSignupSuccess = false
-    
-    // 각 학년 버튼의 선택 상태를 관리하는 변수
-    //    @State private var selectedGrade: Int? = nil
     @State private var selectedGrade: Int = 0
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -24,14 +21,9 @@ struct GetSchoolView: View {
                         .padding(.bottom, 15)
                     
                     HStack {
-                        // 1학년 버튼
                         GradeSelectButton(grade: 1, selectedGrade: $selectedGrade)
-                        
-                        // 2학년 버튼
                         GradeSelectButton(grade: 2, selectedGrade: $selectedGrade)
                             .padding(.horizontal, 10)
-                        
-                        // 3학년 버튼
                         GradeSelectButton(grade: 3, selectedGrade: $selectedGrade)
                     }
                     .padding(.bottom, 23)
@@ -44,15 +36,17 @@ struct GetSchoolView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 304)
                     })
+                    
                     Spacer()
+                    
                     TermsOfUseButton()
                     LongButton(text: "회원가입", color: .buttoncolor) {
                         Task {
-                            let result = await SignupMV.signup() // 비동기 호출
+                            let result = await SignupMV.signup()
                             if result {
                                 isSignupSuccess = true
                             } else {
-                                print(SignupMV.signupErrorMessage ?? "회원가입 실패") // 실패 시 에러 메시지 출력
+                                print(SignupMV.signupErrorMessage ?? "회원가입 실패")
                             }
                         }
                     }
@@ -65,10 +59,10 @@ struct GetSchoolView: View {
                     .presentationDetents([.fraction(0.85)])
             }
             .edgesIgnoringSafeArea(.all)
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
-                .fullScreenCover(isPresented: $isSignupSuccess) {
-                    MainView()
-                }
+            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white) // 뒤로가기 버튼
+        }
+        .fullScreenCover(isPresented: $isSignupSuccess) {
+            MainView()
         }
     }
 }

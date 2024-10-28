@@ -17,9 +17,11 @@ struct GetpasswordView: View {
                         if SignupMV.isSecure {
                             SecureField("비밀번호를 입력하세요", text: $SignupMV.password)
                                 .foregroundColor(.black)
+                                .tint(.maincolor)
                         } else {
                             TextField("비밀번호를 입력하세요", text: $SignupMV.password)
                                 .foregroundColor(.black)
+                                .tint(.maincolor)
                                         }
                         Button(action: {
                             SignupMV.isSecure.toggle()})
