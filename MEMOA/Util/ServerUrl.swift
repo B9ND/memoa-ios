@@ -1,7 +1,7 @@
 import Foundation
 
 struct ServerUrl {
-    var baseUrl = "http://13.125.84.202"
+    var baseUrl = secretUrl
     
     func getUrl(for endpoint: String) -> String {
         return baseUrl + endpoint

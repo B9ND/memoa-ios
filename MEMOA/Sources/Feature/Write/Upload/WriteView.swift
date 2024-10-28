@@ -120,6 +120,7 @@ struct WriteView: View {
                                                 if let urlDictionary = try? JSONSerialization.jsonObject(with: Data(imageUrl.utf8), options: []) as? [String: String],
                                                    let actualUrl = urlDictionary["url"] {
                                                     writeVM.images.append(actualUrl)
+                                                    writeVM.content.text.append(NSAttributedString(string: actualUrl))
                                                     insertImage(imageUrl: actualUrl)
                                                 } else {
                                                     showingAlert = true
@@ -143,6 +144,7 @@ struct WriteView: View {
             CompleteButton(action: {
                 writeVM.post()
                 getPostVM.loadPost()
+                print(writeVM.content)
             }, bool: writeVM.disabled)
             .alert(isPresented: $writeVM.showAlert) {
                 Alert(title: Text("업로드 성공"), message: Text("게시글이 성공적으로 업로드되었어요!"), dismissButton: .default(Text("확인")){
