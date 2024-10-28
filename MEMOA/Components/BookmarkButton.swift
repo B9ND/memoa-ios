@@ -2,7 +2,7 @@ import SwiftUI
 
 //MARK: 북마크 추가버튼
 struct BookmarkButton: View {
-    @StateObject private var addbookmarkVM = BookmarkViewModel()
+//    @StateObject private var addbookmarkVM = BookmarkViewModel()
     @State private var clickbookmark = false
     @State private var showingalert = false
     

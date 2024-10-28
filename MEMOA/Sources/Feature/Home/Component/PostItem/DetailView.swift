@@ -17,10 +17,10 @@ struct DetailView: View {
     var body: some View {
         VStack {
             HStack {
-                ProfileButton(action: {
+                ProfileButton(type: .home) {
                     toProfile = true
-                }, image: "homeprofil")
-                    .padding(.leading, 4)
+                }
+                .padding(.leading, 4)
                 VStack(alignment: .leading) {
                     HStack {
                         Text(getPost.author)

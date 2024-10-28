@@ -14,9 +14,9 @@ struct SearchComponentView: View {
         } label: {
             VStack {
                 HStack {
-                    ProfileButton(action: {
+                    ProfileButton(type: .home) {
                         toProfile = true
-                    }, image: "homeprofil")
+                    }
                     .padding(.leading, 24)
                     
                     VStack(alignment: .leading) {
