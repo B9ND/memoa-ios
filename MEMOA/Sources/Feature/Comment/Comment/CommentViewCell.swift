@@ -14,9 +14,9 @@ struct CommentViewCell: View {
     var body: some View {
         VStack {
             HStack {
-                ProfileButton(action: {
+                ProfileButton(type: .detail) {
                     toProfile = true
-                }, image: "DetailProfilimage")
+                }
                 .padding(.leading, 24)
                 
                 VStack(alignment: .leading) {

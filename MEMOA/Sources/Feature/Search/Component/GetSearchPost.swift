@@ -1,34 +1,37 @@
 import SwiftUI
-import UIKit
 
-// MARK: 홈뷰
-struct HomeView: View {
-    @StateObject var getPostVM = GetPostViewModel()
+struct GetSearchPost: View {
+    @ObservedObject var searchVM: SearchViewModel
+    @ObservedObject var getPostVM = GetPostViewModel()
     @State private var toDetail = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                SelectitemView()
-                Divider()
-                ScrollView {
-                    ForEach(getPostVM.posts, id: \.id) { post in
-                        LazyVStack {
-                            UploadComponentView(post: post) {
+        VStack(alignment: .leading) {
+            ScrollView {
+                if searchVM.noPost {
+                    Image(icon: .loading)
+                        .resizable()
+                        .frame(width: 136, height: 136)
+                        .padding(.vertical, 4)
+                    Text("검색결과가 없어요!")
+                } else {
+                    LazyVStack {
+                        ForEach(searchVM.posts, id: \.id) { post in
+                            SearchComponentView(post: post) {
                                 getPostVM.id = post.id
                                 getPostVM.getDetailPost()
                                 toDetail = true
                             }
-                            if getPostVM.isLoading {
+                            if searchVM.isLoading {
                                 ProgressView()
                             } else {
                                 GeometryReader { geometry in
                                     Color.clear
                                         .onAppear {
                                             if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
-                                                if getPostVM.canLoadMore {
-                                                    getPostVM.page += 1
-                                                    getPostVM.loadPost()
+                                                if searchVM.canLoadMore {
+                                                    searchVM.page += 1
+                                                    searchVM.getPost()
                                                 }
                                             }
                                         }
@@ -36,18 +39,14 @@ struct HomeView: View {
                                 .frame(height: 50)
                             }
                         }
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
                     }
-                    Spacer()
                 }
-                .onAppear {                    
-                    getPostVM.loadPost()
-                }
-                .refreshable {
-                    getPostVM.page = 0
-                    getPostVM.canLoadMore = true
-                    getPostVM.posts.removeAll()
-                    getPostVM.loadPost()
-                }
+            }
+            .refreshable {
+                searchVM.page = 0
+                searchVM.getPost()
             }
         }
         .navigationDestination(isPresented: $toDetail) {

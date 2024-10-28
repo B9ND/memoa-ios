@@ -5,7 +5,7 @@ struct TabViewdesign: View {
         ZStack {
             Circle()
                 .fill(.white)
-                .frame(width: 100, height: 120)
+                .frame(width: 97, height: 117)
                 .shadow(radius: 1)
                 .padding(.bottom, 25)
             

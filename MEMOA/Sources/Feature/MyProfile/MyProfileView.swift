@@ -42,10 +42,10 @@ struct MyProfileView: View {
                                         Image(icon: .pencil)
                                     }
                                 }
-                                .padding(.bottom, 4)
-                                
                                 .padding(.leading, 20)
-                                Text(MyprofilMV.email)
+                                
+                                //MARK: description
+                                Text("안녕하세요 저는 박재민")
                                     .foregroundStyle(.black)
                                     .font(.regular(12))
                                     .padding(.bottom, 14)

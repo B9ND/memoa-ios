@@ -8,13 +8,25 @@
 import SwiftUI
 //MARK: 프로필로 이동하는 버튼
 struct ProfileButton: View {
+    enum ProfileType {
+        case home, detail
+        
+        var icon: Iconography {
+            switch self {
+            case .home:
+                    .smallprofile
+            case .detail:
+                    .mediumProfile
+            }
+        }
+    }
+    
+    let type: ProfileType
     let action: () -> Void
-    let image: String
+    
     var body: some View {
-        Button(action: {
-            action()
-        }, label: {
-            Image(image)
-        })
+        Button(action: action) {
+            Image(icon: type.icon)
+        }
     }
 }

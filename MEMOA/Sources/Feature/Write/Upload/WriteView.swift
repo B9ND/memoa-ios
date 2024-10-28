@@ -18,11 +18,12 @@ struct WriteView: View {
     var body: some View {
         VStack {
             VStack {
-                TextField("제목을 입력하세요", text: $writeVM.title)
+                TextField("제목을 입력하세요", text: $writeVM.title, axis: .vertical)
                     .font(.medium(16))
                     .padding(.leading, 11)
                     .frame(height: 50)
                     .tint(.maincolor)
+                    .hideKeyboardOnTap()
             }
             .frame(width: 335, height: 35)
             .overlay(
@@ -66,6 +67,7 @@ struct WriteView: View {
                             .frame(height: 510)
                             .padding(.leading, 13)
                             .tint(.maincolor)
+                            .hideKeyboardOnTap()
                             .overlay {
                                 HStack {
                                     VStack {
@@ -117,8 +119,9 @@ struct WriteView: View {
                                                 }
                                                 if let urlDictionary = try? JSONSerialization.jsonObject(with: Data(imageUrl.utf8), options: []) as? [String: String],
                                                    let actualUrl = urlDictionary["url"] {
-                                                    writeVM.images.append(actualUrl) 
-                                                    insertImage()
+                                                    writeVM.images.append(actualUrl)
+                                                    writeVM.content.text.append(NSAttributedString(string: actualUrl))
+                                                    insertImage(imageUrl: actualUrl)
                                                 } else {
                                                     showingAlert = true
                                                 }
@@ -140,17 +143,18 @@ struct WriteView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton(action: {
                 writeVM.post()
-                getPostVM.post()
+                getPostVM.loadPost()
+                print(writeVM.content)
             }, bool: writeVM.disabled)
             .alert(isPresented: $writeVM.showAlert) {
                 Alert(title: Text("업로드 성공"), message: Text("게시글이 성공적으로 업로드되었어요!"), dismissButton: .default(Text("확인")){
+                    getPostVM.loadPost()
                     dismiss()
                 })
             }
         }
     }
-    
-    func insertImage() {
+    func insertImage(imageUrl: String) {
         guard let image = imageVM.image else {
             print("이미지가 선택되지 않았습니다.")
             return
