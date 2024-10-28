@@ -82,9 +82,9 @@ class SearchViewModel: ObservableObject {
         ]
         
         let parameters: [String: Any] = [
-            "search": "",
+            "search": searchItem,
             "tags": [
-                searchItem
+                "기타"
             ],
             "page": page,
             "size": 10

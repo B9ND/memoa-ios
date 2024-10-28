@@ -55,13 +55,18 @@ struct SearchView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(searchVM.recentSearchesList, id: \.self) { recentitem in
-                            Text(recentitem.recentSearch)
-                                .font(.regular(14))
-                                .frame(width: 102, height: 29)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 30)
-                                        .stroke(Color.graycolor, lineWidth: 1)
-                                }
+                            Button {
+                                searchVM.searchItem = recentitem.recentSearch
+                            } label: {
+                                Text(recentitem.recentSearch)
+                            }
+                            .foregroundStyle(Color.black)
+                            .font(.regular(14))
+                            .frame(width: 102, height: 29)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Color.graycolor, lineWidth: 1)
+                            }
                         }
                     }
                     .padding()
@@ -69,11 +74,11 @@ struct SearchView: View {
             }
             HStack {
                 if searchVM.noPost {
-                    Text("태그를 재입력해주세요!")
+                    Text("재검색해주세요!")
                         .font(.regular(14))
                         .foregroundStyle(.recently)
                 } else {
-                    Text("태그로 검색해주세요")
+                    Text("게시물을 검색해주세요")
                         .font(.regular(14))
                         .foregroundStyle(.recently)
                 }
