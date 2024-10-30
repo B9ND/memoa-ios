@@ -13,8 +13,9 @@ class WriteViewModel: ObservableObject {
     @Published var showAlert = false
     let serverUrl = ServerUrl.shared
     
-    let tokenUrl = TokenUrl.shared
-    //MARK: 임시방편
+    private var token: String {
+        return UserDefaults.standard.string(forKey: "access") ?? ""
+    }
     
     var disabled: Bool {
         return title.isEmpty || content.text.string.isEmpty || tags.isEmpty
@@ -23,7 +24,6 @@ class WriteViewModel: ObservableObject {
     func post() {
         let url = serverUrl.getUrl(for: "/post")
         
-        let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
@@ -46,7 +46,17 @@ class WriteViewModel: ObservableObject {
                     self.showAlert = true
                     print(response)
                 case .failure(let error):
-                    print(error)
+                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
+                        RefreshAccessToken.shared.reissue { success in
+                            if success {
+                                self.post()
+                            } else {
+                                print("토큰 재발급 실패")
+                            }
+                        }
+                    } else {
+                        print(error.localizedDescription)
+                    }
                 }
             }
     }

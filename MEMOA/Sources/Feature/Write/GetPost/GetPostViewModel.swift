@@ -4,9 +4,6 @@ import Alamofire
 class GetPostViewModel: ObservableObject {
     let serverUrl = ServerUrl.shared
     
-    let tokenUrl = TokenUrl.shared
-    //MARK: 임시방편
-    
     //MARK: getPostModel
     @Published var posts: [GetPostModel] = []
     var page = 0
@@ -17,13 +14,17 @@ class GetPostViewModel: ObservableObject {
     @Published var id = 0
     @Published var detailPosts: [GetDetailPost] = []
     
+    
+    private var token: String {
+        return UserDefaults.standard.string(forKey: "access") ?? ""
+    }
+    
+    
     //MARK: 게시글 불러오기
     func loadPost() {
         guard !isLoading, canLoadMore else { return }
         isLoading = true
         let url = serverUrl.getUrl(for: "/post")
-        
-        let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
@@ -51,7 +52,17 @@ class GetPostViewModel: ObservableObject {
                         self.id = data.first?.id ?? 0
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
+                        RefreshAccessToken.shared.reissue { success in
+                            if success {
+                                self.loadPost()
+                            } else {
+                                print("토큰 재발급 실패")
+                            }
+                        }
+                    } else {
+                        print(error.localizedDescription)
+                    }
                 }
                 self.isLoading = false
             }
@@ -61,22 +72,29 @@ class GetPostViewModel: ObservableObject {
     func getDetailPost() {
         let url = serverUrl.getUrl(for: "/post/\(id)")
         
-        
-        let token = tokenUrl.token
-        
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
         ]
         
         AF.request(url, method: .get, encoding: URLEncoding.default, headers: headers)
             .validate(statusCode: 200..<300)
-            .responseDecodable(of: GetDetailPost.self) { reponse in
-                switch reponse.result {
+            .responseDecodable(of: GetDetailPost.self) { response in
+                switch response.result {
                 case .success(let data):
                     self.detailPosts = [data]
                     print(data)
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
+                        RefreshAccessToken.shared.reissue { success in
+                            if success {
+                                self.getDetailPost()
+                            } else {
+                                print("토큰 재발급 실패")
+                            }
+                        }
+                    } else {
+                        print(error.localizedDescription)
+                    }
                 }
             }
     }
