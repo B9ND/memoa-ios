@@ -27,7 +27,6 @@ struct SearchView: View {
                 .font(.medium(16))
                 .frame(height: 60)
                 .tint(.maincolor)
-                .hideKeyboardOnTap()
             }
             .frame(width: 327, height: 36)
             .background(Color.init(uiColor: .systemGray6))
@@ -63,6 +62,7 @@ struct SearchView: View {
                             .foregroundStyle(Color.black)
                             .font(.regular(14))
                             .frame(width: 102, height: 29)
+                            .padding(.horizontal, 4)
                             .overlay {
                                 RoundedRectangle(cornerRadius: 30)
                                     .stroke(Color.graycolor, lineWidth: 1)
@@ -87,6 +87,7 @@ struct SearchView: View {
             .padding(.horizontal, 30)
             GetSearchPost(searchVM: searchVM)
         }
+        .onAppear(perform : UIApplication.shared.hideKeyboard)
         .padding(.bottom, 63)
         .onAppear {
             searchVM.loadSearches()

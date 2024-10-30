@@ -23,7 +23,6 @@ struct WriteView: View {
                     .padding(.leading, 11)
                     .frame(height: 50)
                     .tint(.maincolor)
-                    .hideKeyboardOnTap()
             }
             .frame(width: 335, height: 35)
             .overlay(
@@ -67,7 +66,6 @@ struct WriteView: View {
                             .frame(height: 510)
                             .padding(.leading, 13)
                             .tint(.maincolor)
-                            .hideKeyboardOnTap()
                             .overlay {
                                 HStack {
                                     VStack {
@@ -153,6 +151,7 @@ struct WriteView: View {
                 })
             }
         }
+        .onAppear(perform : UIApplication.shared.hideKeyboard)
     }
     func insertImage(imageUrl: String) {
         guard let image = imageVM.image else {
