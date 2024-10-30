@@ -6,13 +6,8 @@ struct SignupModel: Encodable {
     var password : String = ""
     var nickname : String = ""
     
-    var signupparams: [String : Any]? {
-        return [
-            "email": email,
-            "password": password,
-            "nickname": nickname
-        ]
-    }
-    
     var isSecure: Bool = true
+    
+    var isTimerRunning = false
+    var remainingTime = 0
 }

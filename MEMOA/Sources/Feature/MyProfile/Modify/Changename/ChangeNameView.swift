@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ChangeNameView: View {
     @State private var changeName = ""
-    @Environment (\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
         VStack {
             TextField("변경할 이름을 입력해주세요", text: $changeName)

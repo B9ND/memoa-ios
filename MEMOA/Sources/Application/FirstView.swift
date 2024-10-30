@@ -3,8 +3,8 @@ import SwiftUI
 
 struct FirstView: View {
     
-    @State private var loginboolean = false
-    @State private var signupboolean = false
+    @State private var toLogin = false
+    @State private var toSignUp = false
     
     var body: some View {
         NavigationStack {
@@ -36,17 +36,17 @@ struct FirstView: View {
                         .padding(.top, 70)
                     Spacer()
                     LongButton(text: "로그인", color: .buttoncolor) {
-                        loginboolean.toggle()
+                        toLogin.toggle()
                     }
                     LongButton(text: "회원가입", color: .white) {
-                        signupboolean.toggle()
+                        toSignUp.toggle()
                     }
                     .padding(.bottom, 60)
                 }
-                .navigationDestination(isPresented: $loginboolean) {
+                .navigationDestination(isPresented: $toLogin) {
                     LoginView()
                         }
-                .navigationDestination(isPresented: $signupboolean) {
+                .navigationDestination(isPresented: $toSignUp) {
                     GetEmailView()
                         }
                 }

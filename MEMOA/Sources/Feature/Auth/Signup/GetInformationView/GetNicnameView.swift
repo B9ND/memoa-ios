@@ -1,46 +1,30 @@
 import SwiftUI
 
 struct GetNicnameView: View {
-    @StateObject var SignupMV: SignupModelView = .init()
+    @StateObject var signUpMV: SignUpViewModel = .init()
     @Environment(\.dismiss) var dismiss
-    @State private var GetSchoolViewboolean = false
+    @State private var toGetSchoolView = false
     
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
-                               startPoint: .top, endPoint: .bottom)
-                .overlay (
-                    Image(icon: .cloud)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 1075)
-                        .offset(y:300)
-                )
+                AuthBackground()
                 VStack {
-                    Text("회원가입")
-                        .foregroundColor(.white)
-                        .font(.bold(30))
-                        .padding(.top, 130)
-                        .padding(.bottom, 46)
-                    CustomTextField(text: $SignupMV.nickname, placeholder: "닉네임을 입력하세요")
+                    AuthText(text: "회원가입")
+                    CustomTextField(text: $signUpMV.nickname, placeholder: "닉네임을 입력하세요")
                     Spacer()
-                    Image("TermsOfUse")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 274)
-                        .padding(.bottom, 5)
+                    TermsOfUseButton()
                     LongButton(text: "다음", color: .buttoncolor) {
-                        GetSchoolViewboolean.toggle()
+                        toGetSchoolView = true
                     }
                     .padding(.bottom, 60)
                 }
             }
             .edgesIgnoringSafeArea(.all)
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
-            .navigationDestination(isPresented: $GetSchoolViewboolean) {
-                GetSchoolView()
-                    }
+                .navigationDestination(isPresented: $toGetSchoolView) {
+                    GetSchoolView()
+                }
         }
     }
 }

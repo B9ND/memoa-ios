@@ -10,12 +10,12 @@ import SwiftUI
 
 enum Iconography: String {
     // auth
-    case openeyes = "openeye"
-    case closeeyes = "closeeyes"
+    case openeye = "openeye"
+    case closeeye = "closeeye"
     case schoolbutton = "schoolbutton"
     case cloud = "cloud"
     case computer = "computer"
-    case termsofuse = "termofuse"
+    case termsofuse = "termsofuse"
     case textfiledimage = "TextfieldBook"
     // home
     case bookMark = "bm"
