@@ -93,7 +93,9 @@ class SignUpViewModel: ObservableObject {
         let url = serverUrl.getUrl(for: "/auth/verify-code")
         
         return await withCheckedContinuation { continuation in
-            AF.request (
+            var continuationCalled = false // 중복 호출 방지 플래그
+            
+            AF.request(
                 url,
                 method: .post,
                 parameters: SignupModel(
@@ -104,6 +106,10 @@ class SignUpViewModel: ObservableObject {
             )
             .validate(statusCode: 200..<300)
             .response { response in
+                // 중복 호출 방지 조건 추가
+                guard !continuationCalled else { return }
+                continuationCalled = true
+                
                 switch response.result {
                 case .success:
                     print("인증번호 확인 성공")
@@ -115,5 +121,6 @@ class SignUpViewModel: ObservableObject {
             }
         }
     }
+
     
 }
