@@ -19,8 +19,7 @@ struct MyProfileView: View {
                         .fill(Color.white)
                         .frame(maxWidth:.infinity)
                         .frame(height: geometry.size.height * 0.95)
-                        .cornerRadius(30, corners: .topLeft)
-                        .cornerRadius(30, corners: .topRight)
+                        .cornerRadius(30, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack {
                                 ZStack {
