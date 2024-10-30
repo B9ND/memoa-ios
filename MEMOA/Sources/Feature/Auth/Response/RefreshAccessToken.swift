@@ -7,10 +7,10 @@ class RefreshAccessToken {
     static let shared = RefreshAccessToken()
     
     private init() {}
-
+    
     func reissue(completion: @escaping (Bool) -> Void) {
         let url = serverUrl.getUrl(for: "/auth/reissue")
-
+        
         guard let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") else {
             print("Refresh token이 존재하지 않습니다.")
             completion(false)

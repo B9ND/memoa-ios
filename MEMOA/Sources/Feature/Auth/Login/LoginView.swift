@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var LoginMV: LoginModelView = .init()
+    @StateObject var LoginMV: LoginViewModel = .init()
     @Environment(\.dismiss) var dismiss
     @State private var isLoginSuccess = false
     
@@ -29,7 +29,6 @@ struct LoginView: View {
                             .tint(.maincolor)
                     }
                     
-                    // 비밀번호 표시 토글 버튼
                     Button(action: {
                         LoginMV.isSecure.toggle()
                     }) {
@@ -41,15 +40,14 @@ struct LoginView: View {
                 .frame(width: 304, height: 46)
                 .background(.white)
                 .cornerRadius(8)
-        
+                
                 Spacer()
                 
-
+                
                 LongButton(text: "로그인", color: .buttoncolor) {
-                    // 로그인 함수 호출
                     LoginMV.login { success in
                         if success {
-                            isLoginSuccess = true // 로그인 성공
+                            isLoginSuccess = true
                         } else {
                             print(LoginMV.loginerrorMessage ?? "로그인 실패")
                         }
@@ -62,8 +60,6 @@ struct LoginView: View {
         .fullScreenCover(isPresented: $isLoginSuccess) {
             MainView()
         }
-    
-        // 뒤로가기 버튼 유지
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
     }
 }

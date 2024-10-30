@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-class SignupModelView: ObservableObject {
+class SignUpViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var code: String = ""
     @Published var password: String = ""
@@ -15,7 +15,7 @@ class SignupModelView: ObservableObject {
     @Published var remainingTime: Int = 0
     
     func startCountdown() {
-        remainingTime = 300 // 5분 = 300초
+        remainingTime = 300
         isTimerRunning = true
         
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in

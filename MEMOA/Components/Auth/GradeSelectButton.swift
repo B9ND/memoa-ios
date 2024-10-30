@@ -13,7 +13,6 @@ struct GradeSelectButton: View {
                 .frame(width: 82, height: 78)
                 .background(.white)
                 .cornerRadius(10)
-                // selectedGrade가 1인 경우 테두리 추가
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(selectedGrade == grade ? Color.buttoncolor : Color.clear, lineWidth: 5)

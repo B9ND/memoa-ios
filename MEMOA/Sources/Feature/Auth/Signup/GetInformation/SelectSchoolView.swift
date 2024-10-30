@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct SelectSchoolView: View {
-    @StateObject var SchoolMV: SchoolModelView = .init()
+    @StateObject var schoolMV: SchoolViewModel = .init()
     @Environment(\.dismiss) var presentation
-
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -13,12 +13,12 @@ struct SelectSchoolView: View {
                     .frame(width: 22)
                     .padding(.leading, 11)
                 
-                TextField("소속학교를 검색하세요", text: $SchoolMV.request.school)
+                TextField("소속학교를 검색하세요", text: $schoolMV.request.school)
                     .foregroundColor(.black)
                     .tint(.maincolor)
-                    .onChange(of: SchoolMV.request.school) { newValue in
+                    .onChange(of: schoolMV.request.school) { newValue in
                         Task {
-                            await SchoolMV.searchSchool(by: newValue)
+                            await schoolMV.searchSchool(by: newValue)
                         }
                     }
             }
@@ -28,8 +28,8 @@ struct SelectSchoolView: View {
             .shadow(radius: 1, y: 1)
             .padding(.top, 38)
             .padding(.bottom, 18)
-
-            ForEach(SchoolMV.request.selectSchool, id: \.self) { school in
+            
+            ForEach(schoolMV.request.selectSchool, id: \.self) { school in
                 Button(action: {
                     presentation()
                 }, label: {
@@ -45,12 +45,12 @@ struct SelectSchoolView: View {
                     .border(Color.gray.opacity(0.2))
                 })
             }
-
+            
             Spacer()
         }
         .onAppear {
             Task {
-                await SchoolMV.fetchSchools()
+                await schoolMV.fetchSchools()
             }
         }
     }

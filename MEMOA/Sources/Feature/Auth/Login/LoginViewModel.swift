@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-class LoginModelView: ObservableObject {
+class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isSecure: Bool = true

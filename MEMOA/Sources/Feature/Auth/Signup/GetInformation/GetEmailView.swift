@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct GetEmailView: View {
-    @StateObject var SignupMV: SignupModelView = .init()
+    @StateObject var signUpMV: SignUpViewModel = .init()
     @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var isCodeValid = false
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -16,18 +16,18 @@ struct GetEmailView: View {
                     HStack {
                         Image(icon: .textfiledimage)
                             .padding(.leading, 11)
-                        TextField("이메일을 입력하세요", text: $SignupMV.email)
+                        TextField("이메일을 입력하세요", text: $signUpMV.email)
                             .foregroundColor(.black)
-
-                        if SignupMV.isTimerRunning {
-                            Text("\(SignupMV.remainingTime)초")
+                        
+                        if signUpMV.isTimerRunning {
+                            Text("\(signUpMV.remainingTime)초")
                                 .foregroundStyle(.gray)
                                 .font(.medium(16))
                                 .padding(.horizontal, 11)
                         } else {
                             Button(action: {
-                                SignupMV.sendEmailToServer()
-                                SignupMV.startCountdown()
+                                signUpMV.sendEmailToServer()
+                                signUpMV.startCountdown()
                             }, label: {
                                 Text("인증")
                                     .foregroundStyle(.maincolor)
@@ -40,15 +40,15 @@ struct GetEmailView: View {
                     .background(.white)
                     .cornerRadius(8)
                     .padding(.bottom, 2)
-
-                    CustomTextField(text: $SignupMV.code, placeholder: "인증번호 6자리를 입력하세요")
+                    
+                    CustomTextField(text: $signUpMV.code, placeholder: "인증번호 6자리를 입력하세요")
                     
                     Spacer()
                     TermsOfUseButton()
-
+                    
                     LongButton(text: "다음", color: .buttoncolor) {
                         Task {
-                            let isCodeValidResponse = await SignupMV.verifyCode()
+                            let isCodeValidResponse = await signUpMV.verifyCode()
                             if isCodeValidResponse {
                                 isCodeValid = true
                             } else {

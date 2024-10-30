@@ -8,7 +8,7 @@ struct SchoolModel {
 struct SchoolList: Identifiable, Hashable {
     var id: UUID
     var schoolname: String
-
+    
     init(schoolname: String = "") {
         self.id = UUID() 
         self.schoolname = schoolname

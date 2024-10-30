@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct GetpasswordView: View {
-    @StateObject var SignupMV: SignupModelView = .init()
+    @StateObject var signUpMV: SignUpViewModel = .init()
     @Environment(\.dismiss) var dismiss
-    @State private var GetNicnameViewboolean = false
+    @State private var toGetNicknameView = false
     
     var body: some View {
         NavigationStack {
@@ -14,19 +14,19 @@ struct GetpasswordView: View {
                     HStack {
                         Image(icon: .textfiledimage)
                             .padding(.leading, 11)
-                        if SignupMV.isSecure {
-                            SecureField("비밀번호를 입력하세요", text: $SignupMV.password)
+                        if signUpMV.isSecure {
+                            SecureField("비밀번호를 입력하세요", text: $signUpMV.password)
                                 .foregroundColor(.black)
                                 .tint(.maincolor)
                         } else {
-                            TextField("비밀번호를 입력하세요", text: $SignupMV.password)
+                            TextField("비밀번호를 입력하세요", text: $signUpMV.password)
                                 .foregroundColor(.black)
                                 .tint(.maincolor)
-                                        }
+                        }
                         Button(action: {
-                            SignupMV.isSecure.toggle()})
+                            signUpMV.isSecure.toggle()})
                         {
-                            Image(icon: SignupMV.isSecure ? .closeeye : .openeye)
+                            Image(icon: signUpMV.isSecure ? .closeeye : .openeye)
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 11)
@@ -37,16 +37,16 @@ struct GetpasswordView: View {
                     Spacer()
                     TermsOfUseButton()
                     LongButton(text: "다음", color: .buttoncolor) {
-                        GetNicnameViewboolean = true
+                        toGetNicknameView = true
                     }
                     .padding(.bottom, 60)
                 }
             }
             .edgesIgnoringSafeArea(.all)
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
-            .navigationDestination(isPresented: $GetNicnameViewboolean) {
-                GetNicnameView()
-                    }
+                .navigationDestination(isPresented: $toGetNicknameView) {
+                    GetNicnameView()
+                }
         }
     }
 }

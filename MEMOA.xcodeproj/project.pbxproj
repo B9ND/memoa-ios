@@ -72,8 +72,8 @@
 		17A439762C9DAB1E00B071CA /* SelectSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439252C9DAB1E00B071CA /* SelectSchoolView.swift */; };
 		17A439772C9DAB1E00B071CA /* SchoolModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439272C9DAB1E00B071CA /* SchoolModel.swift */; };
 		17A439782C9DAB1E00B071CA /* SchoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439282C9DAB1E00B071CA /* SchoolViewModel.swift */; };
-		17A439792C9DAB1E00B071CA /* SignupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439292C9DAB1E00B071CA /* SignupModel.swift */; };
-		17A4397A2C9DAB1E00B071CA /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392A2C9DAB1E00B071CA /* SignupViewModel.swift */; };
+		17A439792C9DAB1E00B071CA /* SignUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A439292C9DAB1E00B071CA /* SignUpModel.swift */; };
+		17A4397A2C9DAB1E00B071CA /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392A2C9DAB1E00B071CA /* SignUpViewModel.swift */; };
 		17A4397B2C9DAB1E00B071CA /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392C2C9DAB1E00B071CA /* FirstView.swift */; };
 		17A4397C2C9DAB1E00B071CA /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392D2C9DAB1E00B071CA /* LoginModel.swift */; };
 		17A4397D2C9DAB1E00B071CA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A4392E2C9DAB1E00B071CA /* LoginViewModel.swift */; };
@@ -151,8 +151,8 @@
 		17A439252C9DAB1E00B071CA /* SelectSchoolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSchoolView.swift; sourceTree = "<group>"; };
 		17A439272C9DAB1E00B071CA /* SchoolModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolModel.swift; sourceTree = "<group>"; };
 		17A439282C9DAB1E00B071CA /* SchoolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolViewModel.swift; sourceTree = "<group>"; };
-		17A439292C9DAB1E00B071CA /* SignupModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupModel.swift; sourceTree = "<group>"; };
-		17A4392A2C9DAB1E00B071CA /* SignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		17A439292C9DAB1E00B071CA /* SignUpModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpModel.swift; sourceTree = "<group>"; };
+		17A4392A2C9DAB1E00B071CA /* SignUpViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		17A4392C2C9DAB1E00B071CA /* FirstView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		17A4392D2C9DAB1E00B071CA /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		17A4392E2C9DAB1E00B071CA /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -459,8 +459,8 @@
 				17A439262C9DAB1E00B071CA /* GetInformation */,
 				17A439272C9DAB1E00B071CA /* SchoolModel.swift */,
 				17A439282C9DAB1E00B071CA /* SchoolViewModel.swift */,
-				17A439292C9DAB1E00B071CA /* SignupModel.swift */,
-				17A4392A2C9DAB1E00B071CA /* SignupViewModel.swift */,
+				17A439292C9DAB1E00B071CA /* SignUpModel.swift */,
+				17A4392A2C9DAB1E00B071CA /* SignUpViewModel.swift */,
 				1797F04C2CBFF38100C181A9 /* ServerUrl.swift */,
 			);
 			path = Signup;
@@ -574,7 +574,7 @@
 			files = (
 				17A4395A2C9DAB1E00B071CA /* TabViewType.swift in Sources */,
 				17A4397C2C9DAB1E00B071CA /* LoginModel.swift in Sources */,
-				17A439792C9DAB1E00B071CA /* SignupModel.swift in Sources */,
+				17A439792C9DAB1E00B071CA /* SignUpModel.swift in Sources */,
 				17A4395F2C9DAB1E00B071CA /* ViewExt.swift in Sources */,
 				17A4397D2C9DAB1E00B071CA /* LoginViewModel.swift in Sources */,
 				17A4394B2C9DAB1E00B071CA /* ModifyViewbutton.swift in Sources */,
@@ -592,7 +592,7 @@
 				17A439512C9DAB1E00B071CA /* ProfileView.swift in Sources */,
 				175A9D352CA41F10001BF9B7 /* AuthBackground.swift in Sources */,
 				17A4396F2C9DAB1E00B071CA /* TermsOfUseButton.swift in Sources */,
-				17A4397A2C9DAB1E00B071CA /* SignupViewModel.swift in Sources */,
+				17A4397A2C9DAB1E00B071CA /* SignUpViewModel.swift in Sources */,
 				17A439602C9DAB1E00B071CA /* RoundedCornerShape.swift in Sources */,
 				17A439442C9DAB1E00B071CA /* DetailView.swift in Sources */,
 				17A4393C2C9DAB1E00B071CA /* BackButton.swift in Sources */,
