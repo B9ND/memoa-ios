@@ -13,5 +13,3 @@ public extension View {
         clipShape(RoundedCornerShape(radius: radius, corners: corners))
     }
 }
-
-fds;lfkdsajf;ladskfj
