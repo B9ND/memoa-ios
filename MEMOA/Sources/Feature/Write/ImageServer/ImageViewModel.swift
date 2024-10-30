@@ -7,8 +7,10 @@ class ImageViewModel: ObservableObject {
     @Published var image: UIImage?
     @Published var imageUrl: String?
     let serverUrl = ServerUrl.shared
-    let tokenUrl = TokenUrl.shared
-    //MARK: 임시방편
+    
+    private var token: String {
+        return UserDefaults.standard.string(forKey: "access") ?? ""
+    }
     
     func getImageUrl(completion: @escaping(String?) -> Void) {
         let url = serverUrl.getUrl(for: "/image/upload")
@@ -22,9 +24,6 @@ class ImageViewModel: ObservableObject {
             print("이미지 데이터를 변환하는 데 실패했습니다.")
             return
         }
-        
-        
-        let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)"
@@ -41,7 +40,18 @@ class ImageViewModel: ObservableObject {
                     completion(self.imageUrl)
                 }
             case .failure(let error):
-                print("업로드 실패: \(error.localizedDescription)")
+                if let httpResponse = response.response, httpResponse.statusCode == 403 {
+                    RefreshAccessToken.shared.reissue { success in
+                        if success {
+                            self.getImageUrl(completion: completion)
+                        } else {
+                            print("토큰 재발급 실패")
+                        }
+                    }
+                } else {
+                    print(error.localizedDescription)
+                    completion(nil)
+                }
             }
         }
     }

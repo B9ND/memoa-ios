@@ -11,7 +11,7 @@ class RefreshAccessToken {
     func reissue(completion: @escaping (Bool) -> Void) {
         let url = serverUrl.getUrl(for: "/auth/reissue")
         
-        guard let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") else {
+        guard let refreshToken = UserDefaults.standard.string(forKey: "refresh") else {
             print("Refresh token이 존재하지 않습니다.")
             completion(false)
             return

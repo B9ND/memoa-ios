@@ -25,8 +25,9 @@ class SearchViewModel: ObservableObject {
     //MARK: 서버url
     let serverUrl = ServerUrl.shared
     
-    //MARK: 임시
-    let tokenUrl = TokenUrl.shared
+    private var token: String {
+        return UserDefaults.standard.string(forKey: "access") ?? ""
+    }
     
     init() {
         self.recentSearchesList = []
@@ -75,7 +76,6 @@ class SearchViewModel: ObservableObject {
         }
         
         let url = serverUrl.getUrl(for: "/post")
-        let token = tokenUrl.token
         
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(token)",
@@ -105,7 +105,17 @@ class SearchViewModel: ObservableObject {
                         self.page += 1
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
+                        RefreshAccessToken.shared.reissue { success in
+                            if success {
+                                self.getPost()
+                            } else {
+                                print("토큰 재발급 실패")
+                            }
+                        }
+                    } else {
+                        print(error.localizedDescription)
+                    }
                 }
                 self.isLoading = false
             }
