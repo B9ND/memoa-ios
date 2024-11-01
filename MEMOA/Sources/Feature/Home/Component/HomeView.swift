@@ -3,7 +3,7 @@ import UIKit
 
 // MARK: 홈뷰
 struct HomeView: View {
-    @StateObject var getPostVM = GetPostViewModel()
+    @StateObject private var getPostVM = GetPostViewModel()
     @State private var toDetail = false
     
     var body: some View {
@@ -12,8 +12,8 @@ struct HomeView: View {
                 SelectitemView()
                 Divider()
                 ScrollView {
-                    ForEach(getPostVM.posts, id: \.id) { post in
-                        LazyVStack {
+                    LazyVStack {
+                        ForEach(getPostVM.posts, id: \.id) { post in
                             UploadComponentView(post: post) {
                                 getPostVM.id = post.id
                                 getPostVM.getDetailPost()
@@ -26,20 +26,20 @@ struct HomeView: View {
                                     Color.clear
                                         .onAppear {
                                             if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
-                                                if getPostVM.canLoadMore {
+                                                if getPostVM.canLoadMore && !getPostVM.isLoading {
                                                     getPostVM.page += 1
                                                     getPostVM.loadPost()
                                                 }
                                             }
                                         }
                                 }
-                                .frame(height: 50)
+                                .frame(height: 0)
                             }
                         }
                     }
                     Spacer()
                 }
-                .onAppear {                    
+                .onAppear {
                     getPostVM.loadPost()
                 }
                 .refreshable {

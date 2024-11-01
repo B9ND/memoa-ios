@@ -25,10 +25,6 @@ class SearchViewModel: ObservableObject {
     //MARK: 서버url
     let serverUrl = ServerUrl.shared
     
-    private var token: String {
-        return UserDefaults.standard.string(forKey: "access") ?? ""
-    }
-    
     init() {
         self.recentSearchesList = []
     }
@@ -75,12 +71,6 @@ class SearchViewModel: ObservableObject {
             self.canLoadMore = true
         }
         
-        let url = serverUrl.getUrl(for: "/post")
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(token)",
-        ]
-        
         let parameters: [String: Any] = [
             "search": searchItem,
             "tags": [
@@ -91,34 +81,19 @@ class SearchViewModel: ObservableObject {
         ]
         
         isLoading = true
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: [SearchModel].self) { response in
-                switch response.result {
-                case .success(let data):
-                    if data.isEmpty {
-                        self.noPost = true
-                        self.canLoadMore = false
-                    } else {
-                        self.noPost = false
-                        self.posts.append(contentsOf: data)
-                        self.page += 1
-                    }
-                case .failure(let error):
-                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
-                        RefreshAccessToken.shared.reissue { success in
-                            if success {
-                                self.getPost()
-                            } else {
-                                print("토큰 재발급 실패")
-                            }
-                        }
-                    } else {
-                        print(error.localizedDescription)
-                    }
+        NetworkRunner.shared.request("/post", method: .get, parameters: parameters, response: [SearchModel].self) { result in
+            if case .success(let data) = result {
+                if data.isEmpty {
+                    self.noPost = true
+                    self.canLoadMore = false
+                } else {
+                    self.noPost = false
+                    self.posts.append(contentsOf: data)
+                    self.page += 1
                 }
-                self.isLoading = false
             }
+            self.isLoading = false
+        }
     }
     
 }

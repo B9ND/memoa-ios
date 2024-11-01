@@ -7,6 +7,7 @@ struct WriteModel {
     let tags: [String]
     let images: [ImageItem]
     let isReleased: Bool
+    let postContent: [PostContent]
 }
 
 struct ContentItem {
@@ -15,4 +16,8 @@ struct ContentItem {
 
 struct ImageItem {
     var images: [String]
+}
+
+struct PostContent {
+    var content: String
 }

@@ -3,9 +3,8 @@ import SwiftUI
 struct UploadComponentView: View {
     @State private var toDetail = false
     @State private var showingAlert = false
-    @State private var toProfile = false
-    var post: GetPostModel
-    var action: () -> Void
+    let post: GetPostModel
+    let action: () -> Void
     
     var body: some View {
         Button {
@@ -15,7 +14,6 @@ struct UploadComponentView: View {
             VStack {
                 HStack {
                     ProfileButton(type: .home) {
-                        toProfile = true
                     }
                     .padding(.leading, 24)
                     
@@ -69,7 +67,9 @@ struct UploadComponentView: View {
                         Spacer()
                     }
                     HStack {
-                        ChatButton()
+                        ChatButton {
+                            // TODO: Handle
+                        }
                         BookmarkButton()
                         Spacer()
                     }

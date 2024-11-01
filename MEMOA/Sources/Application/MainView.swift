@@ -4,7 +4,7 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedtab: TabViewType = .home
     @State private var isNavigatingToWriteView = false
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -41,7 +41,7 @@ struct MainView: View {
                                         .frame(maxWidth: .infinity)
                                     }
                                 }
-                                .padding(.horizontal, 20)
+                                    .padding(.horizontal, 20)
                             )
                     }
                 }

@@ -8,14 +8,8 @@ class ImageViewModel: ObservableObject {
     @Published var imageUrl: String?
     let serverUrl = ServerUrl.shared
     
-    private var token: String {
-        return UserDefaults.standard.string(forKey: "access") ?? ""
-    }
-    
     func getImageUrl(completion: @escaping(String?) -> Void) {
-        let url = serverUrl.getUrl(for: "/image/upload")
-        
-        guard let image = image else {
+        guard let image else {
             print("이미지가 없습니다.")
             return
         }
@@ -25,34 +19,22 @@ class ImageViewModel: ObservableObject {
             return
         }
         
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(token)"
-        ]
-        
-        AF.upload(multipartFormData: { MultipartFormData in
-            MultipartFormData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
-        }, to: url, headers: headers)
-        .responseString { response in
-            switch response.result {
-            case .success(let responseString):
-                DispatchQueue.main.async {
-                    self.imageUrl = responseString.trimmingCharacters(in: .whitespacesAndNewlines)
-                    completion(self.imageUrl)
-                }
-            case .failure(let error):
-                if let httpResponse = response.response, httpResponse.statusCode == 403 {
-                    RefreshAccessToken.shared.reissue { success in
-                        if success {
-                            self.getImageUrl(completion: completion)
-                        } else {
-                            print("토큰 재발급 실패")
-                        }
+        NetworkRunner.shared.upload(multipartFormData: { MultipartFormData in
+            MultipartFormData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")}, to: "/image/upload", response: ImageResponse.self) { result in
+                switch result {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.imageUrl = data.url
+                        completion(self.imageUrl)
                     }
-                } else {
-                    print(error.localizedDescription)
+                case .failure(let error):
                     completion(nil)
+                    dump(error)
                 }
             }
-        }
     }
+}
+
+struct ImageResponse: Decodable {
+    let url: String
 }

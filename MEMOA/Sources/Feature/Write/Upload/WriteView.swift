@@ -85,7 +85,6 @@ struct WriteView: View {
                                     .stroke(Color.graycolor, lineWidth: 1)
                                     .frame(width: 335)
                                     .frame(maxHeight: .infinity)
-                                
                                 //MARK: 이미지
                                 VStack {
                                     Spacer()
@@ -108,21 +107,15 @@ struct WriteView: View {
                                                 showingAlert = true
                                                 return
                                             }
-                                            
                                             //MARK: url 받았을때만 insert image됨
                                             imageVM.getImageUrl { imageUrl in
                                                 guard let imageUrl = imageUrl else {
                                                     showingAlert = true
                                                     return
                                                 }
-                                                if let urlDictionary = try? JSONSerialization.jsonObject(with: Data(imageUrl.utf8), options: []) as? [String: String],
-                                                   let actualUrl = urlDictionary["url"] {
-                                                    writeVM.images.append(actualUrl)
-                                                    writeVM.content.text.append(NSAttributedString(string: actualUrl))
-                                                    insertImage(imageUrl: actualUrl)
-                                                } else {
-                                                    showingAlert = true
-                                                }
+                                                writeVM.images.append(imageUrl)
+                                                writeVM.postContent.append("✔\(imageUrl)✔")
+                                                insertImage(imageUrl: imageUrl)
                                             }
                                         }
                                     }
@@ -141,8 +134,6 @@ struct WriteView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton(action: {
                 writeVM.post()
-                getPostVM.loadPost()
-                print(writeVM.content)
             }, bool: writeVM.disabled)
             .alert(isPresented: $writeVM.showAlert) {
                 Alert(title: Text("업로드 성공"), message: Text("게시글이 성공적으로 업로드되었어요!"), dismissButton: .default(Text("확인")){
@@ -193,6 +184,8 @@ struct WriteView: View {
         ], range: NSMakeRange(0, mutableAttributedText.length))
         
         writeVM.content.text = mutableAttributedText
+        let plainText = writeVM.content.text.string
+        writeVM.postContent.append(plainText)
     }
 }
 

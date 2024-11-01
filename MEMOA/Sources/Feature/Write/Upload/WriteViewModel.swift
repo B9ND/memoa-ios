@@ -2,6 +2,14 @@ import Foundation
 import _PhotosUI_SwiftUI
 import Alamofire
 
+struct WritePostRequest: Encodable {
+    let title: String
+    let content: String
+    let tags: [String]
+    let images: [String]
+    let isReleased: Bool
+}
+
 class WriteViewModel: ObservableObject {
     // MARK: POST
     @Published var title: String = "" // 타이틀
@@ -11,57 +19,30 @@ class WriteViewModel: ObservableObject {
     @Published var images: [String] = []
     @Published var isReleased: Bool = true
     @Published var showAlert = false
-    let serverUrl = ServerUrl.shared
+    var postContent: [String] = []
     
-    private var token: String {
-        return UserDefaults.standard.string(forKey: "access") ?? ""
-    }
+    let serverUrl = ServerUrl.shared
+    private var reissueAttempted = false
     
     var disabled: Bool {
         return title.isEmpty || content.text.string.isEmpty || tags.isEmpty
     }
     
     func post() {
-        let url = serverUrl.getUrl(for: "/post")
-        
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(token)",
-        ]
-        
-        let contentWithoutFont = content.text.removingFontAttributes().string
-        
-        let parameters: [String: Any] = [
-            "title": title,
-            "content": contentWithoutFont,
-            "tags": tags,
-            "images": images,
-            "isReleased": isReleased
-        ]
-        
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-            .responseDecodable(of: GetPostModel.self) { response in
-                switch response.result {
-                case .success(let response):
-                    self.showAlert = true
-                    print(response)
-                case .failure(let error):
-                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
-                        RefreshAccessToken.shared.reissue { success in
-                            if success {
-                                self.post()
-                            } else {
-                                print("토큰 재발급 실패")
-                            }
-                        }
-                    } else {
-                        print(error.localizedDescription)
-                    }
-                }
+        NetworkRunner.shared.request("/post", method: .post, parameters: WritePostRequest(
+            title: title,
+            content: postContent.joined(separator: "\n"),
+            tags: tags,
+            images: images,
+            isReleased: isReleased
+        ), response: GetPostModel.self, isAuthorization: true) { result in
+            if case .success(_) = result {
+                self.showAlert = true
+                self.reissueAttempted = false
             }
+        }
     }
 }
-
 
 
 //MARK: NSString -> string으로

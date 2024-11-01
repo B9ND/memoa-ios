@@ -54,7 +54,7 @@ struct DetailView: View {
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .cornerRadius(8, corners: [.topLeft, .bottomLeft, .topRight, .bottomRight])
+                                        .cornerRadius(8, corners: .allCorners)
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 220,height: 240)
                                         .padding(.leading, 10)
@@ -74,7 +74,9 @@ struct DetailView: View {
                             Spacer()
                         }
                         HStack {
-                            ChatButton()
+                            ChatButton {
+                                // TODO: Handle
+                            }
                             BookmarkButton()
                             Spacer()
                         }

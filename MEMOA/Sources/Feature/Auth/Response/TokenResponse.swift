@@ -8,3 +8,7 @@ struct TokenResponse: Decodable {
         case refreshToken = "refresh"
     }
 }
+
+struct RefreshToken : Codable {
+    let refresh: String
+}

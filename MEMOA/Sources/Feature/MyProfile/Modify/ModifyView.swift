@@ -20,8 +20,7 @@ struct ModifyView: View {
                         .fill(Color.white)
                         .frame(maxWidth:.infinity)
                         .frame(height: geometry.size.height * 0.95)
-                        .cornerRadius(30, corners: .topLeft)
-                        .cornerRadius(30, corners: .topRight)
+                        .cornerRadius(30, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack {
                                 ZStack {
@@ -63,6 +62,7 @@ struct ModifyView: View {
                                         }
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
+                                        profilMV.delete()
                                         withAnimation {
                                             UserDefaults.standard.removeObject(forKey: "access")
                                         }
@@ -98,13 +98,12 @@ struct ModifyView: View {
                             }
                         }
                 }
-                .navigationDestination(isPresented: $changeName, destination: {
+                .navigationDestination(isPresented: $changeName) {
                     ChangeNameView()
-                })
-                
-                .navigationDestination(isPresented: $changeSchool, destination: {
+                }
+                .navigationDestination(isPresented: $changeSchool) {
                     ChangingDepartmentView()
-                })
+                }
                 .ignoresSafeArea()
             }
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
@@ -116,3 +115,6 @@ struct ModifyView: View {
 }
 
 
+func a() {
+    
+}
