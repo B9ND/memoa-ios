@@ -8,22 +8,20 @@
 import SwiftUI
 
 struct FollowingView: View {
+    @StateObject var followingVM = FollowingViewModel()
+    //TODO: 이거수정
+    let id : String
+    
     var body: some View {
-        HStack {
-            Image(icon: .largeprofile)
-                .padding(.trailing, 10)
-            Text("김은찬")
-                .font(.medium(16))
-            Spacer()
-            FollowButton {
-                print("클릭")
+        ScrollView {
+            VStack {
+                ForEach(followingVM.followings, id: \.email) { follower in
+                    FollowingComponent(following: follower)
+                }
             }
         }
-        .padding(.horizontal, 13)
-        .padding()
+        .onAppear {
+            followingVM.getFollowing(user: id)
+        }
     }
-}
-
-#Preview {
-    FollowingView()
 }

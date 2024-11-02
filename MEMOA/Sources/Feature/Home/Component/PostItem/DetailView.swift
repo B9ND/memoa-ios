@@ -48,6 +48,23 @@ struct DetailView: View {
                     Text(getPost.content)
                         .font(.light(18))
                     
+                    //                    ForEach(getPost.content, id: \.self) { text in
+                    //                                  if text.hasPrefix("✔") && text.hasSuffix("✔") {
+                    //                                      if let url = URL(string: text) {
+                    //                                          AsyncImage(url: url) { image in
+                    //                                              image
+                    //                                                  .resizable()
+                    //                                                  .cornerRadius(8)
+                    //                                                  .aspectRatio(contentMode: .fit)
+                    //                                                  .frame(width: 220, height: 240)
+                    //                                                  .padding(.leading, 10)
+                    //                                          } placeholder: {
+                    //                                              ProgressView() // 이미지 로드 중 표시할 플레이스홀더
+                    //                                          }
+                    //                                      }
+                    //                                  }
+                    //                              }
+                    
                     ScrollView(.horizontal) {
                         HStack(spacing: 3) {
                             ForEach(getPost.getImageUrl, id: \.self) { url in
@@ -87,6 +104,9 @@ struct DetailView: View {
             .padding()
             Spacer()
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+        }
+        .navigationDestination(isPresented: $toProfile) {
+            ProfileView(information: getPost)
         }
     }
 }

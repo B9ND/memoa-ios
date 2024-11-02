@@ -2,7 +2,11 @@ import SwiftUI
 
 struct ProfileView: View {
     // MARK: 프로필 뷰
-    var board: BoardModel
+    @StateObject private var follow = ProfileViewModel()
+    @StateObject var followerVM = FollowerViewModel()
+    @StateObject var followingVM = FollowingViewModel()
+    @State private var isFollow = false
+    let information: GetDetailPost
     
     var body: some View {
         NavigationView {
@@ -31,30 +35,42 @@ struct ProfileView: View {
                                             }
                                     }
                                     HStack {
-                                        Text(board.nickname)
+                                        Text(information.author)
                                             .font(.medium(16))
                                     }
                                     .padding(.bottom, 4)
                                     .padding(.leading, 2)
-                                    Text(board.email)
-                                        .foregroundStyle(.black)
-                                        .font(.regular(12))
-                                        .padding(.bottom, 14)
                                     
                                     HStack {
                                         VStack {
-                                            Myfollower(board: followModel(nickname: board.nickname, number: "123"), text: "팔로워")
+                                            Myfollower(board: followModel(nickname: information.author, number: String(followerVM.followers.count)), text: "팔로워")
                                                 .padding(.horizontal, 16)
+                                                .environmentObject(followerVM)
                                         }
                                         VStack {
-                                            Myfollowing(board: followModel(nickname: board.nickname, number: "144"), text: "팔로잉")
+                                            Myfollowing(board: followModel(nickname: information.author, number: String(followingVM.followings.count)), text: "팔로잉")
                                                 .padding(.horizontal, 16)
+                                                .environmentObject(followingVM)
                                         }
                                     }
                                     .padding(.bottom , 5)
                                     VStack {
-                                        FollowButton {
-                                            print("클릭")
+                                        Button {
+                                            isFollow.toggle()
+                                            isFollow ? follow.follow(nickname: information.author) : follow.deleteFollow(nickname: information.author)
+                                        } label: {
+                                            Text(isFollow ? "언팔로우" : "팔로우")
+                                                .font(.regular(10))
+                                                .frame(width: 87, height: 21)
+                                                .background(isFollow ?  Color.white : Color.maincolor)
+                                                .cornerRadius(8)
+                                                .foregroundStyle(isFollow ? .black : .white)
+                                                .overlay {
+                                                    if isFollow {
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .stroke(Color.graycolor, lineWidth: 1)
+                                                    }
+                                                }
                                         }
                                     }
                                     .padding(.bottom ,10)
@@ -68,6 +84,10 @@ struct ProfileView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            followerVM.getFollower(user: information.author)
+            followingVM.getFollowing(user: information.author)
+        }
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }

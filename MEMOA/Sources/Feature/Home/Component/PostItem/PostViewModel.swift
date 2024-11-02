@@ -1,7 +1,7 @@
-import Foundation
-
-class PostViewModel: ObservableObject {
-    @Published var boardList: [BoardModel] = []
-}
-
-
+//import Foundation
+//
+//class PostViewModel: ObservableObject {
+//    @Published var boardList: [BoardModel] = []
+//}
+//
+//

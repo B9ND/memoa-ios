@@ -52,12 +52,12 @@ struct MyProfileView: View {
                                 
                                 HStack {
                                     VStack {
-                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로워")
-                                            .padding(.horizontal, 16)
+//                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로워")
+//                                            .padding(.horizontal, 16)
                                     }
                                     VStack {
-                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로잉")
-                                            .padding(.horizontal, 16)
+//                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로잉")
+//                                            .padding(.horizontal, 16)
                                     }
                                 }
                                 .padding(.bottom, 15)

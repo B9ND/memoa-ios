@@ -20,6 +20,9 @@ class WriteViewModel: ObservableObject {
     @Published var isReleased: Bool = true
     @Published var showAlert = false
     var postContent: [String] = []
+    var getImageUrl: [URL] {
+        images.compactMap { URL(string: $0) }
+    }
     
     let serverUrl = ServerUrl.shared
     private var reissueAttempted = false
@@ -29,9 +32,12 @@ class WriteViewModel: ObservableObject {
     }
     
     func post() {
+        change()
+        let plainTextContent = content.text.removingFontAttributes().string
+        
         NetworkRunner.shared.request("/post", method: .post, parameters: WritePostRequest(
             title: title,
-            content: postContent.joined(separator: "\n"),
+            content: plainTextContent,
             tags: tags,
             images: images,
             isReleased: isReleased
@@ -41,6 +47,27 @@ class WriteViewModel: ObservableObject {
                 self.reissueAttempted = false
             }
         }
+    }
+    
+    //콘텐츠의 텍스트를 Postupload의 텍스트와 교체
+    func change() {
+        let text = content.text.string
+        
+        var updatedText = text
+        var imageCount = 0
+        
+        while let range = updatedText.range(of: "📷") { // 📷 이모지 위치 찾기
+            if let endRange = updatedText.range(of: "!", range: range.upperBound..<updatedText.endIndex) { // "!"로 끝나는지 확인
+                // "📷"로 시작하고 "!"로 끝나는 부분을 잘라냄
+                let nextIndex = imageCount < postContent.count ? imageCount : postContent.count - 1
+                updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: postContent[nextIndex])
+                imageCount += 1 // 다음 요소를 위한 카운트 증가
+            } else {
+                print("이미지 아님 인식처리 x")
+                break
+            }
+        }
+        content.text = NSMutableAttributedString(string: updatedText) // 콘텐츠 텍스트 업데이트
     }
 }
 

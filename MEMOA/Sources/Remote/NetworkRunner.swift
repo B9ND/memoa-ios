@@ -105,5 +105,30 @@ class NetworkRunner {
             }
         }
     }
+    func follow<Parameters: Encodable>(
+        _ path: String,
+        method: HTTPMethod,
+        parameters: Parameters? = nil,
+        headers: HTTPHeaders? = nil,
+        isAuthorization: Bool = false,
+        completionHandler: @escaping (Result<Void, Error>) -> Void
+    ) {
+        session.request(
+            secretUrl + path,
+            method: method,
+            parameters: parameters,
+            encoder: method == .get ? URLEncodedFormParameterEncoder.default : JSONParameterEncoder.default,
+            headers: headers,
+            interceptor: isAuthorization ? AuthInterceptor() : nil
+        )
+        .validate(statusCode: 200..<300) // 성공 범위 설정
+        .response { response in
+            switch response.result {
+            case .success:
+                completionHandler(.success(()))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
 }
-    
