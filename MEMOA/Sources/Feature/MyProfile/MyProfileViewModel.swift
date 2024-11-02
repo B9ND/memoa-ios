@@ -2,14 +2,30 @@ import Foundation
 import Alamofire
 
 class MyProfileViewModel: ObservableObject {
-    @Published var name: String = "박재민"
-    @Published var email: String = "pjmin0923@gmail.com"
+    @Published var name: String = ""
+    @Published var email: String = ""
+    @Published var description: String = ""
     let serverUrl = ServerUrl.shared
     
     private var refreshToken: String {
         return UserDefaults.standard.string(forKey: "refresh") ?? ""
     }
-
+    
+    func fetchMy(followerVM: FollowerViewModel, followingVM: FollowingViewModel) {
+        NetworkRunner.shared.request("/auth/me", method: .get, response: MyProfileModel.self, isAuthorization: true) { result in
+            switch result {
+            case .success(let data):
+                self.name = data.nickname
+                self.email = data.email
+                self.description = data.description ?? "설명이 없습니다."
+                followerVM.getFollower(user: self.name)
+                followingVM.getFollowing(user: self.name)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     
     func delete() {
         let url = serverUrl.getUrl(for: "/auth/logout")
@@ -27,9 +43,5 @@ class MyProfileViewModel: ObservableObject {
                     print(error.localizedDescription)
                 }
             }
-//        
-//        NetworkRunner.shared.request("/auth/logout", method: .delete, parameters: nil, response: <#T##Decodable.Type#>) { <#Result<Decodable, any Error>#> in
-//            <#code#>
-//        }
     }
 }

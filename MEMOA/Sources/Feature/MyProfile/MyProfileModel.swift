@@ -1,11 +1,16 @@
 import Foundation
 
-struct UploadMyimage: Hashable {
-    var imageurl: String
+struct MyProfileModel: Codable {
+    var email: String
+    var nickname: String
+    var description: String?
+    var profileImage: String
+    var department: MyProfileDepartment
 }
 
-struct MyProfileModel {
-    var name: String = "박재민"
-    var email: String = "pjmin0923@gmail.com"
-    var image: [UploadMyimage]
+struct MyProfileDepartment: Codable {
+    var name: String
+    var grade: Int
+    var school: String
+    var subjects: [String]
 }

@@ -2,9 +2,10 @@ import SwiftUI
 
 struct MyProfileView: View {
     //MARK: 프로필 뷰
-    @StateObject var MyprofilMV: MyProfileViewModel = .init()
-    //MARK: 이거 mvvm 하면 하기
-    @State private var follow = false
+    @StateObject private var follow = ProfileViewModel()
+    @StateObject var followerVM = FollowerViewModel()
+    @StateObject var followingVM = FollowingViewModel()
+    @StateObject var MyprofilMV = MyProfileViewModel()
     @State private var modify = false
     @State private var changeName = false
     
@@ -44,7 +45,7 @@ struct MyProfileView: View {
                                 .padding(.leading, 20)
                                 
                                 //MARK: description
-                                Text("안녕하세요 저는 박재민")
+                                Text(MyprofilMV.description)
                                     .foregroundStyle(.black)
                                     .font(.regular(12))
                                     .padding(.bottom, 14)
@@ -52,22 +53,19 @@ struct MyProfileView: View {
                                 
                                 HStack {
                                     VStack {
-//                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로워")
-//                                            .padding(.horizontal, 16)
+                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: String(followerVM.followers.count)), text: "팔로워")
+                                            .padding(.horizontal, 16)
                                     }
                                     VStack {
-//                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로잉")
-//                                            .padding(.horizontal, 16)
+                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: String(followingVM.followings.count)), text: "팔로잉")
+                                            .padding(.horizontal, 16)
                                     }
                                 }
-                                .padding(.bottom, 15)
+                                .padding(.bottom , 5)
                                 
                                 Divider()
                                 ScrollView {
                                     Spacer()
-//                                    UploadComponentView(board: BoardModel(nickname: "유을", time: "2024-09-29", image: [Imagelist(image: "example")], title: "과학수학필기 공유합니다", tag: "공부하기싫다", email: "eunchan2815@gmail.com")) {
-//                                        print("정보주기")
-//                                    }
                                 }
                             }
                         }
@@ -90,6 +88,9 @@ struct MyProfileView: View {
                     Image(icon: .setting)
                 }
             }
+        }
+        .onAppear {
+            MyprofilMV.fetchMy(followerVM: followerVM, followingVM: followingVM)
         }
     }
 }
