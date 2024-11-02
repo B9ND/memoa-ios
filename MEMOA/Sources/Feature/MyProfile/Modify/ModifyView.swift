@@ -2,7 +2,7 @@ import SwiftUI
 
 //MARK: 프로필 수정
 struct ModifyView: View {
-    @ObservedObject var profilMV: MyProfileViewModel = .init()
+    @ObservedObject var profileMV: MyProfileViewModel
     
     @State private var showAlert = false
     @Environment(\.openURL) private var openURL
@@ -34,7 +34,7 @@ struct ModifyView: View {
                                         }
                                 }
                                 HStack {
-                                    Text(profilMV.name)
+                                    Text(profileMV.name)
                                         .font(.medium(16))
                                     Button {
                                         changeName = true
@@ -45,7 +45,7 @@ struct ModifyView: View {
                                 .padding(.bottom, 4)
                                 
                                 .padding(.leading, 20)
-                                Text(profilMV.email)
+                                Text(profileMV.email)
                                     .foregroundStyle(.black)
                                     .font(.regular(12))
                                     .padding(.bottom, 14)
@@ -62,7 +62,7 @@ struct ModifyView: View {
                                         }
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
-                                        profilMV.delete()
+                                        profileMV.delete()
                                         withAnimation {
                                             UserDefaults.standard.removeObject(forKey: "access")
                                         }
@@ -109,12 +109,4 @@ struct ModifyView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
     }
-}
-#Preview {
-    ModifyView()
-}
-
-
-func a() {
-    
 }

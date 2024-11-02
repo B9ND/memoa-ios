@@ -5,7 +5,7 @@ struct MyProfileView: View {
     @StateObject private var follow = ProfileViewModel()
     @StateObject var followerVM = FollowerViewModel()
     @StateObject var followingVM = FollowingViewModel()
-    @StateObject var MyprofilMV = MyProfileViewModel()
+    @StateObject var MyprofileMV = MyProfileViewModel()
     @State private var modify = false
     @State private var changeName = false
     
@@ -34,7 +34,7 @@ struct MyProfileView: View {
                                         }
                                 }
                                 HStack {
-                                    Text(MyprofilMV.name)
+                                    Text(MyprofileMV.name)
                                         .font(.medium(16))
                                     Button {
                                         changeName = true
@@ -45,7 +45,7 @@ struct MyProfileView: View {
                                 .padding(.leading, 20)
                                 
                                 //MARK: description
-                                Text(MyprofilMV.description)
+                                Text(MyprofileMV.description)
                                     .foregroundStyle(.black)
                                     .font(.regular(12))
                                     .padding(.bottom, 14)
@@ -53,11 +53,11 @@ struct MyProfileView: View {
                                 
                                 HStack {
                                     VStack {
-                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: String(followerVM.followers.count)), text: "팔로워")
+                                        Myfollower(board: followModel(nickname: MyprofileMV.name, number: String(followerVM.followers.count)), text: "팔로워")
                                             .padding(.horizontal, 16)
                                     }
                                     VStack {
-                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: String(followingVM.followings.count)), text: "팔로잉")
+                                        Myfollowing(board: followModel(nickname: MyprofileMV.name, number: String(followingVM.followings.count)), text: "팔로잉")
                                             .padding(.horizontal, 16)
                                     }
                                 }
@@ -74,7 +74,7 @@ struct MyProfileView: View {
                     ChangeNameView()
                 }
                 .navigationDestination(isPresented: $modify) {
-                    ModifyView()
+                    ModifyView(profileMV: MyprofileMV)
                 }
                 .ignoresSafeArea()
             }
@@ -90,7 +90,7 @@ struct MyProfileView: View {
             }
         }
         .onAppear {
-            MyprofilMV.fetchMy(followerVM: followerVM, followingVM: followingVM)
+            MyprofileMV.fetchMy(followerVM: followerVM, followingVM: followingVM)
         }
     }
 }
