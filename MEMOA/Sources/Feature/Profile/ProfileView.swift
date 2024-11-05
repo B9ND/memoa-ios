@@ -1,11 +1,12 @@
 import SwiftUI
 
 struct ProfileView: View {
-    // MARK: 프로필 뷰
+    // MARK: 상대방프로필 뷰
     @StateObject private var follow = ProfileViewModel()
-    @StateObject var followerVM = FollowerViewModel()
-    @StateObject var followingVM = FollowingViewModel()
-    @State private var isFollow = false
+    @StateObject private var followerVM = FollowerViewModel()
+    @StateObject private var followingVM = FollowingViewModel()
+    @StateObject private var postVM = MyProfileViewModel()
+    @State private var toDetail = false
     let information: GetDetailPost
     
     var body: some View {
@@ -56,17 +57,20 @@ struct ProfileView: View {
                                     .padding(.bottom , 5)
                                     VStack {
                                         Button {
-                                            isFollow.toggle()
-                                            isFollow ? follow.follow(nickname: information.author) : follow.deleteFollow(nickname: information.author)
+                                            if follow.isFollow {
+                                                follow.deleteFollow(nickname: information.author)
+                                            } else {
+                                                follow.follow(nickname: information.author)
+                                            }
                                         } label: {
-                                            Text(isFollow ? "언팔로우" : "팔로우")
+                                            Text(follow.isFollow ? "언팔로우" : "팔로우")
                                                 .font(.regular(10))
                                                 .frame(width: 87, height: 21)
-                                                .background(isFollow ?  Color.white : Color.maincolor)
+                                                .background(follow.isFollow ?  Color.white : Color.maincolor)
                                                 .cornerRadius(8)
-                                                .foregroundStyle(isFollow ? .black : .white)
+                                                .foregroundStyle(follow.isFollow ? .black : .white)
                                                 .overlay {
-                                                    if isFollow {
+                                                    if follow.isFollow {
                                                         RoundedRectangle(cornerRadius: 10)
                                                             .stroke(Color.graycolor, lineWidth: 1)
                                                     }
@@ -76,6 +80,19 @@ struct ProfileView: View {
                                     .padding(.bottom ,10)
                                     Spacer()
                                     
+                                    Divider()
+                                    ScrollView {
+                                        LazyVStack {
+                                            ForEach(postVM.myPosts, id: \.id) { post in
+                                                MypostComponent(post: post) {
+                                                    postVM.id = post.id
+                                                    postVM.getDetailPost()
+                                                    toDetail = true
+                                                }
+                                            }
+                                        }
+                                        Spacer()
+                                    }
                                 }
                             }
                     }
@@ -85,8 +102,15 @@ struct ProfileView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            postVM.fetchMyPost(author: information.author)
+            follow.fetchMy()
             followerVM.getFollower(user: information.author)
             followingVM.getFollowing(user: information.author)
+        }
+        .navigationDestination(isPresented: $toDetail) {
+            if let detailPost = postVM.detailPosts.first {
+                DetailView(getPost: detailPost)
+            }
         }
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }

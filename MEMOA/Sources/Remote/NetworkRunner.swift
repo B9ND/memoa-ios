@@ -117,11 +117,11 @@ class NetworkRunner {
             secretUrl + path,
             method: method,
             parameters: parameters,
-            encoder: method == .get ? URLEncodedFormParameterEncoder.default : JSONParameterEncoder.default,
+            encoder: URLEncodedFormParameterEncoder.default,
             headers: headers,
             interceptor: isAuthorization ? AuthInterceptor() : nil
         )
-        .validate(statusCode: 200..<300) // 성공 범위 설정
+        .validate()
         .response { response in
             switch response.result {
             case .success:

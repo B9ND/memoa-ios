@@ -45,42 +45,28 @@ struct DetailView: View {
             Divider()
             ScrollView {
                 VStack {
-                    Text(getPost.content)
-                        .font(.light(18))
-                    
-                    //                    ForEach(getPost.content, id: \.self) { text in
-                    //                                  if text.hasPrefix("✔") && text.hasSuffix("✔") {
-                    //                                      if let url = URL(string: text) {
-                    //                                          AsyncImage(url: url) { image in
-                    //                                              image
-                    //                                                  .resizable()
-                    //                                                  .cornerRadius(8)
-                    //                                                  .aspectRatio(contentMode: .fit)
-                    //                                                  .frame(width: 220, height: 240)
-                    //                                                  .padding(.leading, 10)
-                    //                                          } placeholder: {
-                    //                                              ProgressView() // 이미지 로드 중 표시할 플레이스홀더
-                    //                                          }
-                    //                                      }
-                    //                                  }
-                    //                              }
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 3) {
-                            ForEach(getPost.getImageUrl, id: \.self) { url in
+                    ForEach(getPost.content.components(separatedBy: "\n"), id: \.self) { line in
+                        if line.hasPrefix("✔") {
+                            let imageUrl = line.replacingOccurrences(of: "✔", with: "")
+                            if let url = URL(string: imageUrl) {
                                 AsyncImage(url: url) { image in
                                     image
-                                        .image?.resizable()
-                                        .cornerRadius(8, corners: .allCorners)
+                                        .resizable()
+                                        .cornerRadius(8)
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 220,height: 240)
+                                        .frame(width: 220, height: 240)
                                         .padding(.leading, 10)
+                                } placeholder: {
+                                    ProgressView()
                                 }
                             }
+                        } else {
+                            Text(line)
+                                .font(.light(18))
+                                .padding(.horizontal, 36)
                         }
                     }
-                    .scrollIndicators(.hidden)
-                    .padding(.bottom, 30)
+                    
                     VStack {
                         HStack {
                             ForEach(getPost.tags, id: \.self) { tag in
@@ -98,10 +84,10 @@ struct DetailView: View {
                             Spacer()
                         }
                     }
-                    .padding(.leading, 14)
                 }
+                .padding(.trailing, 150)
             }
-            .padding()
+            .padding(.leading, 15)
             Spacer()
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
