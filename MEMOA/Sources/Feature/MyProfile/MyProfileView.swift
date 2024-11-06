@@ -6,9 +6,9 @@ struct MyProfileView: View {
     @StateObject private var followerVM = FollowerViewModel()
     @StateObject private var followingVM = FollowingViewModel()
     @StateObject private var myProfileVM = MyProfileViewModel()
+    @StateObject private var modifyVM = ModifyViewModel()
     @State private var toDetail = false
     @State private var modify = false
-    @State private var changeName = false
     
     var body: some View {
         ZStack {
@@ -24,6 +24,7 @@ struct MyProfileView: View {
                         .cornerRadius(30, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack {
+                                //MARK: 프로필 이미지
                                 ZStack {
                                     Circle()
                                         .fill(Color.white)
@@ -33,23 +34,45 @@ struct MyProfileView: View {
                                             Image(icon: .bigProfile)
                                                 .padding(.top, -44)
                                         }
-                                }
-                                HStack {
-                                    Text(myProfileVM.name)
-                                        .font(.medium(16))
-                                    Button {
-                                        changeName = true
-                                    } label: {
-                                        Image(icon: .pencil)
+//                                    if modifyVM.imageUrl == "" {
+//                                        Circle()
+//                                            .fill(Color.white)
+//                                            .frame(width: 100, height: 100)
+//                                            .padding(.top, -44)
+//                                            .overlay {
+//                                                Image(icon: .bigProfile)
+//                                                    .padding(.top, -44)
+//                                            }
+//                                    } else {
+                                        if let url = URL(string: myProfileVM.profileImage) {
+                                            AsyncImage(url: url) { image in
+                                                Circle()
+                                                    .fill(Color.white)
+                                                    .frame(width: 100, height: 100)
+                                                    .padding(.top, -44)
+                                                    .overlay {
+                                                        image
+                                                            .image?.resizable()
+                                                            .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                                                            .frame(width: 80, height: 80)
+                                                            .padding(.top, -44)
+                                                    }
+                                            }
+//                                        }
                                     }
                                 }
-                                .padding(.leading, 20)
                                 
-                                //MARK: description
-                                Text(myProfileVM.description)
-                                    .foregroundStyle(.black)
-                                    .font(.regular(12))
-                                    .padding(.bottom, 14)
+                                VStack {
+                                    Text(myProfileVM.name)
+                                        .font(.medium(16))
+                                        .padding(.bottom, 2)
+                                    
+                                    //MARK: description
+                                    Text(myProfileVM.description)
+                                        .foregroundStyle(.black)
+                                        .font(.regular(12))
+                                        .padding(.bottom, 14)
+                                }
                                 
                                 
                                 HStack {
@@ -65,26 +88,23 @@ struct MyProfileView: View {
                                 .padding(.bottom , 5)
                                 
                                 Divider()
-                                    ScrollView {
-                                        LazyVStack {
-                                            ForEach(myProfileVM.myPosts, id: \.id) { post in
-                                                MypostComponent(post: post) {
-                                                    myProfileVM.id = post.id
-                                                    myProfileVM.getDetailPost()
-                                                    toDetail = true
-                                                }
+                                ScrollView {
+                                    LazyVStack {
+                                        ForEach(myProfileVM.myPosts, id: \.id) { post in
+                                            MypostComponent(post: post) {
+                                                myProfileVM.id = post.id
+                                                myProfileVM.getDetailPost()
+                                                toDetail = true
                                             }
                                         }
-                                    Spacer()    
+                                    }
+                                    Spacer()
                                 }
                             }
                         }
                 }
-                .navigationDestination(isPresented: $changeName) {
-                    ChangeNameView()
-                }
                 .navigationDestination(isPresented: $modify) {
-                    ModifyView(profileMV: myProfileVM)
+                    ModifyView(profileMV: myProfileVM, modifyVM: modifyVM)
                 }
                 .ignoresSafeArea()
             }

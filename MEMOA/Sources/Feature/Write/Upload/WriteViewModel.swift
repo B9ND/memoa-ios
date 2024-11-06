@@ -15,7 +15,7 @@ class WriteViewModel: ObservableObject {
     @Published var title: String = "" // 타이틀
     @Published var content = ContentItem(text: NSMutableAttributedString())
     @Published var tagsList = ["국어", "수학", "과학", "사회", "영어", "기타"]
-    @Published var tags: [String] = []
+    @Published var tags: [String] = ["대구소프트웨어마이스터고"]
     @Published var images: [String] = []
     @Published var isReleased: Bool = true
     @Published var showAlert = false

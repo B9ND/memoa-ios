@@ -126,7 +126,7 @@ struct WriteView: View {
                                     return
                                 }
                                 writeVM.images.append(imageUrl)
-                                writeVM.postContent.append("✔\(imageUrl)✔")
+                                writeVM.postContent.append("✔★\(imageUrl)✔")
                                 insertComment()
                             }
                         }
@@ -164,7 +164,7 @@ struct WriteView: View {
     }
     func insertComment() {
         let mutableAttributedText = NSMutableAttributedString(attributedString: writeVM.content.text)
-        let commentString = NSAttributedString(string: "📷\(writeVM.images.count)번째 이미지가 들어갈 자리에요!\n\n")
+        let commentString = NSAttributedString(string: "\n📷\(writeVM.images.count)번째 이미지가 들어갈 자리에요!\n\n")
             mutableAttributedText.append(commentString)
         
         mutableAttributedText.addAttributes([

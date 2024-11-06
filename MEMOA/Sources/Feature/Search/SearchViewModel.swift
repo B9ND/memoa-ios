@@ -36,7 +36,7 @@ class SearchViewModel: ObservableObject {
             recentSearchesList.insert(newSearch, at: 0)
         }
         if recentSearchesList.count > 6 {
-            recentSearchesList.remove(at: 0)
+            recentSearchesList.remove(at: 6)
         }
     }
     
@@ -57,6 +57,7 @@ class SearchViewModel: ObservableObject {
             self.recentSearchesList = savedSearches.map { RecentSearches(recentSearch: $0 )}
         }
     }
+    
     func getPost() {
         //MARK: 새로운 검색어로 검색할 때 초기화
         if searchItem.isEmpty {
@@ -82,7 +83,8 @@ class SearchViewModel: ObservableObject {
         
         isLoading = true
         NetworkRunner.shared.request("/post", method: .get, parameters: parameters, response: [SearchModel].self) { result in
-            if case .success(let data) = result {
+            switch result {
+            case .success(let data):
                 if data.isEmpty {
                     self.noPost = true
                     self.canLoadMore = false
@@ -91,6 +93,8 @@ class SearchViewModel: ObservableObject {
                     self.posts.append(contentsOf: data)
                     self.page += 1
                 }
+            case .failure(_):
+                self.noPost = true
             }
             self.isLoading = false
         }

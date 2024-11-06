@@ -46,8 +46,10 @@ struct DetailView: View {
             ScrollView {
                 VStack {
                     ForEach(getPost.content.components(separatedBy: "\n"), id: \.self) { line in
-                        if line.hasPrefix("✔") {
-                            let imageUrl = line.replacingOccurrences(of: "✔", with: "")
+                        if line.hasPrefix("✔★") {
+                            let imageUrl = line
+                                .replacingOccurrences(of: "✔★", with: "")
+                                .replacingOccurrences(of: "✔", with: "")
                             if let url = URL(string: imageUrl) {
                                 AsyncImage(url: url) { image in
                                     image

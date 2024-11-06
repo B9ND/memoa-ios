@@ -5,6 +5,7 @@ class MyProfileViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var email: String = ""
     @Published var description: String = ""
+    @Published var profileImage: String = ""
     let serverUrl = ServerUrl.shared
     
     @Published var myPosts: [MyPostModel] = []
@@ -24,6 +25,7 @@ class MyProfileViewModel: ObservableObject {
                 self.name = data.nickname
                 self.email = data.email
                 self.description = data.description ?? "설명이 없습니다."
+                self.profileImage = data.profileImage
                 followerVM.getFollower(user: self.name)
                 followingVM.getFollowing(user: self.name)
                 self.fetchMyPost(author: self.name)
