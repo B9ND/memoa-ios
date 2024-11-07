@@ -9,6 +9,7 @@ struct ModifyView: View {
     @State private var showImagePicker = false
     @State private var changeProfileImage = true
     @State private var changeName = false
+    @State private var changeDescription = false
     @State private var changeSchool = false
     @Environment(\.dismiss) private var dismiss
     
@@ -107,6 +108,13 @@ struct ModifyView: View {
                                     .padding(.bottom, 14)
                                 
                                 VStack {
+                                    ModifyViewbutton(text: "이름 변경", action: {
+                                        changeName = true
+                                    }, color: .black)
+                                    
+                                    ModifyViewbutton(text: "자기소개 변경", action: {
+                                        changeDescription = true
+                                    }, color: .black)
                                     
                                     ModifyViewbutton(text: "소속 변경", action: {
                                         changeSchool = true
@@ -155,7 +163,10 @@ struct ModifyView: View {
                         }
                 }
                 .navigationDestination(isPresented: $changeName) {
-                    ChangeNameView()
+                    ChangeNameView(changeNameVM: modifyVM)
+                }
+                .navigationDestination(isPresented: $changeDescription) {
+                    ChangeDesciptionView(changeDescriptionVM: modifyVM)
                 }
                 .navigationDestination(isPresented: $changeSchool) {
                     ChangingDepartmentView()
@@ -165,12 +176,7 @@ struct ModifyView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton(action: {
                 modifyVM.patchMy()
-            }, bool: changeProfileImage)
-            .alert(isPresented: $modifyVM.showAlert) {
-                Alert(title: Text("수정 성공"), message: Text("수정수정"), dismissButton: .default(Text("확인")){
-                    dismiss()
-                })
-            }
+            }, bool: changeProfileImage, Title: "이미지 수정성공!", SubTitle: nil, alertBool: $modifyVM.imageAlert)
         }
     }
 }

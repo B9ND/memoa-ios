@@ -10,6 +10,9 @@ import SwiftUI
 struct CompleteButton: View {
     let action: () -> Void
     let bool: Bool
+    let Title: String
+    let SubTitle: String?
+    @Binding var alertBool: Bool
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         HStack {
@@ -30,6 +33,11 @@ struct CompleteButton: View {
                 }
                 .disabled(bool)
             }
+        }
+        .alert(isPresented: $alertBool) {
+            Alert(title: Text(Title), message: Text(SubTitle ?? ""), dismissButton: .default(Text("확인")){
+                dismiss()
+            })
         }
     }
 }

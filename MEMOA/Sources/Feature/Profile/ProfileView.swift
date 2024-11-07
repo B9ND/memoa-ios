@@ -50,12 +50,17 @@ struct ProfileView: View {
                                             }
                                         }
                                     }
-                                    HStack {
+                                    VStack {
                                         Text(information.author)
                                             .font(.medium(16))
+                                            .padding(.bottom, 2)
+                                        
+                                        //MARK: description
+                                        Text(follow.description.isEmpty ? "설명이 없습니다." : follow.description)
+                                            .foregroundStyle(.black)
+                                            .font(.regular(12))
+                                            .padding(.bottom, 14)
                                     }
-                                    .padding(.bottom, 4)
-                                    .padding(.leading, 2)
                                     
                                     HStack {
                                         VStack {
@@ -117,6 +122,7 @@ struct ProfileView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            follow.getUser(nickname: information.author)
             postVM.fetchMyPost(author: information.author)
             follow.fetchMy()
             followerVM.getFollower(user: information.author)

@@ -154,13 +154,7 @@ struct WriteView: View {
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
             writeVM.post()
-        }, bool: writeVM.disabled)
-        .alert(isPresented: $writeVM.showAlert) {
-            Alert(title: Text("업로드 성공"), message: Text("게시글이 성공적으로 업로드되었어요!"), dismissButton: .default(Text("확인")){
-                getPostVM.loadPost()
-                dismiss()
-            })
-        }
+        }, bool: writeVM.disabled, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!", alertBool: $writeVM.showAlert)
     }
     func insertComment() {
         let mutableAttributedText = NSMutableAttributedString(attributedString: writeVM.content.text)

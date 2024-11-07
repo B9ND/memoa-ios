@@ -1,6 +1,7 @@
 import Foundation
 
 class ProfileViewModel: ObservableObject {
+    @Published var description = ""
     @Published var name: String = ""
     @Published var isFollow: Bool = false {
         didSet {
@@ -58,6 +59,17 @@ class ProfileViewModel: ObservableObject {
             switch result {
             case .success(let data):
                 self.name = data.nickname
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getUser(nickname: String) {
+        NetworkRunner.shared.request("/auth/user", method: .get, parameters: ["username" : nickname], response: MyProfileModel.self) { result in
+            switch result {
+            case .success(let data):
+                self.description = data.description ?? ""
             case .failure(let error):
                 print(error.localizedDescription)
             }

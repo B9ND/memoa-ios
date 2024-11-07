@@ -57,7 +57,7 @@ struct MyProfileView: View {
                                         .padding(.bottom, 2)
                                     
                                     //MARK: description
-                                    Text(myProfileVM.description)
+                                    Text(myProfileVM.description.isEmpty ? "설명이 없습니다" : myProfileVM.description)
                                         .foregroundStyle(.black)
                                         .font(.regular(12))
                                         .padding(.bottom, 14)

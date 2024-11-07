@@ -14,7 +14,11 @@ class ModifyViewModel: ObservableObject {
     @Published var nickname: String = ""
     @Published var description: String = ""
     
-    @Published var showAlert = false
+    @Published var changeName: String = ""
+    @Published var changeDescription: String = ""
+    @Published var imageAlert = false
+    @Published var nameAlert = false
+    @Published var descriptionAlert = false
     func getImageUrl() {
         guard let image else {
             print("이미지가 없습니다.")
@@ -50,7 +54,37 @@ class ModifyViewModel: ObservableObject {
                 self.nickname = data.nickname
                 self.imageUrl = data.profileImage
                 self.description = data.description ?? "설명이 없습니다."
-                self.showAlert = true
+                self.imageAlert = true
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func changeUserName() {
+        let parameter: [String: Any] = [
+            "nickname": changeName
+        ]
+        NetworkRunner.shared.request("/auth/me", method: .patch, parameters: parameter, response: MyProfileModel.self) { result in
+            switch result {
+            case .success(let data):
+                self.nickname = data.nickname
+                self.nameAlert = true
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func changeUserDescription() {
+        let parameter: [String: Any] = [
+            "description": changeDescription
+        ]
+        NetworkRunner.shared.request("/auth/me", method: .patch, parameters: parameter, response: MyProfileModel.self) { result in
+            switch result {
+            case .success(let data):
+                self.description = data.description ?? ""
+                self.descriptionAlert = true
             case .failure(let error):
                 print(error.localizedDescription)
             }
