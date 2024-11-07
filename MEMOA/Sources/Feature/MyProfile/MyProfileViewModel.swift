@@ -18,6 +18,7 @@ class MyProfileViewModel: ObservableObject {
         return UserDefaults.standard.string(forKey: "refresh") ?? ""
     }
     
+    //MARK: 내정보 불러오기
     func fetchMy(followerVM: FollowerViewModel, followingVM: FollowingViewModel) {
         NetworkRunner.shared.request("/auth/me", method: .get, response: MyProfileModel.self, isAuthorization: true) { result in
             switch result {
@@ -36,6 +37,7 @@ class MyProfileViewModel: ObservableObject {
     }
     
     
+    //MARK: 로그아웃
     func delete() {
         let url = serverUrl.getUrl(for: "/auth/logout")
         
@@ -54,6 +56,7 @@ class MyProfileViewModel: ObservableObject {
             }
     }
     
+    //MARK: 내 글불러오기
     func fetchMyPost(author: String) {
         let parameters: [String: Any] = ["author": author]
         NetworkRunner.shared.request("/post/user", method: .get, parameters: parameters, response: [MyPostModel].self) { result in
@@ -71,6 +74,7 @@ class MyProfileViewModel: ObservableObject {
         }
     }
     
+    //MARK: 내 디테일 글불러오기
     func getDetailPost() {
         NetworkRunner.shared.request("/post/\(id)", response: GetDetailPost.self) { result in
             if case .success(let data) = result {

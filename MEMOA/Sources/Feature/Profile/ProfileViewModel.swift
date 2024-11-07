@@ -64,7 +64,7 @@ class ProfileViewModel: ObservableObject {
             }
         }
     }
-    
+    //유저의 자기소개 불러오기 위함
     func getUser(nickname: String) {
         NetworkRunner.shared.request("/auth/user", method: .get, parameters: ["username" : nickname], response: MyProfileModel.self) { result in
             switch result {

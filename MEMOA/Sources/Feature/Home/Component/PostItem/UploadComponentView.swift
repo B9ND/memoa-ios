@@ -1,5 +1,6 @@
 import SwiftUI
 
+//MARK: 게시글
 struct UploadComponentView: View {
     @State private var toDetail = false
     @State private var showingAlert = false

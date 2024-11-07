@@ -19,6 +19,7 @@ class ModifyViewModel: ObservableObject {
     @Published var imageAlert = false
     @Published var nameAlert = false
     @Published var descriptionAlert = false
+    //MARK: 이미지 url 불러오기
     func getImageUrl() {
         guard let image else {
             print("이미지가 없습니다.")
@@ -43,6 +44,7 @@ class ModifyViewModel: ObservableObject {
             }
     }
     
+    //MARK: 이미지 올리기
     func patchMy() {
         let parameter: [String: Any] = [
             "profileImage": imageUrl
@@ -61,6 +63,7 @@ class ModifyViewModel: ObservableObject {
         }
     }
     
+    //MARK: 유저의 이름을 바꿈
     func changeUserName() {
         let parameter: [String: Any] = [
             "nickname": changeName
@@ -76,6 +79,7 @@ class ModifyViewModel: ObservableObject {
         }
     }
     
+    //MARK: 유저의 설명을 바꿈
     func changeUserDescription() {
         let parameter: [String: Any] = [
             "description": changeDescription

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: 유저 소개 수정
 struct ChangeDesciptionView: View {
     @ObservedObject var changeDescriptionVM: ModifyViewModel
     var body: some View {
