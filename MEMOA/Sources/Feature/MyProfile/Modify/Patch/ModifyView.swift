@@ -27,16 +27,6 @@ struct ModifyView: View {
                         .overlay {
                             VStack {
                                 ZStack {
-                                    //                                    if modifyVM.imageUrl == "" {
-                                    //                                        Circle()
-                                    //                                            .fill(Color.white)
-                                    //                                            .frame(width: 100, height: 100)
-                                    //                                            .padding(.top, -44)
-                                    //                                            .overlay {
-                                    //                                                Image(icon: .bigProfile)
-                                    //                                                    .padding(.top, -44)
-                                    //                                            }
-                                    //                                    } else {
                                     //MARK: 그대로의 이미지
                                     if let url = URL(string: profileMV.profileImage) {
                                         AsyncImage(url: url) { image in
@@ -51,7 +41,6 @@ struct ModifyView: View {
                                                         .frame(width: 80, height: 80)
                                                         .padding(.top, -44)
                                                 }
-                                            //                                            }
                                         }
                                     }
                                     
@@ -69,7 +58,6 @@ struct ModifyView: View {
                                                         .frame(width: 80, height: 80)
                                                         .padding(.top, -44)
                                                 }
-                                            //                                            }
                                         }
                                     }
                                     

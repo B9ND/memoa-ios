@@ -14,11 +14,19 @@ struct MypostComponent: View {
         } label: {
             VStack {
                 HStack {
-                    ProfileButton(type: .home) {
+                    Button {
                         toProfile = true
+                    } label: {
+                        if let url = URL(string: post.authorProfileImage) {
+                            AsyncImage(url: url) { image in
+                                image
+                                    .image?.resizable()
+                                    .cornerRadius(30)
+                                    .frame(width: 37, height: 37)
+                            }
+                        }
                     }
                     .padding(.leading, 24)
-                    
                     VStack(alignment: .leading) {
                         HStack {
                             Text(post.author)

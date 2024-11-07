@@ -34,31 +34,20 @@ struct MyProfileView: View {
                                             Image(icon: .bigProfile)
                                                 .padding(.top, -44)
                                         }
-//                                    if modifyVM.imageUrl == "" {
-//                                        Circle()
-//                                            .fill(Color.white)
-//                                            .frame(width: 100, height: 100)
-//                                            .padding(.top, -44)
-//                                            .overlay {
-//                                                Image(icon: .bigProfile)
-//                                                    .padding(.top, -44)
-//                                            }
-//                                    } else {
-                                        if let url = URL(string: myProfileVM.profileImage) {
-                                            AsyncImage(url: url) { image in
-                                                Circle()
-                                                    .fill(Color.white)
-                                                    .frame(width: 100, height: 100)
-                                                    .padding(.top, -44)
-                                                    .overlay {
-                                                        image
-                                                            .image?.resizable()
-                                                            .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
-                                                            .frame(width: 80, height: 80)
-                                                            .padding(.top, -44)
-                                                    }
-                                            }
-//                                        }
+                                    if let url = URL(string: myProfileVM.profileImage) {
+                                        AsyncImage(url: url) { image in
+                                            Circle()
+                                                .fill(Color.white)
+                                                .frame(width: 100, height: 100)
+                                                .padding(.top, -44)
+                                                .overlay {
+                                                    image
+                                                        .image?.resizable()
+                                                        .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                                                        .frame(width: 80, height: 80)
+                                                        .padding(.top, -44)
+                                                }
+                                        }
                                     }
                                 }
                                 

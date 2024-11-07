@@ -17,8 +17,17 @@ struct DetailView: View {
     var body: some View {
         VStack {
             HStack {
-                ProfileButton(type: .home) {
+                Button {
                     toProfile = true
+                } label: {
+                    if let url = URL(string: getPost.authorProfileImage) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .image?.resizable()
+                                .cornerRadius(30)
+                                .frame(width: 37, height: 37)
+                        }
+                    }
                 }
                 .padding(.leading, 4)
                 VStack(alignment: .leading) {
