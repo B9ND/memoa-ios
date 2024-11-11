@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct NotOpenSchoolView: View {
-    @StateObject var signupMV: SignUpViewModel = .init()
+    @StateObject var signUpVM = SignUpViewModel()
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -32,8 +32,4 @@ struct NotOpenSchoolView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }
-}
-
-#Preview {
-    NotOpenSchoolView()
 }

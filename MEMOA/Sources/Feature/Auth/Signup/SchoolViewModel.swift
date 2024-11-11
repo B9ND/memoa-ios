@@ -1,62 +1,45 @@
-import Foundation
+import SwiftUI
 import Alamofire
 
 class SchoolViewModel: ObservableObject {
-    @Published var request: SchoolModel = .init()
-    let serverUrl = ServerUrl.shared
-    
-    func fetchSchools() async {
-        let url = serverUrl.getUrl(for: "/school/search")
+    @Published var serverUrl = ServerUrl.shared
+    @Published var request = SchoolModel()
+    @Published var isLoading = false
+    @Published var errorMessage: String?
+    @Published var getSchool: [School] = []
+    @Published var schoolName = ""
+    @Published var selectedSchoolDepartments: [Department] = []
+
+    func resetSchoolList() {
+        getSchool = []
+        errorMessage = nil
+    }
+
+    func fetchSchoolList(searchQuery: String) {
+        let url = serverUrl.getUrl(for: "/school/search?search=\(searchQuery)")
         
-        do {
-            let response = try await
-            AF.request(
-                url,
-                method: .get
-            )
-            .serializingDecodable([SchoolListResponse].self).value
-            
-            request.selectSchool = response.map { SchoolList(schoolname: $0.name) }
-        } catch {
-            print("에러 \(error)")
-        }
+        isLoading = true
+        errorMessage = nil
+
+        AF.request(url, method: .get)
+            .validate()
+            .responseDecodable(of: [School].self) { response in
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    switch response.result {
+                    case .success(let schoolList):
+                        self.getSchool = schoolList
+                    case .failure(let error):
+                        self.errorMessage = "데이터를 불러오지 못했습니다: \(error.localizedDescription)"
+                    }
+                }
+            }
     }
     
-    func searchSchool(by name: String) async {
-        let url = serverUrl.getUrl(for: "/school/search")
-        
-        do {
-            let response = try await
-            AF.request(
-                url,
-                method: .get
-            )
-            .serializingDecodable([SchoolListResponse].self).value
-            
-            request.selectSchool = response.map { SchoolList(schoolname: $0.name) }
-        } catch {
-            print("에러 \(error)")
-        }
-    }
-    
-    func addSchool(school: SchoolPostRequest) async -> Bool {
-        let url = serverUrl.getUrl(for: "/school")
-        
-        do {
-            let response = try await
-            AF.request(
-                url,
-                method: .post,
-                parameters: school,
-                encoder: JSONParameterEncoder.default
-            )
-            .serializingDecodable(SchoolListResponse.self).value
-            
-            print("Added school: \(response.name)")
-            return true
-        } catch {
-            print("에러 \(error)")
-            return false
-        }
+    func updateDepartments(for grade: Int) {
+        selectedSchoolDepartments = getSchool
+            .first { $0.name == schoolName }?
+            .departments
+            .filter { $0.grade == grade } ?? []
     }
 }

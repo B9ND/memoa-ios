@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GetNicnameView: View {
-    @StateObject var signUpMV: SignUpViewModel = .init()
+    @StateObject var signUpVM = SignUpViewModel()
     @Environment(\.dismiss) var dismiss
     @State private var toGetSchoolView = false
     
@@ -11,7 +11,7 @@ struct GetNicnameView: View {
                 AuthBackground()
                 VStack {
                     AuthText(text: "회원가입")
-                    CustomTextField(text: $signUpMV.nickname, placeholder: "닉네임을 입력하세요")
+                    CustomTextField(text: $signUpVM.nickname, placeholder: "닉네임을 입력하세요")
                     Spacer()
                     TermsOfUseButton()
                     LongButton(text: "다음", color: .buttoncolor) {
@@ -20,15 +20,12 @@ struct GetNicnameView: View {
                     .padding(.bottom, 60)
                 }
             }
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
                 .navigationDestination(isPresented: $toGetSchoolView) {
-                    GetSchoolView()
+                    GetSchoolView(signUpVM: signUpVM)
                 }
         }
     }
-}
-
-#Preview {
-    GetNicnameView()
 }

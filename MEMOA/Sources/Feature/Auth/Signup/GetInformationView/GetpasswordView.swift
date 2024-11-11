@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GetpasswordView: View {
-    @StateObject var signUpMV: SignUpViewModel = .init()
+    @StateObject var signUpVM = SignUpViewModel()
     @Environment(\.dismiss) var dismiss
     @State private var toGetNicknameView = false
     
@@ -14,19 +14,19 @@ struct GetpasswordView: View {
                     HStack {
                         Image(icon: .textfiledimage)
                             .padding(.leading, 11)
-                        if signUpMV.isSecure {
-                            SecureField("비밀번호를 입력하세요", text: $signUpMV.password)
+                        if signUpVM.isSecure {
+                            SecureField("비밀번호를 입력하세요", text: $signUpVM.password)
                                 .foregroundColor(.black)
                                 .tint(.maincolor)
                         } else {
-                            TextField("비밀번호를 입력하세요", text: $signUpMV.password)
+                            TextField("비밀번호를 입력하세요", text: $signUpVM.password)
                                 .foregroundColor(.black)
                                 .tint(.maincolor)
                         }
                         Button(action: {
-                            signUpMV.isSecure.toggle()})
+                            signUpVM.isSecure.toggle()})
                         {
-                            Image(icon: signUpMV.isSecure ? .closeeye : .openeye)
+                            Image(icon: signUpVM.isSecure ? .closeeye : .openeye)
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 11)
@@ -37,20 +37,18 @@ struct GetpasswordView: View {
                     Spacer()
                     TermsOfUseButton()
                     LongButton(text: "다음", color: .buttoncolor) {
+                        print(signUpVM.email)
                         toGetNicknameView = true
                     }
                     .padding(.bottom, 60)
                 }
             }
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
                 .navigationDestination(isPresented: $toGetNicknameView) {
-                    GetNicnameView()
+                    GetNicnameView(signUpVM: signUpVM)
                 }
         }
     }
-}
-
-#Preview {
-    GetpasswordView()
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GetEmailView: View {
-    @StateObject var signUpMV: SignUpViewModel = .init()
+    @StateObject var signUpVM = SignUpViewModel()
     @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
     @State private var alertMessage = ""
@@ -16,18 +16,20 @@ struct GetEmailView: View {
                     HStack {
                         Image(icon: .textfiledimage)
                             .padding(.leading, 11)
-                        TextField("이메일을 입력하세요", text: $signUpMV.email)
+                        TextField("이메일을 입력하세요", text: $signUpVM.email)
                             .foregroundColor(.black)
+                            .tint(.maincolor)
                         
-                        if signUpMV.isTimerRunning {
-                            Text("\(signUpMV.remainingTime)초")
+                        if signUpVM.isTimerRunning {
+                            Text("\(signUpVM.remainingTime)초")
                                 .foregroundStyle(.gray)
                                 .font(.medium(16))
                                 .padding(.horizontal, 11)
                         } else {
                             Button(action: {
-                                signUpMV.sendEmailToServer()
-                                signUpMV.startCountdown()
+                                signUpVM.sendEmailToServer()
+                                signUpVM.startCountdown()
+
                             }, label: {
                                 Text("인증")
                                     .foregroundStyle(.maincolor)
@@ -41,14 +43,14 @@ struct GetEmailView: View {
                     .cornerRadius(8)
                     .padding(.bottom, 2)
                     
-                    CustomTextField(text: $signUpMV.code, placeholder: "인증번호 6자리를 입력하세요")
+                    CustomTextField(text: $signUpVM.code, placeholder: "인증번호 6자리를 입력하세요")
                     
                     Spacer()
                     TermsOfUseButton()
                     
                     LongButton(text: "다음", color: .buttoncolor) {
                         Task {
-                            let isCodeValidResponse = await signUpMV.verifyCode()
+                            let isCodeValidResponse = await signUpVM.verifyCode()
                             if isCodeValidResponse {
                                 isCodeValid = true
                             } else {
@@ -60,18 +62,15 @@ struct GetEmailView: View {
                     .padding(.bottom, 60)
                 }
             }
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("오류"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
             }
             .navigationDestination(isPresented: $isCodeValid) {
-                GetNicnameView()
+                GetpasswordView(signUpVM: signUpVM)
             }
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }
-}
-
-#Preview {
-    GetEmailView()
 }

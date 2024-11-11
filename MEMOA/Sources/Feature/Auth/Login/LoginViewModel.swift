@@ -11,8 +11,6 @@ class LoginViewModel: ObservableObject {
     var isLoginDisabled: Bool {
         email.isEmpty || password.isEmpty
     }
-    
-    // 로그인 함수
     func login(completion: @escaping (Bool) -> Void) {
         let url = serverUrl.getUrl(for: "/auth/login")
         

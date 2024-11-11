@@ -8,10 +8,10 @@ struct GradeSelectButton: View {
             selectedGrade = grade
         }, label: {
             Text("\(grade)학년")
-                .foregroundColor(.black)
-                .font(.bold(20))
-                .frame(width: 82, height: 78)
-                .background(.white)
+                            .foregroundColor(.black)
+                            .font(.bold(20))
+                            .frame(width: 82, height: 78)
+                            .background(.white)
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
