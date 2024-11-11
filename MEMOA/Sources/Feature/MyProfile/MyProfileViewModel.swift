@@ -6,6 +6,8 @@ class MyProfileViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var description: String = ""
     @Published var profileImage: String = ""
+    @Published var subjects: [String] = []
+    //TODO: 서브젝트 불러와서 글쓰기 할때 불러오기
     let serverUrl = ServerUrl.shared
     
     @Published var myPosts: [MyPostModel] = []
@@ -27,6 +29,7 @@ class MyProfileViewModel: ObservableObject {
                 self.email = data.email
                 self.description = data.description ?? "설명이 없습니다."
                 self.profileImage = data.profileImage
+                self.subjects = data.department.subjects
                 followerVM.getFollower(user: self.name)
                 followingVM.getFollowing(user: self.name)
                 self.fetchMyPost(author: self.name)

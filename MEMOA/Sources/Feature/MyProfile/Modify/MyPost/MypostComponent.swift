@@ -80,7 +80,7 @@ struct MypostComponent: View {
                         ChatButton {
                             // TODO: Handle
                         }
-                        BookmarkButton()
+                        BookmarkButton(id: .constant(post.id))
                         Spacer()
                     }
                 }

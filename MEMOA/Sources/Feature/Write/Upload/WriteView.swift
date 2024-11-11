@@ -138,14 +138,24 @@ struct WriteView: View {
         
         ScrollView(.horizontal) {
             HStack(spacing: 3) {
-                ForEach(writeVM.getImageUrl, id: \.self) { url in
-                    AsyncImage(url: url) { image in
-                        image
-                            .image?.resizable()
-                            .cornerRadius(8, corners: .allCorners)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 105,height: 115)
-                            .padding(.leading, 10)
+                ForEach(Array(writeVM.getImageUrl.enumerated()), id: \.element) { index, url in
+                    ZStack {
+                        AsyncImage(url: url) { image in
+                            image
+                                .image?.resizable()
+                                .cornerRadius(8, corners: .allCorners)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 105,height: 115)
+                                .padding(.leading, 10)
+                        }
+                        Button {
+                            writeVM.images.remove(at: index)
+                            deleteComment(index: index)
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundStyle(.red)
+                        }
+                        .offset(x: 50, y: -50)
                     }
                 }
             }
@@ -156,14 +166,29 @@ struct WriteView: View {
             writeVM.post()
         }, bool: writeVM.disabled, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!", alertBool: $writeVM.showAlert)
     }
+    
+    //MARK: 넣을 이미지
     func insertComment() {
         let mutableAttributedText = NSMutableAttributedString(attributedString: writeVM.content.text)
         let commentString = NSAttributedString(string: "\n📷\(writeVM.images.count)번째 이미지가 들어갈 자리에요!\n\n")
-            mutableAttributedText.append(commentString)
+        mutableAttributedText.append(commentString)
         
         mutableAttributedText.addAttributes([
             .font: UIFont(name: "Pretendard-Medium", size: 15)!
         ], range: NSMakeRange(0, mutableAttributedText.length))
+        writeVM.content.text = mutableAttributedText
+    }
+    
+    //MARK: 삭제할 이미지
+    func deleteComment(index : Int) {
+        let commentString = "\n📷\(index + 1)번째 이미지가 들어갈 자리에요!\n\n"
+        let mutableAttributedText = NSMutableAttributedString(attributedString: writeVM.content.text)
+        
+        if let range = mutableAttributedText.string.range(of: commentString) {
+            let nsRange = NSRange(range, in: mutableAttributedText.string)
+            mutableAttributedText.deleteCharacters(in: nsRange)
+        }
+        
         writeVM.content.text = mutableAttributedText
     }
 }

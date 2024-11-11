@@ -53,7 +53,7 @@ struct DetailView: View {
             .padding()
             Divider()
             ScrollView {
-                VStack {
+                VStack(alignment: .leading) {
                     ForEach(getPost.content.components(separatedBy: "\n"), id: \.self) { line in
                         if line.hasPrefix("✔★") {
                             let imageUrl = line
@@ -91,12 +91,12 @@ struct DetailView: View {
                             ChatButton {
                                 // TODO: Handle
                             }
-                            BookmarkButton()
+                            BookmarkButton(id: .constant(getPost.id))
                             Spacer()
                         }
                     }
                 }
-                .padding(.trailing, 150)
+                Spacer()
             }
             .padding(.leading, 15)
             Spacer()
