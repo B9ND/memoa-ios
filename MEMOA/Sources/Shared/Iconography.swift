@@ -16,7 +16,7 @@ enum Iconography: String {
     case cloud = "cloud"
     case computer = "computer"
     case termsofuse = "termsofuse"
-    case textfiledimage = "TextfieldBook"
+    case textfiledimage = "textfieldbook"
     // home
     case bookMark = "bm"
     case chating = "chat"

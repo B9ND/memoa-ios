@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var LoginMV: LoginViewModel = .init()
+    @ObservedObject var LoginVM: LoginViewModel = .init()
     @Environment(\.dismiss) var dismiss
     @State private var isLoginSuccess = false
+    @State private var showAlert = false
     
     var body: some View {
         ZStack {
@@ -12,27 +13,27 @@ struct LoginView: View {
             VStack {
                 AuthText(text: "로그인")
                 
-                CustomTextField(text: $LoginMV.email, placeholder: "이메일을 입력하세요")
+                CustomTextField(text: $LoginVM.email, placeholder: "이메일을 입력하세요")
                     .padding(.bottom, 2)
                 
                 HStack {
                     Image(icon: .textfiledimage)
                         .padding(.leading, 11)
                     
-                    if LoginMV.isSecure {
-                        SecureField("비밀번호를 입력하세요", text: $LoginMV.password)
+                    if LoginVM.isSecure {
+                        SecureField("비밀번호를 입력하세요", text: $LoginVM.password)
                             .foregroundColor(.black)
                             .tint(.maincolor)
                     } else {
-                        TextField("비밀번호를 입력하세요", text: $LoginMV.password)
+                        TextField("비밀번호를 입력하세요", text: $LoginVM.password)
                             .foregroundColor(.black)
                             .tint(.maincolor)
                     }
                     
                     Button(action: {
-                        LoginMV.isSecure.toggle()
+                        LoginVM.isSecure.toggle()
                     }) {
-                        Image(icon: LoginMV.isSecure ? .closeeye : .openeye)
+                        Image(icon: LoginVM.isSecure ? .closeeye : .openeye)
                             .foregroundColor(.gray)
                     }
                     .padding(.horizontal, 11)
@@ -45,17 +46,26 @@ struct LoginView: View {
                 
                 
                 LongButton(text: "로그인", color: .buttoncolor) {
-                    LoginMV.login { success in
+                    LoginVM.login { success in
                         if success {
                             isLoginSuccess = true
                         } else {
-                            print(LoginMV.loginerrorMessage ?? "로그인 실패")
+                            print(LoginVM.loginerrorMessage ?? "로그인 실패")
+                            showAlert = true
                         }
                     }
                 }
                 .padding(.bottom, 60)
+                .alert(isPresented: $showAlert) {
+                            Alert(
+                                title: Text("로그인 실패"),
+                                message: Text("다시 시도해 주세요."),
+                                dismissButton: .default(Text("확인"))
+                            )
+                        }
             }
         }
+        .onAppear(perform : UIApplication.shared.hideKeyboard)
         .edgesIgnoringSafeArea(.all)
         .fullScreenCover(isPresented: $isLoginSuccess) {
             MainView()

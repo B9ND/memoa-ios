@@ -1,25 +1,24 @@
 import SwiftUI
 
 struct SelectSchoolView: View {
-    @StateObject var schoolMV: SchoolViewModel = .init()
-    @Environment(\.dismiss) var presentation
+    @EnvironmentObject var schoolVM: SchoolViewModel
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Image(.searchbutton)
+                Image("searchbutton")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 22)
                     .padding(.leading, 11)
                 
-                TextField("소속학교를 검색하세요", text: $schoolMV.request.school)
+                TextField("소속학교를 검색하세요", text: $schoolVM.request.school)
                     .foregroundColor(.black)
                     .tint(.maincolor)
-                    .onChange(of: schoolMV.request.school) { newValue in
-                        Task {
-                            await schoolMV.searchSchool(by: newValue)
-                        }
+                    .onChange(of: schoolVM.request.school) { newValue in
+                        schoolVM.resetSchoolList()
+                        schoolVM.fetchSchoolList(searchQuery: newValue)
                     }
             }
             .frame(width: 324, height: 36)
@@ -29,32 +28,34 @@ struct SelectSchoolView: View {
             .padding(.top, 38)
             .padding(.bottom, 18)
             
-            ForEach(schoolMV.request.selectSchool, id: \.self) { school in
-                Button(action: {
-                    presentation()
-                }, label: {
-                    HStack {
-                        Text(school.schoolname)
-                            .foregroundColor(.black)
+            if schoolVM.isLoading {
+                ProgressView("검색 중...")
+            } else if schoolVM.request.school.isEmpty {
+                Text("검색 결과가 없습니다.")
+                    .foregroundColor(.gray)
+            } else if let errorMessage = schoolVM.errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            } else {
+                ForEach(schoolVM.getSchool, id: \.self) { school in
+                    Button {
+                        schoolVM.schoolName = school.name
+                        dismiss()
+                    } label: {
+                        Text(school.name)
                             .font(.light(16))
+                            .foregroundColor(.black)
                             .padding(.leading, 17)
-                        Spacer()
                     }
-                    .frame(maxWidth: .infinity, maxHeight: 47)
-                    .background(.white)
-                    .border(Color.gray.opacity(0.2))
-                })
+                    .frame(maxWidth: .infinity, maxHeight: 47, alignment: .leading)
+                    .border(.gray, width: 1)
+                }
             }
-            
             Spacer()
-        }
-        .onAppear {
-            Task {
-                await schoolMV.fetchSchools()
-            }
         }
     }
 }
+
 
 #Preview {
     SelectSchoolView()

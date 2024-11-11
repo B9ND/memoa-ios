@@ -1,41 +1,21 @@
 import Foundation
 
-struct SchoolModel {
+// 학과 정보
+struct Department: Identifiable, Codable, Hashable {
+    var id: Int
+    var name: String
+    var grade: Int
+    var subjects: [String]
+}
+
+// 학교 정보
+struct School: Codable, Hashable {
+    var name: String
+    var departments: [Department]
+}
+
+struct SchoolModel: Codable {
     var school: String = ""
-    var selectSchool = [SchoolList]()
+    var selectSchool: [School] = []
 }
 
-struct SchoolList: Identifiable, Hashable {
-    var id: UUID
-    var schoolname: String
-    
-    init(schoolname: String = "") {
-        self.id = UUID() 
-        self.schoolname = schoolname
-    }
-}
-
-
-struct SchoolListResponse: Decodable {
-    let id: Int
-    let name: String
-    let departments: [DepartmentResponse]
-}
-
-struct DepartmentResponse: Decodable {
-    let id: Int
-    let name: String
-    let grade: Int
-    let subjects: [String]
-}
-
-struct SchoolPostRequest: Encodable {
-    let name: String
-    let departments: [DepartmentPostRequest]
-}
-
-struct DepartmentPostRequest: Encodable {
-    let name: String
-    let grade: Int
-    let subjects: [String]
-}
