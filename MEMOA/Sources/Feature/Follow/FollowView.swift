@@ -12,6 +12,7 @@ struct FollowView: View {
     @Binding var toFollower: Bool
     @Binding var toFollowing: Bool
     var followBoard: followModel
+    
     var body: some View {
         VStack {
             HStack {
@@ -48,9 +49,9 @@ struct FollowView: View {
             .padding(.horizontal, 90)
             
             if toFollower {
-                FollowerView()
+                FollowerView(id: followBoard.nickname)
             } else if toFollowing {
-                FollowingView()
+                FollowingView(id: followBoard.nickname)
             }
         }
         Spacer()

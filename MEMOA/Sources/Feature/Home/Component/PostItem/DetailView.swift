@@ -17,8 +17,17 @@ struct DetailView: View {
     var body: some View {
         VStack {
             HStack {
-                ProfileButton(type: .home) {
+                Button {
                     toProfile = true
+                } label: {
+                    if let url = URL(string: getPost.authorProfileImage) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .image?.resizable()
+                                .cornerRadius(30)
+                                .frame(width: 37, height: 37)
+                        }
+                    }
                 }
                 .padding(.leading, 4)
                 VStack(alignment: .leading) {
@@ -44,26 +53,31 @@ struct DetailView: View {
             .padding()
             Divider()
             ScrollView {
-                VStack {
-                    Text(getPost.content)
-                        .font(.light(18))
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 3) {
-                            ForEach(getPost.getImageUrl, id: \.self) { url in
+                VStack(alignment: .leading) {
+                    ForEach(getPost.content.components(separatedBy: "\n"), id: \.self) { line in
+                        if line.hasPrefix("✔★") {
+                            let imageUrl = line
+                                .replacingOccurrences(of: "✔★", with: "")
+                                .replacingOccurrences(of: "✔", with: "")
+                            if let url = URL(string: imageUrl) {
                                 AsyncImage(url: url) { image in
                                     image
-                                        .image?.resizable()
-                                        .cornerRadius(8, corners: [.topLeft, .bottomLeft, .topRight, .bottomRight])
+                                        .resizable()
+                                        .cornerRadius(8)
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 220,height: 240)
+                                        .frame(width: 220, height: 240)
                                         .padding(.leading, 10)
+                                } placeholder: {
+                                    ProgressView()
                                 }
                             }
+                        } else {
+                            Text(line)
+                                .font(.light(18))
+                                .padding(.horizontal, 36)
                         }
                     }
-                    .scrollIndicators(.hidden)
-                    .padding(.bottom, 30)
+                    
                     VStack {
                         HStack {
                             ForEach(getPost.tags, id: \.self) { tag in
@@ -74,17 +88,22 @@ struct DetailView: View {
                             Spacer()
                         }
                         HStack {
-                            ChatButton()
-                            BookmarkButton()
+                            ChatButton {
+                                // TODO: Handle
+                            }
+                            BookmarkButton(id: .constant(getPost.id))
                             Spacer()
                         }
                     }
-                    .padding(.leading, 14)
                 }
+                Spacer()
             }
-            .padding()
+            .padding(.leading, 15)
             Spacer()
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+        }
+        .navigationDestination(isPresented: $toProfile) {
+            ProfileView(information: getPost)
         }
     }
 }

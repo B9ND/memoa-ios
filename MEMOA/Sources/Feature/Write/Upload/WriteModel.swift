@@ -7,6 +7,7 @@ struct WriteModel {
     let tags: [String]
     let images: [ImageItem]
     let isReleased: Bool
+    let postContent: [String]
 }
 
 struct ContentItem {

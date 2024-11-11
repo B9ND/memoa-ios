@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct MyProfileView: View {
-    //MARK: 프로필 뷰
-    @StateObject var MyprofilMV: MyProfileViewModel = .init()
-    //MARK: 이거 mvvm 하면 하기
-    @State private var follow = false
+    //MARK: 내 프로필 뷰
+    @StateObject private var follow = ProfileViewModel()
+    @StateObject private var followerVM = FollowerViewModel()
+    @StateObject private var followingVM = FollowingViewModel()
+    @StateObject private var myProfileVM = MyProfileViewModel()
+    @StateObject private var modifyVM = ModifyViewModel()
+    @State private var toDetail = false
     @State private var modify = false
-    @State private var changeName = false
     
     var body: some View {
         ZStack {
@@ -22,6 +24,7 @@ struct MyProfileView: View {
                         .cornerRadius(30, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack {
+                                //MARK: 프로필 이미지
                                 ZStack {
                                     Circle()
                                         .fill(Color.white)
@@ -31,52 +34,66 @@ struct MyProfileView: View {
                                             Image(icon: .bigProfile)
                                                 .padding(.top, -44)
                                         }
+                                    if let url = URL(string: myProfileVM.profileImage) {
+                                        AsyncImage(url: url) { image in
+                                            Circle()
+                                                .fill(Color.white)
+                                                .frame(width: 100, height: 100)
+                                                .padding(.top, -44)
+                                                .overlay {
+                                                    image
+                                                        .image?.resizable()
+                                                        .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                                                        .frame(width: 80, height: 80)
+                                                        .padding(.top, -44)
+                                                }
+                                        }
+                                    }
                                 }
-                                HStack {
-                                    Text(MyprofilMV.name)
+                                
+                                VStack {
+                                    Text(myProfileVM.name)
                                         .font(.medium(16))
-                                    Button {
-                                        changeName = true
-                                    } label: {
-                                        Image(icon: .pencil)
-                                    }
+                                        .padding(.bottom, 2)
+                                    
+                                    //MARK: description
+                                    Text(myProfileVM.description.isEmpty ? "설명이 없습니다" : myProfileVM.description)
+                                        .foregroundStyle(.black)
+                                        .font(.regular(12))
+                                        .padding(.bottom, 14)
                                 }
-                                .padding(.leading, 20)
-                                
-                                //MARK: description
-                                Text("안녕하세요 저는 박재민")
-                                    .foregroundStyle(.black)
-                                    .font(.regular(12))
-                                    .padding(.bottom, 14)
                                 
                                 
                                 HStack {
                                     VStack {
-                                        Myfollower(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로워")
+                                        Myfollower(board: followModel(nickname: myProfileVM.name, number: String(followerVM.followers.count)), text: "팔로워")
                                             .padding(.horizontal, 16)
                                     }
                                     VStack {
-                                        Myfollowing(board: followModel(nickname: MyprofilMV.name, number: "123"), text: "팔로잉")
+                                        Myfollowing(board: followModel(nickname: myProfileVM.name, number: String(followingVM.followings.count)), text: "팔로잉")
                                             .padding(.horizontal, 16)
                                     }
                                 }
-                                .padding(.bottom, 15)
+                                .padding(.bottom , 5)
                                 
                                 Divider()
                                 ScrollView {
+                                    LazyVStack {
+                                        ForEach(myProfileVM.myPosts, id: \.id) { post in
+                                            MypostComponent(post: post) {
+                                                myProfileVM.id = post.id
+                                                myProfileVM.getDetailPost()
+                                                toDetail = true
+                                            }
+                                        }
+                                    }
                                     Spacer()
-//                                    UploadComponentView(board: BoardModel(nickname: "유을", time: "2024-09-29", image: [Imagelist(image: "example")], title: "과학수학필기 공유합니다", tag: "공부하기싫다", email: "eunchan2815@gmail.com")) {
-//                                        print("정보주기")
-//                                    }
                                 }
                             }
                         }
                 }
-                .navigationDestination(isPresented: $changeName) {
-                    ChangeNameView()
-                }
                 .navigationDestination(isPresented: $modify) {
-                    ModifyView()
+                    ModifyView(profileMV: myProfileVM, modifyVM: modifyVM)
                 }
                 .ignoresSafeArea()
             }
@@ -89,6 +106,14 @@ struct MyProfileView: View {
                 } label: {
                     Image(icon: .setting)
                 }
+            }
+        }
+        .onAppear {
+            myProfileVM.fetchMy(followerVM: followerVM, followingVM: followingVM)
+        }
+        .navigationDestination(isPresented: $toDetail) {
+            if let detailPost = myProfileVM.detailPosts.first {
+                DetailView(getPost: detailPost)
             }
         }
     }

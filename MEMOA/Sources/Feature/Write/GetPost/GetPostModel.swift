@@ -7,6 +7,7 @@ struct GetPostModel: Codable {
 //    let content: String
     //MARK: home에서 content필요없을듯?
     let author: String
+    let authorProfileImage: String
     let tags: [String]
     let createdAt: String
     let images: [String]

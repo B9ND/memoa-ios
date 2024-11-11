@@ -13,7 +13,7 @@ struct CommentView: View {
         //MARK: board 다시 만들까 고민중임
         VStack {
             ForEach(1..<5) { _ in
-                CommentViewCell(board: BoardModel(nickname: "김은찬", time: "2024-10-18", image: [], title: "공유", tag: "" , email: "fsdlfksj"))
+//                CommentViewCell(board: BoardModel(nickname: "김은찬", time: "2024-10-18", image: [], title: "공유", tag: "" , email: "fsdlfksj"))
             }
         }
         .padding(.vertical, 14)

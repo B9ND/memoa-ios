@@ -1,16 +1,24 @@
+//
+//  FollowerModel.swift
+//  MEMOA
+//
+//  Created by dgsw30 on 11/2/24.
+//
+
 import Foundation
 
-struct MyProfileModel: Codable {
+struct FollowerModel: Codable {
     var email: String
     var nickname: String
     var description: String?
     var profileImage: String
-    var department: MyProfileDepartment
+    var department: FollowerDepartment
 }
 
-struct MyProfileDepartment: Codable {
+struct FollowerDepartment: Codable {
     var name: String
     var grade: Int
     var school: String
     var subjects: [String]
 }
+

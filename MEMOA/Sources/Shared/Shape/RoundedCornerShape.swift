@@ -8,11 +8,11 @@ public struct RoundedCornerShape : Shape {
         public init(rawValue: UInt) {
             self.rawValue = rawValue
         }
-        public static var topLeft = RectCorner(rawValue: 1 << 0)
-        public static var topRight = RectCorner(rawValue: 1 << 1)
-        public static var bottomLeft = RectCorner(rawValue: 1 << 2)
-        public static var bottomRight = RectCorner(rawValue: 1 << 3)
-        public static var allCorners: RectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight]
+        public static let topLeft = RectCorner(rawValue: 1 << 0)
+        public static let topRight = RectCorner(rawValue: 1 << 1)
+        public static let bottomLeft = RectCorner(rawValue: 1 << 2)
+        public static let bottomRight = RectCorner(rawValue: 1 << 3)
+        public static let allCorners: RectCorner = [.topLeft, .topRight, .bottomLeft, .bottomRight]
     }
     
     private let radius: CGFloat

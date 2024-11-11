@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct ProfileView: View {
-    // MARK: 프로필 뷰
-    var board: BoardModel
+    // MARK: 상대방프로필 뷰
+    @StateObject private var follow = ProfileViewModel()
+    @StateObject private var followerVM = FollowerViewModel()
+    @StateObject private var followingVM = FollowingViewModel()
+    @StateObject private var postVM = MyProfileViewModel()
+    @State private var toDetail = false
+    let information: GetDetailPost
     
     var body: some View {
         NavigationView {
@@ -29,37 +34,85 @@ struct ProfileView: View {
                                                 Image(icon: .bigProfile)
                                                     .padding(.top, -44)
                                             }
+                                        if let url = URL(string: information.authorProfileImage) {
+                                            AsyncImage(url: url) { image in
+                                                Circle()
+                                                    .fill(Color.white)
+                                                    .frame(width: 100, height: 100)
+                                                    .padding(.top, -44)
+                                                    .overlay {
+                                                        image
+                                                            .image?.resizable()
+                                                            .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                                                            .frame(width: 80, height: 80)
+                                                            .padding(.top, -44)
+                                                    }
+                                            }
+                                        }
                                     }
-                                    HStack {
-                                        Text(board.nickname)
+                                    VStack {
+                                        Text(information.author)
                                             .font(.medium(16))
+                                            .padding(.bottom, 2)
+                                        
+                                        //MARK: description
+                                        Text(follow.description.isEmpty ? "설명이 없습니다." : follow.description)
+                                            .foregroundStyle(.black)
+                                            .font(.regular(12))
+                                            .padding(.bottom, 14)
                                     }
-                                    .padding(.bottom, 4)
-                                    .padding(.leading, 2)
-                                    Text(board.email)
-                                        .foregroundStyle(.black)
-                                        .font(.regular(12))
-                                        .padding(.bottom, 14)
                                     
                                     HStack {
                                         VStack {
-                                            Myfollower(board: followModel(nickname: board.nickname, number: "123"), text: "팔로워")
+                                            Myfollower(board: followModel(nickname: information.author, number: String(followerVM.followers.count)), text: "팔로워")
                                                 .padding(.horizontal, 16)
+                                                .environmentObject(followerVM)
                                         }
                                         VStack {
-                                            Myfollowing(board: followModel(nickname: board.nickname, number: "144"), text: "팔로잉")
+                                            Myfollowing(board: followModel(nickname: information.author, number: String(followingVM.followings.count)), text: "팔로잉")
                                                 .padding(.horizontal, 16)
+                                                .environmentObject(followingVM)
                                         }
                                     }
                                     .padding(.bottom , 5)
                                     VStack {
-                                        FollowButton {
-                                            print("클릭")
+                                        Button {
+                                            if follow.isFollow {
+                                                follow.deleteFollow(nickname: information.author)
+                                            } else {
+                                                follow.follow(nickname: information.author)
+                                            }
+                                        } label: {
+                                            Text(follow.isFollow ? "언팔로우" : "팔로우")
+                                                .font(.regular(10))
+                                                .frame(width: 87, height: 21)
+                                                .background(follow.isFollow ?  Color.white : Color.maincolor)
+                                                .cornerRadius(8)
+                                                .foregroundStyle(follow.isFollow ? .black : .white)
+                                                .overlay {
+                                                    if follow.isFollow {
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .stroke(Color.graycolor, lineWidth: 1)
+                                                    }
+                                                }
                                         }
                                     }
                                     .padding(.bottom ,10)
                                     Spacer()
                                     
+                                    Divider()
+                                    ScrollView {
+                                        LazyVStack {
+                                            ForEach(postVM.myPosts, id: \.id) { post in
+                                                MypostComponent(post: post) {
+                                                    postVM.id = post.id
+                                                    postVM.getDetailPost()
+                                                    toDetail = true
+                                                }
+                                            }
+                                        }
+                                        Spacer()
+                                    }
                                 }
                             }
                     }
@@ -68,6 +121,18 @@ struct ProfileView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            follow.getUser(nickname: information.author)
+            postVM.fetchMyPost(author: information.author)
+            follow.fetchMy()
+            followerVM.getFollower(user: information.author)
+            followingVM.getFollowing(user: information.author)
+        }
+        .navigationDestination(isPresented: $toDetail) {
+            if let detailPost = postVM.detailPosts.first {
+                DetailView(getPost: detailPost)
+            }
+        }
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }

@@ -28,7 +28,36 @@ struct SelectitemView: View {
                         .resizable()
                         .frame(width: 10, height: 9)
                 }
-                .frame(width: 233)
+                .frame(width: 204)
+                .frame(minHeight: 29)
+                .background(Color.picker)
+                .cornerRadius(8)
+            }
+            
+            //과목선택
+            Menu {
+                ForEach(selectVM.grade, id: \.grade) { gradeItem in
+                    Button(action: {
+                        selectVM.selectedGrade = gradeItem.grade
+                    }) {
+                        HStack {
+                            Text("\(gradeItem.grade)학년")
+                                .foregroundColor(selectVM.selectedGrade == gradeItem.grade ? .white : .black)
+                                .padding()
+                                .cornerRadius(5)
+                        }
+                    }
+                }
+            } label: {
+                HStack {
+                    Text("과목")
+                        .font(.regular(14))
+                        .foregroundColor(.black)
+                    Image(.pickerItem)
+                        .resizable()
+                        .frame(width: 10, height: 9)
+                }
+                .frame(width: 59)
                 .frame(minHeight: 29)
                 .background(Color.picker)
                 .cornerRadius(8)
@@ -53,12 +82,11 @@ struct SelectitemView: View {
                     Text("\(selectVM.selectedGrade)학년")
                         .font(.regular(14))
                         .foregroundColor(.black)
-                        .padding(.horizontal, 2)
                     Image(.pickerItem)
                         .resizable()
                         .frame(width: 10, height: 9)
                 }
-                .frame(width: 82)
+                .frame(width: 59)
                 .frame(minHeight: 29)
                 .background(Color.picker)
                 .cornerRadius(8)

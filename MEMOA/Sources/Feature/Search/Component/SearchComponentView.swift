@@ -14,10 +14,18 @@ struct SearchComponentView: View {
         } label: {
             VStack {
                 HStack {
-                    ProfileButton(type: .home) {
+                    Button {
                         toProfile = true
+                    } label: {
+                        if let url = URL(string: post.authorProfileImage) {
+                            AsyncImage(url: url) { image in
+                                image
+                                    .image?.resizable()
+                                    .cornerRadius(30)
+                                    .frame(width: 37, height: 37)
+                            }
+                        }
                     }
-                    .padding(.leading, 24)
                     
                     VStack(alignment: .leading) {
                         HStack {
@@ -47,10 +55,7 @@ struct SearchComponentView: View {
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .cornerRadius(8, corners: .topLeft)
-                                        .cornerRadius(8, corners: .bottomLeft)
-                                        .cornerRadius(8, corners: .topRight)
-                                        .cornerRadius(8, corners: .bottomRight)
+                                        .cornerRadius(8, corners: .allCorners)
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 220,height: 240)
                                         .padding(.leading, 10)
@@ -72,8 +77,10 @@ struct SearchComponentView: View {
                         Spacer()
                     }
                     HStack {
-                        ChatButton()
-                        BookmarkButton()
+                        ChatButton {
+                            // TODO: Handle
+                        }
+                        BookmarkButton(id: .constant(post.id))
                         Spacer()
                     }
                 }

@@ -8,16 +8,16 @@
 import SwiftUI
 //MARK: 채팅버튼
 struct ChatButton: View {
-    @State private var toChat = false
+    let action: () -> Void
     var body: some View {
         Button {
-            toChat.toggle()
+            action()
         } label: {
             Image(.chat)
                 .foregroundStyle(.timecolor)
         }
-        .navigationDestination(isPresented: $toChat) {
-            CommentView()
-        }
+//        .navigationDestination(isPresented: $toChat) {
+//            CommentView()
+//        }
     }
 }

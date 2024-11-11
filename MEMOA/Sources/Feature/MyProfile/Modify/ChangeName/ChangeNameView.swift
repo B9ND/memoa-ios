@@ -9,11 +9,10 @@
 import SwiftUI
 
 struct ChangeNameView: View {
-    @State private var changeName = ""
-    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var changeNameVM: ModifyViewModel
     var body: some View {
         VStack {
-            TextField("변경할 이름을 입력해주세요", text: $changeName)
+            TextField("변경할 이름을 입력해주세요", text: $changeNameVM.changeName)
                 .tint(.maincolor)
                 .padding(.horizontal, 16)
                     Rectangle()
@@ -22,13 +21,9 @@ struct ChangeNameView: View {
         }
         .padding()
         Spacer()
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+        BackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
-            print("이름변경")
-        }, bool: changeName.isEmpty)
+            changeNameVM.changeUserName()
+        }, bool: changeNameVM.changeName.isEmpty, Title: "이름이 변경되었어요!", SubTitle: nil, alertBool: $changeNameVM.nameAlert)
     }
-}
-
-#Preview {
-    ChangeNameView()
 }

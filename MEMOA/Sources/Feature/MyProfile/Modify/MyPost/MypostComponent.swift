@@ -1,11 +1,10 @@
 import SwiftUI
 
-//MARK: 게시글
-struct UploadComponentView: View {
+struct MypostComponent: View {
     @State private var toDetail = false
     @State private var showingAlert = false
     @State private var toProfile = false
-    let post: GetPostModel
+    let post: MyPostModel
     let action: () -> Void
     
     var body: some View {
@@ -28,7 +27,6 @@ struct UploadComponentView: View {
                         }
                     }
                     .padding(.leading, 24)
-                    
                     VStack(alignment: .leading) {
                         HStack {
                             Text(post.author)
@@ -93,3 +91,4 @@ struct UploadComponentView: View {
         }
     }
 }
+

@@ -13,6 +13,7 @@ struct GetDetailPost: Codable {
     let title: String
     let content: String
     let author: String
+    let authorProfileImage: String
     let tags: [String]
     let createdAt: String
     let images: [String]

@@ -4,6 +4,7 @@ struct SearchModel: Codable {
     let id: Int
     let title: String
     let author: String
+    let authorProfileImage: String
     let tags: [String]
     let createdAt: String
     let images: [String]

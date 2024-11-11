@@ -25,10 +25,6 @@ class SearchViewModel: ObservableObject {
     //MARK: 서버url
     let serverUrl = ServerUrl.shared
     
-    private var token: String {
-        return UserDefaults.standard.string(forKey: "access") ?? ""
-    }
-    
     init() {
         self.recentSearchesList = []
     }
@@ -40,7 +36,7 @@ class SearchViewModel: ObservableObject {
             recentSearchesList.insert(newSearch, at: 0)
         }
         if recentSearchesList.count > 6 {
-            recentSearchesList.remove(at: 0)
+            recentSearchesList.remove(at: 6)
         }
     }
     
@@ -61,6 +57,7 @@ class SearchViewModel: ObservableObject {
             self.recentSearchesList = savedSearches.map { RecentSearches(recentSearch: $0 )}
         }
     }
+    
     func getPost() {
         //MARK: 새로운 검색어로 검색할 때 초기화
         if searchItem.isEmpty {
@@ -75,12 +72,6 @@ class SearchViewModel: ObservableObject {
             self.canLoadMore = true
         }
         
-        let url = serverUrl.getUrl(for: "/post")
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(token)",
-        ]
-        
         let parameters: [String: Any] = [
             "search": searchItem,
             "tags": [
@@ -91,34 +82,22 @@ class SearchViewModel: ObservableObject {
         ]
         
         isLoading = true
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers)
-            .validate(statusCode: 200..<300)
-            .responseDecodable(of: [SearchModel].self) { response in
-                switch response.result {
-                case .success(let data):
-                    if data.isEmpty {
-                        self.noPost = true
-                        self.canLoadMore = false
-                    } else {
-                        self.noPost = false
-                        self.posts.append(contentsOf: data)
-                        self.page += 1
-                    }
-                case .failure(let error):
-                    if let httpResponse = response.response, httpResponse.statusCode == 403 {
-                        RefreshAccessToken.shared.reissue { success in
-                            if success {
-                                self.getPost()
-                            } else {
-                                print("토큰 재발급 실패")
-                            }
-                        }
-                    } else {
-                        print(error.localizedDescription)
-                    }
+        NetworkRunner.shared.request("/post", method: .get, parameters: parameters, response: [SearchModel].self) { result in
+            switch result {
+            case .success(let data):
+                if data.isEmpty {
+                    self.noPost = true
+                    self.canLoadMore = false
+                } else {
+                    self.noPost = false
+                    self.posts.append(contentsOf: data)
+                    self.page += 1
                 }
-                self.isLoading = false
+            case .failure(_):
+                self.noPost = true
             }
+            self.isLoading = false
+        }
     }
     
 }

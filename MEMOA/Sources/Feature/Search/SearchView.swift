@@ -92,6 +92,9 @@ struct SearchView: View {
         .onAppear {
             searchVM.loadSearches()
         }
+        .onDisappear {
+            searchVM.noPost = false
+        }
         .navigationDestination(isPresented: $toDetail) {
             if let detailPost = getPostVM.detailPosts.first {
                 DetailView(getPost: detailPost)

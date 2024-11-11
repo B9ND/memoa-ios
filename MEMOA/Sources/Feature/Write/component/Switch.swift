@@ -12,7 +12,7 @@ struct Switch: View {
     var body: some View {
         //공개 스위치
         HStack {
-            Text("우리학교만 공개")
+            Text("비공개")
                 .font(.regular(14))
             ZStack(alignment: bool ? .leading : .trailing) {
                 Rectangle()

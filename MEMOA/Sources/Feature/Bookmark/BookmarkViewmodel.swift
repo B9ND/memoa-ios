@@ -1,16 +1,27 @@
-import SwiftUI
-import Combine
 import Foundation
 
 class BookmarkViewModel: ObservableObject {
-    @Published var bookmarks: [BookmarkModel] = []
+    @Published var isBoomark = false
     
-    func addBookmark<T: View>(view: T) {
-        let newBookmark = BookmarkModel(bookmarkview: AnyView(view))
-        bookmarks.append(newBookmark)
+    func bookmark(id: Int) {
+        NetworkRunner.shared.bookmark("/bookmark", method: .post, parameters: ["post-id" : id], isAuthorization: true) { result in
+            switch result {
+            case .success():
+                self.isBoomark = true
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
-    func removeBookmark(at indexSet: IndexSet) {
-        bookmarks.remove(atOffsets: indexSet)
+    func deleteBookmark(id: Int) {
+        NetworkRunner.shared.bookmark("/bookmark", method: .delete, parameters: ["post-id" : id], isAuthorization: true) { result in
+            switch result {
+            case .success():
+                self.isBoomark = false
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
