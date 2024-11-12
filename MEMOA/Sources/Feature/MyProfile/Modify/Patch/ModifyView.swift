@@ -169,7 +169,7 @@ struct ModifyView: View {
                     ChangeDesciptionView(changeDescriptionVM: modifyVM)
                 }
                 .navigationDestination(isPresented: $changeSchool) {
-                    ChangingDepartmentView()
+//                    ChangingDepartmentView()
                 }
                 .ignoresSafeArea()
             }

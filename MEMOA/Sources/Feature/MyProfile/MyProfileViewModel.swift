@@ -30,8 +30,8 @@ class MyProfileViewModel: ObservableObject {
                 self.description = data.description ?? "설명이 없습니다."
                 self.profileImage = data.profileImage
                 self.subjects = data.department.subjects
-                followerVM.getFollower(user: self.name)
-                followingVM.getFollowing(user: self.name)
+                followerVM.getFollower(nickname: self.name)
+                followingVM.getFollowing(nickname: self.name)
                 self.fetchMyPost(author: self.name)
             case .failure(let error):
                 print(error.localizedDescription)

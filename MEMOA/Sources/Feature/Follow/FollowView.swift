@@ -56,12 +56,8 @@ struct FollowView: View {
         }
         Spacer()
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Text(followBoard.nickname)
-                        .font(.medium(16))
-                        .padding(.trailing, 165)
-                }
-            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle(followBoard.nickname)
+            .font(.medium(16))
     }
 }

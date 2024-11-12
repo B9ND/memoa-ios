@@ -21,7 +21,7 @@ struct FollowingView: View {
             }
         }
         .onAppear {
-            followingVM.getFollowing(user: id)
+            followingVM.getFollowing(nickname: id)
         }
     }
 }

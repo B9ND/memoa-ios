@@ -70,14 +70,17 @@ struct UploadComponentView: View {
                 }
                 
                 VStack {
-                    HStack {
-                        ForEach(post.tags, id: \.self) { tag in
-                            Text("#\(tag)")
-                                .font(.regular(12))
-                                .foregroundStyle(Color.timecolor)
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(post.tags, id: \.self) { tag in
+                                Text("#\(tag)")
+                                    .font(.regular(12))
+                                    .foregroundStyle(Color.timecolor)
+                            }
+                            Spacer()
                         }
-                        Spacer()
                     }
+                    .scrollIndicators(.hidden)
                     HStack {
                         ChatButton {
                             // TODO: Handle
