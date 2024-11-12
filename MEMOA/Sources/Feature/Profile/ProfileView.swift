@@ -2,10 +2,10 @@ import SwiftUI
 
 struct ProfileView: View {
     // MARK: 상대방프로필 뷰
-    @StateObject private var follow = ProfileViewModel()
-    @StateObject private var followerVM = FollowerViewModel()
-    @StateObject private var followingVM = FollowingViewModel()
-    @StateObject private var postVM = MyProfileViewModel()
+    @StateObject private var followVM = ProfileViewModel()
+    @StateObject private var followerVM = FollowerViewModel() //팔로우
+    @StateObject private var followingVM = FollowingViewModel() //팔로워
+    @StateObject private var postVM = MyProfileViewModel() //이거 내 게시물 불러올때만
     @State private var toDetail = false
     let information: GetDetailPost
     
@@ -56,7 +56,7 @@ struct ProfileView: View {
                                             .padding(.bottom, 2)
                                         
                                         //MARK: description
-                                        Text(follow.description.isEmpty ? "설명이 없습니다." : follow.description)
+                                        Text(followVM.description.isEmpty ? "설명이 없습니다." : followVM.description)
                                             .foregroundStyle(.black)
                                             .font(.regular(12))
                                             .padding(.bottom, 14)
@@ -76,25 +76,35 @@ struct ProfileView: View {
                                     }
                                     .padding(.bottom , 5)
                                     VStack {
-                                        Button {
-                                            if follow.isFollow {
-                                                follow.deleteFollow(nickname: information.author)
-                                            } else {
-                                                follow.follow(nickname: information.author)
-                                            }
-                                        } label: {
-                                            Text(follow.isFollow ? "언팔로우" : "팔로우")
+                                        if followVM.email == followVM.myEmail {
+                                            Text("MY")
                                                 .font(.regular(10))
                                                 .frame(width: 87, height: 21)
-                                                .background(follow.isFollow ?  Color.white : Color.maincolor)
+                                                .background(Color.white)
                                                 .cornerRadius(8)
-                                                .foregroundStyle(follow.isFollow ? .black : .white)
+                                                .foregroundStyle(.black)
                                                 .overlay {
-                                                    if follow.isFollow {
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(Color.graycolor, lineWidth: 1)
-                                                    }
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(Color.graycolor, lineWidth: 1)
                                                 }
+                                        } else {
+                                            Button {
+                                                followVM.followed.toggle()
+                                                followVM.follow(nickname: information.author)
+                                            } label: {
+                                                Text(followVM.followed ? "언팔로우" : "팔로우")
+                                                    .font(.regular(10))
+                                                    .frame(width: 87, height: 21)
+                                                    .background(followVM.followed ? Color.white : Color.maincolor)
+                                                    .cornerRadius(8)
+                                                    .foregroundStyle(followVM.followed ? .black : .white)
+                                                    .overlay {
+                                                        if followVM.followed {
+                                                            RoundedRectangle(cornerRadius: 10)
+                                                                .stroke(Color.graycolor, lineWidth: 1)
+                                                        }
+                                                    }
+                                            }
                                         }
                                     }
                                     .padding(.bottom ,10)
@@ -122,11 +132,11 @@ struct ProfileView: View {
         }
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            follow.getUser(nickname: information.author)
+            followVM.getUser(nickname: information.author)
             postVM.fetchMyPost(author: information.author)
-            follow.fetchMy()
-            followerVM.getFollower(user: information.author)
-            followingVM.getFollowing(user: information.author)
+            followVM.fetchMy()
+            followerVM.getFollower(nickname: information.author)
+            followingVM.getFollowing(nickname: information.author)
         }
         .navigationDestination(isPresented: $toDetail) {
             if let detailPost = postVM.detailPosts.first {

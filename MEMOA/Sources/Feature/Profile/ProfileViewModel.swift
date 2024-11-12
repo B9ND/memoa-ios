@@ -2,55 +2,21 @@ import Foundation
 
 class ProfileViewModel: ObservableObject {
     @Published var description = ""
-    @Published var name: String = ""
-    @Published var isFollow: Bool = false {
-        didSet {
-            saveFollowState()
-        }
-    }
+    @Published var myName: String = ""
+    @Published var email: String = ""
+    @Published var myEmail: String = ""
+    @Published var followed: Bool = false
     
-    //상태 로드
-    init() {
-        loadFollowState()
-    }
-    
-    //MARK: 팔로우
+    //MARK: 유저를 팔로우 or 취소합니다
     func follow(nickname: String) {
-        NetworkRunner.shared.follow("/follow", method: .post, parameters: ["follower" : nickname], isAuthorization: true) { result in
+        NetworkRunner.shared.follow("/follow", method: .post, parameters: ["nickname" : nickname], isAuthorization: true) { result in
             switch result {
             case .success(_):
-                self.isFollow = true
-                self.saveFollowState()
-                print("팔로우")
+                print("팔로우됨")
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-    }
-    
-    //MARK: 언팔
-    func deleteFollow(nickname: String) {
-        NetworkRunner.shared.follow("/follow", method: .delete, parameters: ["follower" : nickname], isAuthorization: true) { result in
-            switch result {
-            case .success(_):
-                self.isFollow = false
-                self.saveFollowState()
-                print("언팔로우")
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    private func saveFollowState() {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(isFollow, forKey: "isFollow")
-    }
-    
-    //상태 로드
-    private func loadFollowState() {
-        let userDefaults = UserDefaults.standard
-        isFollow = userDefaults.bool(forKey: "isFollow")
     }
     
     //MARK: 내정보로 팔로우 할수있게
@@ -58,18 +24,23 @@ class ProfileViewModel: ObservableObject {
         NetworkRunner.shared.request("/auth/me", method: .get, response: MyProfileModel.self, isAuthorization: true) { result in
             switch result {
             case .success(let data):
-                self.name = data.nickname
+                self.myName = data.nickname
+                self.myEmail = data.email
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
-    //유저의 자기소개 불러오기 위함
+    
+    //MARK: 유저의 정보 불러오기
     func getUser(nickname: String) {
-        NetworkRunner.shared.request("/auth/user", method: .get, parameters: ["username" : nickname], response: MyProfileModel.self) { result in
+        NetworkRunner.shared.request("/user", method: .get, parameters: ["username" : nickname], response: MyProfileModel.self, isAuthorization: true) { result in
             switch result {
             case .success(let data):
                 self.description = data.description ?? ""
+                self.email = data.email
+                self.followed = data.followed
+                print("팔로우 상태: \(self.followed)")
             case .failure(let error):
                 print(error.localizedDescription)
             }

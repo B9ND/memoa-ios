@@ -6,6 +6,7 @@ struct ProfileModel: Codable {
     var description: String?
     var profileImage: String
     var department: ProfileDepartment
+    var followed: Bool
 }
 
 struct ProfileDepartment: Codable {
