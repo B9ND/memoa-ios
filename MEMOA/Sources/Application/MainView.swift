@@ -2,6 +2,7 @@ import SwiftUI
 
 //MARK: 도담코드 보고 수정
 struct MainView: View {
+    @EnvironmentObject private var myProfileVM: MyProfileViewModel
     @State private var selectedtab: TabViewType = .home
     @State private var isNavigatingToWriteView = false
     
@@ -50,6 +51,9 @@ struct MainView: View {
             .navigationDestination(isPresented: $isNavigatingToWriteView) {
                 WriteView()
             }
+        }
+        .onAppear {
+            myProfileVM.fetchMy()
         }
     }
 }

@@ -1,95 +1,81 @@
 import SwiftUI
 
 struct SelectitemView: View {
+    @EnvironmentObject private var myProfileVM: MyProfileViewModel
     @StateObject var selectVM = SelectSchoolViewModel()
     var body: some View {
         HStack {
-            // 학교 선택 Menu
-            Menu {
-                ForEach(selectVM.school, id: \.school) { schoolItem in
-                    Button(action: {
-                        selectVM.selectedSchool = schoolItem.school
-                    }) {
-                        HStack {
-                            Text(schoolItem.school)
-                                .foregroundColor(selectVM.selectedSchool == schoolItem.school ? .white : .black)
-                                .padding()
-                                .cornerRadius(5)
-                        }
-                    }
-                }
-            } label: {
+            // 내 학교
+            if let myInformation = myProfileVM.profile {
                 HStack {
-                    Text(selectVM.selectedSchool)
+                    Text(myInformation.department.school)
                         .font(.regular(14))
                         .foregroundColor(.black)
                         .padding(.horizontal, 4)
-                    Image(icon: .pickshcool)
-                        .resizable()
-                        .frame(width: 10, height: 9)
                 }
                 .frame(width: 204)
                 .frame(minHeight: 29)
                 .background(Color.picker)
                 .cornerRadius(8)
-            }
-            
-            //과목선택
-            Menu {
-                ForEach(selectVM.grade, id: \.grade) { gradeItem in
-                    Button(action: {
-                        selectVM.selectedGrade = gradeItem.grade
-                    }) {
-                        HStack {
-                            Text("\(gradeItem.grade)학년")
-                                .foregroundColor(selectVM.selectedGrade == gradeItem.grade ? .white : .black)
-                                .padding()
-                                .cornerRadius(5)
+                
+                //과목선택
+                Menu {
+                    ForEach(myInformation.department.subjects.indices, id: \.self) { index in
+                        let subject = myInformation.department.subjects[index]
+                        Button(action: {
+                            selectVM.selectedSubject = subject
+                        }) {
+                            HStack {
+                                Text(subject)
+                                    .foregroundColor(selectVM.selectedSubject == subject ? .white : .black)
+                                    .padding()
+                                    .cornerRadius(5)
+                            }
                         }
                     }
+                } label: {
+                    HStack {
+                        Text(selectVM.selectedSubject.isEmpty ? "과목" : selectVM.selectedSubject)
+                            .font(.regular(14))
+                            .foregroundColor(.black)
+                        Image(.pickerItem)
+                            .resizable()
+                            .frame(width: 10, height: 9)
+                    }
+                    .frame(width: 59)
+                    .frame(minHeight: 29)
+                    .background(Color.picker)
+                    .cornerRadius(8)
                 }
-            } label: {
-                HStack {
-                    Text("과목")
-                        .font(.regular(14))
-                        .foregroundColor(.black)
-                    Image(.pickerItem)
-                        .resizable()
-                        .frame(width: 10, height: 9)
-                }
-                .frame(width: 59)
-                .frame(minHeight: 29)
-                .background(Color.picker)
-                .cornerRadius(8)
-            }
-            
-            // 학년 선택 Menu
-            Menu {
-                ForEach(selectVM.grade, id: \.grade) { gradeItem in
-                    Button(action: {
-                        selectVM.selectedGrade = gradeItem.grade
-                    }) {
-                        HStack {
-                            Text("\(gradeItem.grade)학년")
-                                .foregroundColor(selectVM.selectedGrade == gradeItem.grade ? .white : .black)
-                                .padding()
-                                .cornerRadius(5)
+                
+                // 학년 선택 Menu
+                Menu {
+                    ForEach(selectVM.grade, id: \.grade) { gradeItem in
+                        Button(action: {
+                            selectVM.selectedGrade = gradeItem.grade
+                        }) {
+                            HStack {
+                                Text("\(gradeItem.grade)학년")
+                                    .foregroundColor(selectVM.selectedGrade == gradeItem.grade ? .white : .black)
+                                    .padding()
+                                    .cornerRadius(5)
+                            }
                         }
                     }
+                } label: {
+                    HStack {
+                        Text("\(selectVM.selectedGrade)학년")
+                            .font(.regular(14))
+                            .foregroundColor(.black)
+                        Image(.pickerItem)
+                            .resizable()
+                            .frame(width: 10, height: 9)
+                    }
+                    .frame(width: 59)
+                    .frame(minHeight: 29)
+                    .background(Color.picker)
+                    .cornerRadius(8)
                 }
-            } label: {
-                HStack {
-                    Text("\(selectVM.selectedGrade)학년")
-                        .font(.regular(14))
-                        .foregroundColor(.black)
-                    Image(.pickerItem)
-                        .resizable()
-                        .frame(width: 10, height: 9)
-                }
-                .frame(width: 59)
-                .frame(minHeight: 29)
-                .background(Color.picker)
-                .cornerRadius(8)
             }
         }
     }

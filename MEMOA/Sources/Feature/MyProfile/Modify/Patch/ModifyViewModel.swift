@@ -7,18 +7,18 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
 class ModifyViewModel: ObservableObject {
+    @Published var profile: MyProfileModel?
     @Published var image: UIImage?
     @Published var imageUrl: String = ""
-    @Published var nickname: String = ""
-    @Published var description: String = ""
     
     @Published var changeName: String = ""
     @Published var changeDescription: String = ""
     @Published var imageAlert = false
     @Published var nameAlert = false
-    @Published var descriptionAlert = false
+    @Published var descriptionAlert = false    
     //MARK: 이미지 url 불러오기
     func getImageUrl() {
         guard let image else {
@@ -53,9 +53,7 @@ class ModifyViewModel: ObservableObject {
         NetworkRunner.shared.request("/auth/me", method: .patch, parameters: parameter, response: MyProfileModel.self) { result in
             switch result {
             case .success(let data):
-                self.nickname = data.nickname
-                self.imageUrl = data.profileImage
-                self.description = data.description ?? "설명이 없습니다."
+                self.profile = data
                 self.imageAlert = true
             case .failure(let error):
                 print(error.localizedDescription)
@@ -71,7 +69,7 @@ class ModifyViewModel: ObservableObject {
         NetworkRunner.shared.request("/auth/me", method: .patch, parameters: parameter, response: MyProfileModel.self) { result in
             switch result {
             case .success(let data):
-                self.nickname = data.nickname
+                self.profile = data
                 self.nameAlert = true
             case .failure(let error):
                 print(error.localizedDescription)
@@ -87,7 +85,7 @@ class ModifyViewModel: ObservableObject {
         NetworkRunner.shared.request("/auth/me", method: .patch, parameters: parameter, response: MyProfileModel.self) { result in
             switch result {
             case .success(let data):
-                self.description = data.description ?? ""
+                self.profile = data
                 self.descriptionAlert = true
             case .failure(let error):
                 print(error.localizedDescription)

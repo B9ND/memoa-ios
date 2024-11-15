@@ -4,7 +4,7 @@ struct MypostComponent: View {
     @State private var toDetail = false
     @State private var showingAlert = false
     @State private var toProfile = false
-    let post: MyPostModel
+    let post: MyPostModel?
     let action: () -> Void
     
     var body: some View {
@@ -12,85 +12,87 @@ struct MypostComponent: View {
             action()
             toDetail = true
         } label: {
-            VStack {
-                HStack {
-                    Button {
-                        toProfile = true
-                    } label: {
-                        if let url = URL(string: post.authorProfileImage) {
-                            AsyncImage(url: url) { image in
-                                image
-                                    .image?.resizable()
-                                    .cornerRadius(30)
-                                    .frame(width: 37, height: 37)
-                            }
-                        }
-                    }
-                    .padding(.leading, 24)
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(post.author)
-                                .foregroundStyle(.black)
-                                .font(.medium(14))
-                            Circle()
-                                .frame(width: 5, height: 4)
-                                .tint(Color(uiColor: .systemGray3))
-                            Text(post.createdAt)
-                                .font(.medium(12))
-                                .foregroundColor(.timecolor)
-                        }
-                        .padding(.vertical, 2)
-                        
-                        Text(post.title)
-                            .foregroundColor(.timecolor)
-                            .font(.light(13))
-                    }
-                    Spacer()
-                }
-                
+            if let myPost = post {
                 VStack {
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 3) {
-                            ForEach(post.getImageUrl, id: \.self) { url in
+                    HStack {
+                        Button {
+                            toProfile = true
+                        } label: {
+                            if let url = URL(string: myPost.authorProfileImage) {
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .cornerRadius(8, corners: [.topLeft, .bottomLeft, .topRight, .bottomRight])
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 220,height: 240)
-                                        .padding(.leading, 10)
+                                        .cornerRadius(30)
+                                        .frame(width: 37, height: 37)
                                 }
                             }
                         }
-                        .padding(.horizontal, 70)
-                    }
-                    .scrollIndicators(.hidden)
-                }
-                
-                VStack {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(post.tags, id: \.self) { tag in
-                                Text("#\(tag)")
-                                    .font(.regular(12))
-                                    .foregroundStyle(Color.timecolor)
+                        .padding(.leading, 24)
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(myPost.author)
+                                    .foregroundStyle(.black)
+                                    .font(.medium(14))
+                                Circle()
+                                    .frame(width: 5, height: 4)
+                                    .tint(Color(uiColor: .systemGray3))
+                                Text(myPost.createdAt)
+                                    .font(.medium(12))
+                                    .foregroundColor(.timecolor)
                             }
+                            .padding(.vertical, 2)
+                            
+                            Text(myPost.title)
+                                .foregroundColor(.timecolor)
+                                .font(.light(13))
+                        }
+                        Spacer()
+                    }
+                    
+                    VStack {
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 3) {
+                                ForEach(myPost.getImageUrl, id: \.self) { url in
+                                    AsyncImage(url: url) { image in
+                                        image
+                                            .image?.resizable()
+                                            .cornerRadius(8, corners: [.allCorners])
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 220,height: 240)
+                                            .padding(.leading, 10)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 70)
+                        }
+                        .scrollIndicators(.hidden)
+                    }
+                    
+                    VStack {
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(myPost.tags, id: \.self) { tag in
+                                    Text("#\(tag)")
+                                        .font(.regular(12))
+                                        .foregroundStyle(Color.timecolor)
+                                }
+                                Spacer()
+                            }
+                        }
+                        .scrollIndicators(.hidden)
+                        
+                        HStack {
+                            ChatButton {
+                                // TODO: Handle
+                            }
+                            BookmarkButton(id: .constant(myPost.id))
                             Spacer()
                         }
                     }
-                    .scrollIndicators(.hidden)
-                    
-                    HStack {
-                        ChatButton {
-                            // TODO: Handle
-                        }
-                        BookmarkButton(id: .constant(post.id))
-                        Spacer()
-                    }
+                    .padding(.horizontal, 70)
+                    Divider()
+                    Spacer()
                 }
-                .padding(.horizontal, 70)
-                Divider()
-                Spacer()
             }
         }
     }

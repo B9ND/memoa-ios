@@ -39,6 +39,7 @@ struct HomeView: View {
                     }
                     Spacer()
                 }
+                .redacted(reason: getPostVM.posts.isEmpty ? .placeholder : [])
                 .onAppear {
                     getPostVM.loadPost()
                 }

@@ -12,7 +12,7 @@ struct DetailView: View {
     @State private var showingAlert = false
     @State private var toProfile = false
     @Environment(\.dismiss) private var dismiss
-    var getPost: GetDetailPost
+    let getPost: GetDetailPost
     
     var body: some View {
         VStack {
@@ -103,7 +103,7 @@ struct DetailView: View {
             BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
         .navigationDestination(isPresented: $toProfile) {
-            ProfileView(information: getPost)
+            ProfileView(username: .constant(getPost.author))
         }
     }
 }

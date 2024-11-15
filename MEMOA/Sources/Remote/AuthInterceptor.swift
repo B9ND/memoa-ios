@@ -46,7 +46,7 @@ class AuthInterceptor: RequestInterceptor {
             case .success(let response):
                 UserDefaults.standard.setValue(response.accessToken, forKey: "access")
                 UserDefaults.standard.setValue(response.refreshToken, forKey: "refresh")
-                completion(.doNotRetry)
+                completion(.retry)
             case .failure(let error):
                 UserDefaults.standard.removeObject(forKey: "access")
                 UserDefaults.standard.removeObject(forKey: "refresh")

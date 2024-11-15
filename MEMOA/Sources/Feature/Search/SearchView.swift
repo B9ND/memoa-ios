@@ -73,15 +73,9 @@ struct SearchView: View {
                 }
             }
             HStack {
-                if searchVM.noPost {
-                    Text("재검색해주세요!")
-                        .font(.regular(14))
-                        .foregroundStyle(.recently)
-                } else {
-                    Text("게시물을 검색해주세요")
-                        .font(.regular(14))
-                        .foregroundStyle(.recently)
-                }
+                Text(searchVM.noPost ? "재검색해주세요!" : "게시물을 검색해주세요")
+                    .font(.regular(14))
+                    .foregroundStyle(.recently)
                 Spacer()
             }
             .padding(.horizontal, 30)

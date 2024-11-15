@@ -10,6 +10,8 @@ import Alamofire
 
 //MARK: 추상화메서드
 
+struct VoidResponse: Decodable {}
+
 class NetworkRunner {
     static let shared = NetworkRunner()
     
@@ -25,7 +27,7 @@ class NetworkRunner {
         method: HTTPMethod,
         parameters: Parameters?,
         headers: HTTPHeaders? = nil,
-        response: Response.Type,
+        response: Response.Type = VoidResponse.self,
         isAuthorization: Bool = false,
         completionHandler: @escaping (Result<Response, Error>) -> Void
     ) {
@@ -53,7 +55,7 @@ class NetworkRunner {
         method: HTTPMethod = .get,
         parameters: [String: Any]? = nil,
         headers: HTTPHeaders? = nil,
-        response: Response.Type,
+        response: Response.Type = VoidResponse.self,
         isAuthorization: Bool = true,
         completionHandler: @escaping (Result<Response, Error>) -> Void
     ) {
@@ -105,7 +107,8 @@ class NetworkRunner {
             }
         }
     }
-    func follow<Parameters: Encodable>(
+    
+    func query<Parameters: Encodable>(
         _ path: String,
         method: HTTPMethod,
         parameters: Parameters? = nil,
@@ -132,30 +135,30 @@ class NetworkRunner {
         }
     }
     
-    func bookmark<Parameters: Encodable>(
-        _ path: String,
-        method: HTTPMethod,
-        parameters: Parameters? = nil,
-        headers: HTTPHeaders? = nil,
-        isAuthorization: Bool = false,
-        completionHandler: @escaping (Result<Void, Error>) -> Void
-    ) {
-        session.request(
-            secretUrl + path,
-            method: method,
-            parameters: parameters,
-            encoder: URLEncodedFormParameterEncoder.default,
-            headers: headers,
-            interceptor: isAuthorization ? AuthInterceptor() : nil
-        )
-        .validate()
-        .response { response in
-            switch response.result {
-            case .success:
-                completionHandler(.success(()))
-            case .failure(let error):
-                completionHandler(.failure(error))
-            }
-        }
-    }
+//    func bookmark<Parameters: Encodable>(
+//        _ path: String,
+//        method: HTTPMethod,
+//        parameters: Parameters? = nil,
+//        headers: HTTPHeaders? = nil,
+//        isAuthorization: Bool = false,
+//        completionHandler: @escaping (Result<Void, Error>) -> Void
+//    ) {
+//        session.request(
+//            secretUrl + path,
+//            method: method,
+//            parameters: parameters,
+//            encoder: URLEncodedFormParameterEncoder.default,
+//            headers: headers,
+//            interceptor: isAuthorization ? AuthInterceptor() : nil
+//        )
+//        .validate()
+//        .response { response in
+//            switch response.result {
+//            case .success:
+//                completionHandler(.success(()))
+//            case .failure(let error):
+//                completionHandler(.failure(error))
+//            }
+//        }
+//    }
 }

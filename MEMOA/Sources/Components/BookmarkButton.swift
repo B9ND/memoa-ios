@@ -11,11 +11,10 @@ struct BookmarkButton: View {
         Button {
             if bookmarkVM.isBoomark {
                 bookmarkVM.deleteBookmark(id: id)
-                showingAlert.toggle()
             } else {
                 bookmarkVM.bookmark(id: id)
-                showingAlert.toggle()
             }
+            showingAlert.toggle()
             bookmarkVM.isBoomark.toggle()
             saveBookmark()
         } label: {
