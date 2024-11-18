@@ -17,6 +17,7 @@ struct GetDetailPost: Codable {
     let tags: [String]
     let createdAt: String
     let images: [String]
+    let isBookmarked: Bool
     var getImageUrl: [URL] {
         images.compactMap { URL(string: $0) }
     }

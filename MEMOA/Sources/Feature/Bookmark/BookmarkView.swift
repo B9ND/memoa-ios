@@ -14,19 +14,35 @@ struct Bookmark {
 }
 
 struct BookmarkView: View {
-    @StateObject private var showingbookmarkVM = BookmarkViewModel()
+    @StateObject private var bookmarkVM = BookmarkViewModel()
+    @State private var toDetail: Bool = false
     var body: some View {
-        VStack {
-//            if showingbookmarkVM.bookmarks.isEmpty {
-                Text("선택된 북마크가 없어요!")
-                    .font(.bold(20))
-//            } else {
-//                ForEach(showingbookmarkVM.bookmarks) {
-//                    bookmark in
-//                    bookmark.bookmarkview   
-//                }
-                //뷰를 보여주고 그에대한 데이터 이거 하지말고
-//            }
+        ScrollView {
+            VStack {
+                if bookmarkVM.noExist {
+                    Text("선택된 북마크가 없어요!")
+                        .font(.bold(20))
+                } else {
+                    ForEach(bookmarkVM.posts, id: \.postId) { post in
+                        BookmarkComponentView(post: post) {
+                            bookmarkVM.id = post.postId
+                            bookmarkVM.getDetailPost()
+                            toDetail = true
+                        }
+                    }
+                }
+            }
+            .navigationDestination(isPresented: $toDetail) {
+                if let detailPost = bookmarkVM.detailPosts.first {
+                    DetailView(getPost: detailPost)
+                }
+            }
+        }
+        .onAppear {
+            bookmarkVM.getBookmark()
+        }
+        .onDisappear {
+            bookmarkVM.posts.removeAll()
         }
     }
 }
