@@ -3,6 +3,7 @@ import PhotosUI
 
 // MARK: 글쓰기뷰
 struct WriteView: View {
+    @EnvironmentObject var myProfileVM: MyProfileViewModel
     @StateObject var writeVM = WriteViewModel()
     @StateObject var imageVM = ImageViewModel()
     @StateObject var getPostVM = GetPostViewModel()
@@ -12,7 +13,7 @@ struct WriteView: View {
     @Environment(\.dismiss) private var dismiss
     
     init() {
-        _clickedTags = State(initialValue: Array(repeating: false, count: WriteViewModel().tagsList.count))
+        _clickedTags = State(initialValue: Array(repeating: false, count: 0))
     }
     
     var body: some View {
@@ -34,23 +35,35 @@ struct WriteView: View {
                 
                 ScrollView(.horizontal) {
                     HStack {
-                        ForEach(0..<writeVM.tagsList.count, id: \.self) { index in
-                            Button {
-                                clickedTags[index].toggle()
-                                if clickedTags[index] {
-                                    writeVM.tags.append(writeVM.tagsList[index])
-                                } else {
-                                    if let tagIndex = writeVM.tags.firstIndex(of: writeVM.tagsList[index]) {
-                                        writeVM.tags.remove(at: tagIndex)
+                        if let profile = myProfileVM.profile {
+                            ForEach(profile.department.subjects.indices, id: \.self) { index in
+                                let subject = profile.department.subjects[index]
+                                Button {
+                                    if index < clickedTags.count {
+                                        clickedTags[index].toggle()
+                                        if clickedTags[index] {
+                                            writeVM.tags.append(subject)
+                                        } else {
+                                            if let tagIndex = writeVM.tags.firstIndex(of: subject) {
+                                                writeVM.tags.remove(at: tagIndex)
+                                            }
+                                        }
                                     }
+                                } label: {
+                                    Text(subject)
+                                        .frame(width: 44, height: 29)
+                                        .cornerRadius(8)
+                                        .font(.regular(14))
+                                        .foregroundColor(.black)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .stroke(
+                                                    index < clickedTags.count && clickedTags[index]
+                                                        ? Color.maincolor
+                                                        : Color.graycolor
+                                                )
+                                        )
                                 }
-                            } label: {
-                                Text(writeVM.tagsList[index])
-                                    .frame(width: 44, height: 29)
-                                    .cornerRadius(8)
-                                    .font(.regular(14))
-                                    .foregroundColor(.black)
-                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(clickedTags[index] ? Color.maincolor : Color.graycolor))
                             }
                         }
                     }
@@ -153,17 +166,27 @@ struct WriteView: View {
                             deleteComment(index: index)
                         } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.red)
+                                .foregroundStyle(.black)
+                                .foregroundStyle(Color.bordercolor)
                         }
                         .offset(x: 50, y: -50)
                     }
                 }
             }
         }
+        .onAppear {
+            // View가 나타날 때 clickedTags 배열 초기화
+            if let profile = myProfileVM.profile {
+                clickedTags = Array(repeating: false, count: profile.department.subjects.count)
+            }
+        }
         
         BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
-            writeVM.post()
+            if let school = myProfileVM.profile {
+                writeVM.post()
+                writeVM.tags.append(school.department.school)
+            }
         }, bool: writeVM.disabled, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!", alertBool: $writeVM.showAlert)
     }
     

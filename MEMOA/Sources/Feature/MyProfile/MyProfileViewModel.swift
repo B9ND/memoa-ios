@@ -2,13 +2,7 @@ import Foundation
 import Alamofire
 
 class MyProfileViewModel: ObservableObject {
-    @Published var name: String = ""
-    @Published var email: String = ""
-    @Published var description: String = ""
-    @Published var profileImage: String = ""
-    @Published var subjects: [String] = []
-    //TODO: 서브젝트 불러와서 글쓰기 할때 불러오기
-    let serverUrl = ServerUrl.shared
+    @Published var profile: MyProfileModel?
     
     @Published var myPosts: [MyPostModel] = []
     var canLoadMore = true
@@ -21,18 +15,11 @@ class MyProfileViewModel: ObservableObject {
     }
     
     //MARK: 내정보 불러오기
-    func fetchMy(followerVM: FollowerViewModel, followingVM: FollowingViewModel) {
+    func fetchMy() {
         NetworkRunner.shared.request("/auth/me", method: .get, response: MyProfileModel.self, isAuthorization: true) { result in
             switch result {
             case .success(let data):
-                self.name = data.nickname
-                self.email = data.email
-                self.description = data.description ?? "설명이 없습니다."
-                self.profileImage = data.profileImage
-                self.subjects = data.department.subjects
-                followerVM.getFollower(nickname: self.name)
-                followingVM.getFollowing(nickname: self.name)
-                self.fetchMyPost(author: self.name)
+                self.profile = data
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -42,21 +29,18 @@ class MyProfileViewModel: ObservableObject {
     
     //MARK: 로그아웃
     func delete() {
-        let url = serverUrl.getUrl(for: "/auth/logout")
-        
         let headers: HTTPHeaders = [
             "Authorization": "Bearer \(refreshToken)"
         ]
         
-        AF.request(url, method: .delete, headers: headers)
-            .response { reponse in
-                switch reponse.result {
-                case .success(_):
-                    print("로그아웃됨")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+        NetworkRunner.shared.request("/auth/logout", method: .delete, headers: headers) { result in
+            switch result {
+            case .success(_):
+                UserDefaults.setValue("access", forKey: "")
+            case .failure(let error):
+                print(error.localizedDescription)
             }
+        }
     }
     
     //MARK: 내 글불러오기

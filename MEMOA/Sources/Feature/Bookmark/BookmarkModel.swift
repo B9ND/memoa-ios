@@ -1,10 +1,12 @@
 import SwiftUI
 
-struct BookmarkModel: Identifiable, Equatable {
-    static func == (lhs: BookmarkModel, rhs: BookmarkModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    var id = UUID()
-    var bookmarkview: AnyView
+struct BookmarkModel: Codable {
+    let nickname: String
+    let postId: Int
+    let title: String
+    let profileImage: String
+    let createdAt: String
+//    var getImageUrl: [URL] {
+//        images.compactMap { URL(string: $0) }
+//    }
 }

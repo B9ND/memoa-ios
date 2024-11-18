@@ -1,6 +1,13 @@
+//
+//  ostModel.swift
+//  MEMOA
+//
+//  Created by dgsw30 on 11/14/24.
+//
+
 import Foundation
 
-struct MyPostModel: Decodable {
+struct OtherPostModel: Decodable {
     let id: Int
     let title, content, author, authorProfileImage: String
     let tags: [String]

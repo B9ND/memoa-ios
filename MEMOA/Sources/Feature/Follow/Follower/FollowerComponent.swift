@@ -9,16 +9,20 @@ import SwiftUI
 
 struct FollowerComponent: View {
     let follower : FollowerModel
+    @State private var toProfile = false
     var body: some View {
         HStack {
-            
-            let url = URL(string: follower.profileImage)
-            AsyncImage(url: url) { image in
-                image
-                    .image?.resizable()
-                    .cornerRadius(30, corners: [.topLeft, .bottomLeft, .topRight, .bottomRight])
-                    .frame(width: 55, height: 55)
-                    .padding(.trailing, 10)
+            Button  {
+                toProfile = true
+            } label: {
+                let url = URL(string: follower.profileImage)
+                AsyncImage(url: url) { image in
+                    image
+                        .image?.resizable()
+                        .cornerRadius(30, corners: [.allCorners])
+                        .frame(width: 55, height: 55)
+                        .padding(.trailing, 10)
+                }
             }
             
             Text(follower.nickname)
@@ -28,6 +32,9 @@ struct FollowerComponent: View {
                 
             }
         }
+        .navigationDestination(isPresented: $toProfile, destination: {
+            ProfileView(username: .constant(follower.nickname))
+        })
         .padding(.horizontal, 13)
         .padding()
     }

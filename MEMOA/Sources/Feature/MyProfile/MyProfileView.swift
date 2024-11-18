@@ -2,11 +2,10 @@ import SwiftUI
 
 struct MyProfileView: View {
     //MARK: 내 프로필 뷰
+    @EnvironmentObject var myProfileVM: MyProfileViewModel
     @StateObject private var follow = ProfileViewModel()
     @StateObject private var followerVM = FollowerViewModel()
     @StateObject private var followingVM = FollowingViewModel()
-    @StateObject private var myProfileVM = MyProfileViewModel()
-    @StateObject private var modifyVM = ModifyViewModel()
     @State private var toDetail = false
     @State private var modify = false
     
@@ -34,7 +33,8 @@ struct MyProfileView: View {
                                             Image(icon: .bigProfile)
                                                 .padding(.top, -44)
                                         }
-                                    if let url = URL(string: myProfileVM.profileImage) {
+                                    if let profile = myProfileVM.profile,
+                                       let url = URL(string: profile.profileImage) {
                                         AsyncImage(url: url) { image in
                                             Circle()
                                                 .fill(Color.white)
@@ -43,38 +43,40 @@ struct MyProfileView: View {
                                                 .overlay {
                                                     image
                                                         .image?.resizable()
-                                                        .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+                                                        .cornerRadius(40, corners: .allCorners)
                                                         .frame(width: 80, height: 80)
                                                         .padding(.top, -44)
                                                 }
                                         }
                                     }
                                 }
-                                
-                                VStack {
-                                    Text(myProfileVM.name)
-                                        .font(.medium(16))
-                                        .padding(.bottom, 2)
+                                if let profile = myProfileVM.profile {
+                                    VStack {
+                                        Text(profile.nickname)
+                                            .font(.medium(16))
+                                            .padding(.bottom, 2)
+                                        
+                                        //MARK: description
+                                        // TODO: Fix
+                                        Text(profile.description ?? "설명이 없습니다.")
+                                            .foregroundStyle(.black)
+                                            .font(.regular(12))
+                                            .padding(.bottom, 14)
+                                    }
                                     
-                                    //MARK: description
-                                    Text(myProfileVM.description.isEmpty ? "설명이 없습니다" : myProfileVM.description)
-                                        .foregroundStyle(.black)
-                                        .font(.regular(12))
-                                        .padding(.bottom, 14)
-                                }
-                                
-                                
-                                HStack {
-                                    VStack {
-                                        Myfollower(board: followModel(nickname: myProfileVM.name, number: String(followerVM.followers.count)), text: "팔로워")
-                                            .padding(.horizontal, 16)
+                                    
+                                    HStack {
+                                        VStack {
+                                            Myfollower(board: followModel(nickname: profile.nickname, number: String(followerVM.followers.count)), text: "팔로워")
+                                                .padding(.horizontal, 16)
+                                        }
+                                        VStack {
+                                            Myfollowing(board: followModel(nickname: profile.nickname, number: String(followingVM.followings.count)), text: "팔로잉")
+                                                .padding(.horizontal, 16)
+                                        }
                                     }
-                                    VStack {
-                                        Myfollowing(board: followModel(nickname: myProfileVM.name, number: String(followingVM.followings.count)), text: "팔로잉")
-                                            .padding(.horizontal, 16)
-                                    }
+                                    .padding(.bottom , 5)
                                 }
-                                .padding(.bottom , 5)
                                 
                                 Divider()
                                 ScrollView {
@@ -93,7 +95,7 @@ struct MyProfileView: View {
                         }
                 }
                 .navigationDestination(isPresented: $modify) {
-                    ModifyView(profileMV: myProfileVM, modifyVM: modifyVM)
+                    ModifyView()
                 }
                 .ignoresSafeArea()
             }
@@ -108,8 +110,23 @@ struct MyProfileView: View {
                 }
             }
         }
+        .refreshable {
+            if let profile = myProfileVM.profile {
+                myProfileVM.myPosts.removeAll()
+                myProfileVM.fetchMyPost(author: profile.nickname)
+            }
+        }
         .onAppear {
-            myProfileVM.fetchMy(followerVM: followerVM, followingVM: followingVM)
+            if let profile = myProfileVM.profile {
+                myProfileVM.fetchMy()
+                myProfileVM.fetchMyPost(author: profile.nickname)
+            }
+        }
+        .onReceive(myProfileVM.$profile) { profile in
+            if let profile {
+                followerVM.getFollower(nickname: profile.nickname)
+                followingVM.getFollowing(nickname: profile.nickname)
+            }
         }
         .navigationDestination(isPresented: $toDetail) {
             if let detailPost = myProfileVM.detailPosts.first {
