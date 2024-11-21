@@ -62,6 +62,7 @@ struct UploadComponentView: View {
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 220,height: 240)
                                             .padding(.leading, 10)
+                                        //줌가능하게
                                     }
                                 }
                             }
@@ -86,7 +87,7 @@ struct UploadComponentView: View {
                             ChatButton {
                                 // TODO: Handle
                             }
-                            BookmarkButton(id: .constant(post.id))
+                            BookmarkButton(isBookmark: .constant(post.isBookmarked), id: .constant(post.id))
                             Spacer()
                         }
                     }

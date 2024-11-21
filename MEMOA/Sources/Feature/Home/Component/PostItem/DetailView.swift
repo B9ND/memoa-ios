@@ -91,7 +91,7 @@ struct DetailView: View {
                             ChatButton {
                                 // TODO: Handle
                             }
-                            BookmarkButton(id: .constant(getPost.id))
+                            BookmarkButton(isBookmark: .constant(getPost.isBookmarked), id: .constant(getPost.id))
                             Spacer()
                         }
                     }

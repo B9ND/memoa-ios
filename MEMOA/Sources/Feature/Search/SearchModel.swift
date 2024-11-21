@@ -11,6 +11,7 @@ struct SearchModel: Codable {
     var getImageUrl: [URL] {
         images.compactMap { URL(string: $0) }
     }
+    let isBookmarked: Bool
 }
 
 struct Search {

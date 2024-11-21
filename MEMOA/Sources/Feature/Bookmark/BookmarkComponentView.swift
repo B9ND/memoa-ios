@@ -57,44 +57,37 @@ struct BookmarkComponentView: View {
                         Spacer()
                     }
                     
-//                    VStack {
-//                        ScrollView(.horizontal) {
-//                            HStack(spacing: 3) {
-//                                ForEach(post.getImageUrl, id: \.self) { url in
-//                                    AsyncImage(url: url) { image in
-//                                        image
-//                                            .image?.resizable()
-//                                            .cornerRadius(8, corners: [.allCorners])
-//                                            .aspectRatio(contentMode: .fit)
-//                                            .frame(width: 220,height: 240)
-//                                            .padding(.leading, 10)
-//                                    }
-//                                }
-//                            }
-//                            .padding(.horizontal, 70)
-//                        }
-//                        .scrollIndicators(.hidden)
-//                    }
+                    VStack {
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 3) {
+                                ForEach(post.getImageUrl, id: \.self) { url in
+                                    AsyncImage(url: url) { image in
+                                        image
+                                            .image?.resizable()
+                                            .cornerRadius(8, corners: [.allCorners])
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 220,height: 240)
+                                            .padding(.leading, 10)
+                                    }
+                                }
+                            }
+                            .padding(.horizontal, 70)
+                        }
+                        .scrollIndicators(.hidden)
+                    }
                     
                     VStack {
-//                        ScrollView(.horizontal) {
-//                            HStack {
-//                                ForEach(post.tags, id: \.self) { tag in
-//                                    Text("#\(tag)")
-//                                        .font(.regular(12))
-//                                        .foregroundStyle(Color.timecolor)
-//                                }
-//                                Spacer()
-//                            }
-//                        }
-//                        .scrollIndicators(.hidden)
-                        HStack {
-                            ChatButton {
-                                // TODO: Handle
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(post.tags, id: \.self) { tag in
+                                    Text("#\(tag)")
+                                        .font(.regular(12))
+                                        .foregroundStyle(Color.timecolor)
+                                }
+                                Spacer()
                             }
-                            BookmarkButton(id: .constant(post.postId))
-                            Spacer()
                         }
+                        .scrollIndicators(.hidden)
                     }
                     .padding(.horizontal, 70)
                     Divider()

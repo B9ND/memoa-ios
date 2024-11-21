@@ -30,13 +30,14 @@ class MyProfileViewModel: ObservableObject {
     //MARK: 로그아웃
     func delete() {
         let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(refreshToken)"
+//            TODO: "Authorization": "Bearer \(refreshToken)"
+            "Refresh": "\(refreshToken)"
         ]
         
         NetworkRunner.shared.request("/auth/logout", method: .delete, headers: headers) { result in
             switch result {
             case .success(_):
-                UserDefaults.setValue("access", forKey: "")
+                break
             case .failure(let error):
                 print(error.localizedDescription)
             }

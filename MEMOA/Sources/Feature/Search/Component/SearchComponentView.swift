@@ -80,7 +80,7 @@ struct SearchComponentView: View {
                         ChatButton {
                             // TODO: Handle
                         }
-                        BookmarkButton(id: .constant(post.id))
+                        BookmarkButton(isBookmark: .constant(post.isBookmarked), id: .constant(post.id))
                         Spacer()
                     }
                 }

@@ -21,6 +21,9 @@ struct ChangeDesciptionView: View {
         }
         .padding()
         Spacer()
+            .onAppear {
+                changeDescriptionVM.changeDescription = ""
+            }
         BackButton(text: "자기소개 변경", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
             changeDescriptionVM.changeUserDescription()

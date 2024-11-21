@@ -23,7 +23,7 @@ class GetPostViewModel: ObservableObject {
         let parameters: [String: Any] = [
             "search": "",
             "tags": [
-                "기타", "수학", "사회", "과학", "국어", "영어"
+                "기타", "수학", "사회", "과학", "국어", "영어", "대구소프트웨어마이스터고등학교"
             ],
             "page": page,
             "size": 10

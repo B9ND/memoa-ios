@@ -85,7 +85,7 @@ struct MypostComponent: View {
                             ChatButton {
                                 // TODO: Handle
                             }
-                            BookmarkButton(id: .constant(myPost.id))
+                            BookmarkButton(isBookmark: .constant(myPost.isBookmarked), id: .constant(myPost.id))
                             Spacer()
                         }
                     }

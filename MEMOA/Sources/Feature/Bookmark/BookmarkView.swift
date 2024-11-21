@@ -17,12 +17,17 @@ struct BookmarkView: View {
     @StateObject private var bookmarkVM = BookmarkViewModel()
     @State private var toDetail: Bool = false
     var body: some View {
-        ScrollView {
-            VStack {
-                if bookmarkVM.noExist {
+        VStack {
+            if bookmarkVM.noExist {
+                VStack {
                     Text("선택된 북마크가 없어요!")
                         .font(.bold(20))
-                } else {
+                }
+            }
+        }
+        ScrollView {
+            VStack {
+                if !bookmarkVM.noExist {
                     ForEach(bookmarkVM.posts, id: \.postId) { post in
                         BookmarkComponentView(post: post) {
                             bookmarkVM.id = post.postId
@@ -32,10 +37,10 @@ struct BookmarkView: View {
                     }
                 }
             }
-            .navigationDestination(isPresented: $toDetail) {
-                if let detailPost = bookmarkVM.detailPosts.first {
-                    DetailView(getPost: detailPost)
-                }
+        }
+        .navigationDestination(isPresented: $toDetail) {
+            if let detailPost = bookmarkVM.detailPosts.first {
+                DetailView(getPost: detailPost)
             }
         }
         .onAppear {

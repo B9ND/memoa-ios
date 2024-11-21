@@ -29,28 +29,21 @@ struct ProfileView: View {
                                             .fill(Color.white)
                                             .frame(width: 100, height: 100)
                                             .padding(.top, -44)
-                                            .overlay {
-                                                Image(icon: .bigProfile)
-                                                    .padding(.top, -44)
-                                            }
                                         if let profile = profileVM.profile,
                                            let url = URL(string: profile.profileImage) {
                                             AsyncImage(url: url) { image in
-                                                Circle()
-                                                    .fill(Color.white)
-                                                    .frame(width: 100, height: 100)
-                                                    .padding(.top, -44)
-                                                    .overlay {
-                                                        image
-                                                            .image?.resizable()
-                                                            .cornerRadius(40, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
-                                                            .frame(width: 80, height: 80)
-                                                            .padding(.top, -44)
-                                                    }
+                                                image
+                                                    .resizable()
+                                                    .frame(width: 90, height: 90)
+                                                    .scaledToFit()
+                                                    .clipShape(Circle())
+                                            } placeholder: {
+                                                ProgressView()
                                             }
+                                            .padding(.top, -44)
                                         }
                                     }
-                                    
+                                
                                     if let profile = profileVM.profile {
                                         VStack {
                                             Text(profile.nickname)

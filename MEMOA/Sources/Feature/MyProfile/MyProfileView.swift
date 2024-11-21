@@ -33,22 +33,26 @@ struct MyProfileView: View {
                                             Image(icon: .bigProfile)
                                                 .padding(.top, -44)
                                         }
-                                    if let profile = myProfileVM.profile,
-                                       let url = URL(string: profile.profileImage) {
-                                        AsyncImage(url: url) { image in
-                                            Circle()
-                                                .fill(Color.white)
-                                                .frame(width: 100, height: 100)
-                                                .padding(.top, -44)
-                                                .overlay {
-                                                    image
-                                                        .image?.resizable()
-                                                        .cornerRadius(40, corners: .allCorners)
-                                                        .frame(width: 80, height: 80)
-                                                        .padding(.top, -44)
-                                                }
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color.white)
+                                            .frame(width: 100, height: 100)
+                                            .padding(.top, -44)
+                                        if let profile = myProfileVM.profile,
+                                           let url = URL(string: profile.profileImage) {
+                                            AsyncImage(url: url) { image in
+                                                image
+                                                    .resizable()
+                                                    .frame(width: 90, height: 90)
+                                                    .scaledToFit()
+                                                    .clipShape(Circle())
+                                            } placeholder: {
+                                                EmptyView()
+                                            }
+                                            .padding(.top, -44)
                                         }
                                     }
+                                    
                                 }
                                 if let profile = myProfileVM.profile {
                                     VStack {
