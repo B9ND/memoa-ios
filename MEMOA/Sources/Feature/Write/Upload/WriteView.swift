@@ -179,6 +179,7 @@ struct WriteView: View {
                 clickedTags = Array(repeating: false, count: profile.department.subjects.count)
                 if let school = myProfileVM.profile {
                     writeVM.tags.append(school.department.school)
+                    writeVM.tags.append(String("\(school.department.grade)학년"))
                 }
             }
         }

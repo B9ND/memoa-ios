@@ -14,6 +14,11 @@ class MyProfileViewModel: ObservableObject {
         return UserDefaults.standard.string(forKey: "refresh") ?? ""
     }
     
+    init() {
+        fetchMy()
+        //MARK: 이거 처음에 로그인했을때 안불러와짐 수정해야함
+    }
+    
     //MARK: 내정보 불러오기
     func fetchMy() {
         NetworkRunner.shared.request("/auth/me", method: .get, response: MyProfileModel.self, isAuthorization: true) { result in
@@ -30,7 +35,7 @@ class MyProfileViewModel: ObservableObject {
     //MARK: 로그아웃
     func delete() {
         let headers: HTTPHeaders = [
-//            TODO: "Authorization": "Bearer \(refreshToken)"
+            //            TODO: "Authorization": "Bearer \(refreshToken)"
             "Refresh": "\(refreshToken)"
         ]
         

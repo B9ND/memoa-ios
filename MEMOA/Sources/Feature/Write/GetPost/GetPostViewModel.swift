@@ -13,6 +13,7 @@ class GetPostViewModel: ObservableObject {
     //MARK: getDetailModel
     @Published var id = 0
     @Published var detailPosts: [GetDetailPost] = []
+    @Published var tags: [String] = []
     
     
     //MARK: 게시글 불러오기
@@ -22,9 +23,7 @@ class GetPostViewModel: ObservableObject {
         
         let parameters: [String: Any] = [
             "search": "",
-            "tags": [
-                "기타", "수학", "사회", "과학", "국어", "영어", "대구소프트웨어마이스터고등학교"
-            ],
+            "tags": tags,
             "page": page,
             "size": 10
         ]

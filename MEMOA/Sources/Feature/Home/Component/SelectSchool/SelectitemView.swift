@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SelectitemView: View {
     @EnvironmentObject private var myProfileVM: MyProfileViewModel
+    @ObservedObject var postVM: GetPostViewModel
     @StateObject var selectVM = SelectSchoolViewModel()
     var body: some View {
         HStack {
@@ -23,7 +24,15 @@ struct SelectitemView: View {
                     ForEach(myInformation.department.subjects.indices, id: \.self) { index in
                         let subject = myInformation.department.subjects[index]
                         Button(action: {
-                            selectVM.selectedSubject = subject
+                            if selectVM.selectedSubject != subject {
+                                selectVM.selectedSubject = subject
+                                postVM.page = 0
+                                postVM.canLoadMore = true
+                                postVM.posts.removeAll()
+                                postVM.tags.removeAll()
+                                postVM.tags.append(subject)
+                                postVM.loadPost()
+                            }
                         }) {
                             HStack {
                                 Text(subject)
@@ -52,7 +61,15 @@ struct SelectitemView: View {
                 Menu {
                     ForEach(selectVM.grade, id: \.grade) { gradeItem in
                         Button(action: {
-                            selectVM.selectedGrade = gradeItem.grade
+                            if selectVM.selectedGrade != gradeItem.grade {
+                                selectVM.selectedGrade = gradeItem.grade
+                                postVM.page = 0
+                                postVM.canLoadMore = true
+                                postVM.posts.removeAll()
+                                postVM.tags.removeAll()
+                                postVM.tags.append(String(gradeItem.grade))
+                                postVM.loadPost()
+                            }
                         }) {
                             HStack {
                                 Text("\(gradeItem.grade)학년")
@@ -64,7 +81,7 @@ struct SelectitemView: View {
                     }
                 } label: {
                     HStack {
-                        Text("\(selectVM.selectedGrade)학년")
+                        Text(selectVM.selectedGrade == 0 ? "\(myInformation.department.grade)학년" : "\(selectVM.selectedGrade)학년")
                             .font(.regular(14))
                             .foregroundColor(.black)
                         Image(.pickerItem)
@@ -79,8 +96,4 @@ struct SelectitemView: View {
             }
         }
     }
-}
-
-#Preview {
-    SelectitemView()
 }

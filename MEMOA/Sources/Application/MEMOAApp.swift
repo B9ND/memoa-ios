@@ -9,8 +9,7 @@ import SwiftUI
 
 @main
 struct MEMOAApp: App {
-    @AppStorage("access")
-    private var accessToken: String?
+    @AppStorage("access") private var accessToken: String?
     @StateObject private var myProfileVM = MyProfileViewModel()
     var body: some Scene {
         WindowGroup {

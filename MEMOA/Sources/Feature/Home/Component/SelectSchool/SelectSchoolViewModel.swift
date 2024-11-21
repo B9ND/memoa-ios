@@ -14,6 +14,6 @@ class SelectSchoolViewModel: ObservableObject {
         gradeitem(grade: 3)
     ]
     
-    @Published var selectedGrade: Int = 1
+    @Published var selectedGrade: Int = 0
     @Published var selectedSubject: String = ""
 }
