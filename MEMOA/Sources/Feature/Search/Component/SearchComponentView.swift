@@ -4,9 +4,15 @@ struct SearchComponentView: View {
     @State private var toDetail = false
     @State private var showingAlert = false
     @State private var toProfile = false
-    var post: SearchModel
+    var post: ServerResponse
     var action: () -> Void
-    
+
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd" // 원하는 형식으로 설정
+        return formatter
+    }
+
     var body: some View {
         Button {
             action()
@@ -18,15 +24,26 @@ struct SearchComponentView: View {
                         toProfile = true
                     } label: {
                         if let url = URL(string: post.authorProfileImage) {
-                            AsyncImage(url: url) { image in
-                                image
-                                    .image?.resizable()
-                                    .cornerRadius(30)
-                                    .frame(width: 37, height: 37)
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .cornerRadius(30)
+                                        .frame(width: 37, height: 37)
+                                case .failure:
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .resizable()
+                                        .frame(width: 37, height: 37)
+                                        .foregroundColor(.gray)
+                                default:
+                                    ProgressView()
+                                        .frame(width: 37, height: 37)
+                                }
                             }
                         }
                     }
-                    
+
                     VStack(alignment: .leading) {
                         HStack {
                             Text(post.author)
@@ -35,30 +52,54 @@ struct SearchComponentView: View {
                             Circle()
                                 .frame(width: 5, height: 4)
                                 .tint(Color(uiColor: .systemGray3))
-                            Text(post.createdAt)
+                            Text(dateFormatter.string(from: post.createdAt))
                                 .font(.medium(12))
                                 .foregroundColor(.timecolor)
                         }
                         .padding(.vertical, 2)
-                        
+
                         Text(post.title)
                             .foregroundColor(.timecolor)
                             .font(.light(13))
                     }
                     Spacer()
                 }
-                
+
                 VStack {
                     ScrollView(.horizontal) {
                         HStack(spacing: 3) {
-                            ForEach(post.getImageUrl, id: \.self) { url in
-                                AsyncImage(url: url) { image in
-                                    image
-                                        .image?.resizable()
-                                        .cornerRadius(8, corners: .allCorners)
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 220,height: 240)
-                                        .padding(.leading, 10)
+                            ForEach(post.images, id: \.self) { imageUrl in
+                                if let url = URL(string: imageUrl) {
+                                    AsyncImage(url: url) { phase in
+                                        switch phase {
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .cornerRadius(8)
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 220, height: 240)
+                                                .padding(.leading, 10)
+                                        case .failure:
+                                            Rectangle()
+                                                .fill(Color.gray.opacity(0.3))
+                                                .frame(width: 220, height: 240)
+                                                .cornerRadius(8)
+                                        default:
+                                            ProgressView()
+                                                .frame(width: 220, height: 240)
+                                        }
+                                    }
+                                } else {
+                                    // URL 변환 실패 시 대체 UI
+                                    Rectangle()
+                                        .fill(Color.red.opacity(0.3))
+                                        .frame(width: 220, height: 240)
+                                        .cornerRadius(8)
+                                        .overlay(
+                                            Text("Invalid URL")
+                                                .font(.caption)
+                                                .foregroundColor(.white)
+                                        )
                                 }
                             }
                         }
@@ -66,7 +107,7 @@ struct SearchComponentView: View {
                     }
                     .scrollIndicators(.hidden)
                 }
-                
+
                 VStack {
                     HStack {
                         ForEach(post.tags, id: \.self) { tag in
@@ -80,7 +121,6 @@ struct SearchComponentView: View {
                         ChatButton {
                             // TODO: Handle
                         }
-                        BookmarkButton(id: .constant(post.id))
                         Spacer()
                     }
                 }
@@ -91,4 +131,3 @@ struct SearchComponentView: View {
         }
     }
 }
-

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-//MARK: 추상화메서드
+//MARK: 추상화메서드 구현체
 
 struct VoidResponse: Decodable {}
 

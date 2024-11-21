@@ -9,19 +9,24 @@ struct GetSearchPost: View {
         VStack(alignment: .leading) {
             ScrollView {
                 if searchVM.noPost {
-                    Image(icon: .loading)
-                        .resizable()
-                        .frame(width: 136, height: 136)
-                        .padding(.vertical, 4)
-                    Text("검색결과가 없어요!")
+                    VStack {
+                        Image(icon: .loading)
+                            .resizable()
+                            .frame(width: 136, height: 136)
+                            .padding(.vertical, 4)
+                        Text("검색결과가 없어요!")
+                    }
+                    .padding(.top, 100)
                 } else {
                     LazyVStack {
-                        ForEach(searchVM.posts, id: \.id) { post in
+                        ForEach(searchVM.posts, id: \.self) { post in
                             SearchComponentView(post: post) {
                                 getPostVM.id = post.id
                                 getPostVM.getDetailPost()
                                 toDetail = true
                             }
+                            
+                            // 무한 스크롤 로딩 로직
                             if searchVM.isLoading {
                                 ProgressView()
                             } else {
@@ -29,9 +34,9 @@ struct GetSearchPost: View {
                                     Color.clear
                                         .onAppear {
                                             if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
+                                                // 기존 getPost() 대신 fetchPosts() 사용
                                                 if searchVM.canLoadMore {
-                                                    searchVM.page += 1
-                                                    searchVM.getPost()
+                                                    searchVM.fetchPosts()
                                                 }
                                             }
                                         }
@@ -45,8 +50,8 @@ struct GetSearchPost: View {
                 }
             }
             .refreshable {
-                searchVM.page = 0
-                searchVM.getPost()
+                // 기존 page reset 대신 refreshPosts() 사용
+                searchVM.refreshPosts()
             }
         }
         .navigationDestination(isPresented: $toDetail) {

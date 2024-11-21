@@ -14,6 +14,7 @@ class MyProfileViewModel: ObservableObject {
         return UserDefaults.standard.string(forKey: "refresh") ?? ""
     }
     
+    
     //MARK: 내정보 불러오기
     func fetchMy() {
         NetworkRunner.shared.request("/auth/me", method: .get, response: MyProfileModel.self, isAuthorization: true) { result in

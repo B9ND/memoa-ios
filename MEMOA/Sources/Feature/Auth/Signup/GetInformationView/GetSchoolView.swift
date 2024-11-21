@@ -1,6 +1,6 @@
 import SwiftUI
 
-// GetSchoolView.swift
+
 struct GetSchoolView: View {
     @StateObject var schoolVM = SchoolViewModel()
     @StateObject var signUpVM = SignUpViewModel()
@@ -10,8 +10,8 @@ struct GetSchoolView: View {
     @State private var selectGrade = 0
     @State private var selectedDepartment: Department? = nil
     @State private var departmentIDs: [String: Int] = [:]
-    @State private var isAlertPresented = false // 알림 상태
-    @State private var alertMessage = "" // 알림 메시지
+    @State private var isAlertPresented = false
+    @State private var alertMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -79,7 +79,7 @@ struct GetSchoolView: View {
 
                     TermsOfUseButton()
                     LongButton(text: "회원가입", color: .buttoncolor) {
-                        print(signUpVM.email, signUpVM.password, signUpVM.nickname, signUpVM.departmentId ?? "" )
+                        print(signUpVM.email, signUpVM.password, signUpVM.nickname)
                         Task {
                             signUpVM.departmentId = selectedDepartment?.id
                             let result = await signUpVM.signup()
@@ -105,7 +105,7 @@ struct GetSchoolView: View {
             .onAppear(perform : UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
             .fullScreenCover(isPresented: $isSignUpSuccess) {
-                MainView()
+                FirstView()
             }
             .alert(isPresented: $isAlertPresented) {
                 Alert(title: Text("회원가입 실패"), message: Text(alertMessage), dismissButton: .default(Text("확인")))

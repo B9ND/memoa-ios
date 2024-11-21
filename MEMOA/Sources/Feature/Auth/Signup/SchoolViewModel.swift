@@ -20,6 +20,8 @@ class SchoolViewModel: ObservableObject {
         
         isLoading = true
         errorMessage = nil
+        
+
 
         AF.request(url, method: .get)
             .validate()
