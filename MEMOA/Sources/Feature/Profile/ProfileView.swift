@@ -119,6 +119,9 @@ struct ProfileView: View {
                                         }
                                         Spacer()
                                     }
+                                    .safeAreaInset(edge: .bottom) {
+                                        Color.clear.frame(height: 97)
+                                    }
                                 }
                             }
                     }

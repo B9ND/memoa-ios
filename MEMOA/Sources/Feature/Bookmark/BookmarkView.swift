@@ -38,6 +38,9 @@ struct BookmarkView: View {
                 }
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            Color.clear.frame(height: 97)
+        }
         .navigationDestination(isPresented: $toDetail) {
             if let detailPost = bookmarkVM.detailPosts.first {
                 DetailView(getPost: detailPost)

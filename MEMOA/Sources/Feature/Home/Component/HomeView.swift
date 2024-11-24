@@ -52,6 +52,9 @@ struct HomeView: View {
                     }
                     Spacer()
                 }
+                .safeAreaInset(edge: .bottom) {
+                    Color.clear.frame(height: 97)
+                }
                 .onAppear {
                     if let information = myProfileVM.profile {
                         getPostVM.tags.append(information.department.school)

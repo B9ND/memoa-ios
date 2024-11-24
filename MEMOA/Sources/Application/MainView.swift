@@ -10,16 +10,11 @@ struct MainView: View {
         NavigationStack {
             ZStack {
                 switch selectedtab {
-                case .home:
-                    HomeView()
-                case .search:
-                    SearchView()
-                case .bookmark:
-                    BookmarkView()
-                case .profil:
-                    MyProfileView()
-                case .plus:
-                    EmptyView()
+                case .home: HomeView()
+                case .search: SearchView()
+                case .bookmark: BookmarkView()
+                case .profil: MyProfileView()
+                case .plus: EmptyView()
                 }
                 
                 GeometryReader { geometry in
