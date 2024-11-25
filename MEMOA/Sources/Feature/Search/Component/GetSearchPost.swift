@@ -19,14 +19,24 @@ struct GetSearchPost: View {
                     .padding(.top, 100)
                 } else {
                     LazyVStack {
-                        ForEach(searchVM.posts, id: \.self) { post in
-                            SearchComponentView(post: post) {
+                        ForEach(searchVM.posts, id: \.self) { serverResponse in
+                            let post = GetPostModel(
+                                id: serverResponse.id,
+                                title: serverResponse.title,
+                                author: serverResponse.author,
+                                authorProfileImage: serverResponse.authorProfileImage,
+                                tags: serverResponse.tags,
+                                createdAt: serverResponse.createdAt,
+                                images: serverResponse.images,
+                                isBookmarked: serverResponse.isBookmarked
+                            )
+                            
+                            UploadComponentView(post: post) {
                                 getPostVM.id = post.id
                                 getPostVM.getDetailPost()
                                 toDetail = true
                             }
                             
-                            // 무한 스크롤 로딩 로직
                             if searchVM.isLoading {
                                 ProgressView()
                             } else {
@@ -34,7 +44,6 @@ struct GetSearchPost: View {
                                     Color.clear
                                         .onAppear {
                                             if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
-                                                // 기존 getPost() 대신 fetchPosts() 사용
                                                 if searchVM.canLoadMore {
                                                     searchVM.fetchPosts()
                                                 }
@@ -50,7 +59,6 @@ struct GetSearchPost: View {
                 }
             }
             .refreshable {
-                // 기존 page reset 대신 refreshPosts() 사용
                 searchVM.refreshPosts()
             }
         }

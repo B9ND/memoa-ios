@@ -16,7 +16,6 @@ class SchoolViewModel: ObservableObject {
     }
 
     func fetchSchoolList(searchQuery: String) {
-        let url = serverUrl.getUrl(for: "/school/search?search=\(searchQuery)")
         
         isLoading = true
         errorMessage = nil

@@ -12,22 +12,32 @@ struct searchGradeItem: Encodable {
     }
 }
 
-/// 게시물 서버 응답 모델
+//서버 응답 모델
 struct ServerResponse: Codable, Identifiable, Hashable {
-    var id: Int
-    var title: String
-    var content: String
-    var author: String
-    var authorProfileImage: String
-    var tags: [String]
-    var createdAt: Date
-    var images: [String]
-}
-
-/// 검색 모델 (검색 조건 전달용)
-struct SearchModel: Codable {
-    var tags: [String]
-    var search: String
-    var page: Int32
-    var size: Int32
+    let id: Int
+    let title: String
+    let content: String
+    let author: String
+    let authorProfileImage: String
+    let tags: [String]
+    let createdAt: String
+    let images: [String]
+    let isBookmarked: Bool
+    
+    // Computed property to convert image strings to URLs
+    var imageUrls: [URL] {
+        images.compactMap { URL(string: $0) }
+    }
+    
+    //검색 모델
+    struct SearchRequest: Encodable {
+        let search: String
+        let tags: [String]
+        let page: Int32
+        let size: Int32
+        
+        enum CodingKeys: String, CodingKey {
+            case search, tags, page, size
+        }
+    }
 }
