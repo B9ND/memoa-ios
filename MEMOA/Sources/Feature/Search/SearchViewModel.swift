@@ -1,104 +1,95 @@
 import SwiftUI
+import Combine
 import Alamofire
 
-//MARK: 최근검색어
 class SearchViewModel: ObservableObject {
-    //최근검색어
     @Published var searchItem: String = ""
-    @Published var recentSearchesList: [RecentSearches]
+    @Published var posts: [ServerResponse] = []
+    @Published var isLoading: Bool = false
+    @Published var noPost: Bool = false
+    @Published var canLoadMore: Bool = true
+    @Published var page: Int32 = 0
+    @Published var error: Error?
+    @Published var selectedTags: [String] = []
     
-    //검색 목록
-    @Published var posts: [SearchModel] = []
-    @Published var id = 0
-    
-    var page = 0
-    
-    //MARK: 검색어 목록없음
-    var noPost = false
-    
-    //MARK: 게시글 로딩
-    var isLoading = false
-    
-    //MARK: 더이상 로드할 게시물 x
-    var canLoadMore = true
-    
-    //MARK: 서버url
-    let serverUrl = ServerUrl.shared
+    private let size: Int32 = 10
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
-        self.recentSearchesList = []
+        setupSearchItemObserver()
     }
-    // 최근검색어
-    func addSearchItem() {
-        let newSearch = RecentSearches(recentSearch: searchItem)
+    
+    //searchItem 변경 시 디바운스로 검색 실행
+    private func setupSearchItemObserver() {
+        $searchItem
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.resetSearch()
+                self.fetchPosts()
+            }
+            .store(in: &cancellables)
+    }
+    
+    //검색 초기화
+    func resetSearch() {
+        posts.removeAll()
+        page = 0
+        canLoadMore = true
+        noPost = false
+        error = nil
+    }
+    
+    //게시물 데이터 가져오는 함수
+    func fetchPosts() {
+        guard canLoadMore, !isLoading else { return }
+        isLoading = true
         
-        if !newSearch.recentSearch.isEmpty {
-            recentSearchesList.insert(newSearch, at: 0)
-        }
-        if recentSearchesList.count > 6 {
-            recentSearchesList.remove(at: 6)
-        }
-    }
-    
-    // 검색어 지우기
-    func clearSearches() {
-        recentSearchesList.removeAll()
-    }
-    
-    // 유저디폴트로 저장
-    func saveSearches() {
-        let searches = recentSearchesList.map { $0.recentSearch }
-        UserDefaults.standard.set(searches, forKey: "recentSearches")
-    }
-    
-    // 유저디폴트로 저장
-    func loadSearches() {
-        if let savedSearches = UserDefaults.standard.array(forKey: "recentSearches") as? [String] {
-            self.recentSearchesList = savedSearches.map { RecentSearches(recentSearch: $0 )}
-        }
-    }
-    
-    func getPost() {
-        //MARK: 새로운 검색어로 검색할 때 초기화
-        if searchItem.isEmpty {
-            self.noPost = true
-            self.canLoadMore = false
-            return
-        }
-        
-        //MARK: 페이지를 0으로 초기화
-        if page == 0 {
-            self.posts.removeAll()
-            self.canLoadMore = true
-        }
-        
-        let parameters: [String: Any] = [
+        let parameters: Parameters = [
             "search": searchItem,
-            "tags": [
-                "기타"
-            ],
+            "tags": selectedTags,
             "page": page,
-            "size": 10
+            "size": size
         ]
         
-        isLoading = true
-        NetworkRunner.shared.request("/post", method: .get, parameters: parameters, response: [SearchModel].self) { result in
+        NetworkRunner.shared.request(
+            "/post",
+            method: .get,
+            parameters: parameters,
+            response: [ServerResponse].self
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            self.isLoading = false
+            
             switch result {
-            case .success(let data):
-                if data.isEmpty {
-                    self.noPost = true
+            case .success(let posts):
+                // 게시물 성공적으로 가져왔을 때 처리
+                if posts.isEmpty {
                     self.canLoadMore = false
+                    self.noPost = self.posts.isEmpty
                 } else {
-                    self.noPost = false
-                    self.posts.append(contentsOf: data)
+                    self.posts.append(contentsOf: posts)
                     self.page += 1
                 }
-            case .failure(_):
+            case .failure(let error):
+                // 실패 시 처리
+                print("Error: \(error)")
+                self.error = error
                 self.noPost = true
             }
-            self.isLoading = false
         }
     }
     
+    //태그를 설정하고 게시물 다시 가져오기
+    func updateTagsAndFetch(newTags: [String]) {
+        selectedTags = newTags
+        refreshPosts() // 새로고침 후 태그에 맞는 게시물 다시 로드
+    }
+    
+    //수동 새로고침 메서드
+    func refreshPosts() {
+        resetSearch()
+        fetchPosts()
+    }
 }
-

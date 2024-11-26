@@ -9,19 +9,34 @@ struct GetSearchPost: View {
         VStack(alignment: .leading) {
             ScrollView {
                 if searchVM.noPost {
-                    Image(icon: .loading)
-                        .resizable()
-                        .frame(width: 136, height: 136)
-                        .padding(.vertical, 4)
-                    Text("검색결과가 없어요!")
+                    VStack {
+                        Image(icon: .loading)
+                            .resizable()
+                            .frame(width: 136, height: 136)
+                            .padding(.vertical, 4)
+                        Text("검색결과가 없어요!")
+                    }
+                    .padding(.top, 100)
                 } else {
                     LazyVStack {
-                        ForEach(searchVM.posts, id: \.id) { post in
-                            SearchComponentView(post: post) {
+                        ForEach(searchVM.posts, id: \.self) { serverResponse in
+                            let post = GetPostModel(
+                                id: serverResponse.id,
+                                title: serverResponse.title,
+                                author: serverResponse.author,
+                                authorProfileImage: serverResponse.authorProfileImage,
+                                tags: serverResponse.tags,
+                                createdAt: serverResponse.createdAt,
+                                images: serverResponse.images,
+                                isBookmarked: serverResponse.isBookmarked
+                            )
+                            
+                            UploadComponentView(post: post) {
                                 getPostVM.id = post.id
                                 getPostVM.getDetailPost()
                                 toDetail = true
                             }
+                            
                             if searchVM.isLoading {
                                 ProgressView()
                             } else {
@@ -30,8 +45,7 @@ struct GetSearchPost: View {
                                         .onAppear {
                                             if geometry.frame(in: .global).maxY < UIScreen.main.bounds.height {
                                                 if searchVM.canLoadMore {
-                                                    searchVM.page += 1
-                                                    searchVM.getPost()
+                                                    searchVM.fetchPosts()
                                                 }
                                             }
                                         }
@@ -45,8 +59,7 @@ struct GetSearchPost: View {
                 }
             }
             .refreshable {
-                searchVM.page = 0
-                searchVM.getPost()
+                searchVM.refreshPosts()
             }
         }
         .navigationDestination(isPresented: $toDetail) {

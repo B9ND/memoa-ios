@@ -15,10 +15,13 @@ class MyProfileViewModel: ObservableObject {
         return UserDefaults.standard.string(forKey: "refresh") ?? ""
     }
     
+<<<<<<< HEAD
+=======
 //    init() {
 //        fetchMy()
 //        //MARK: 이거 처음에 로그인했을때 안불러와짐 수정해야함
 //    }으믕으므으으으으 ㅇ
+>>>>>>> develop
     
     //MARK: 내정보 불러오기
     func fetchMy() {

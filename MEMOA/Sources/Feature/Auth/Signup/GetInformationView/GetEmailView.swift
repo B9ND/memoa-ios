@@ -26,16 +26,22 @@ struct GetEmailView: View {
                                 .font(.medium(16))
                                 .padding(.horizontal, 11)
                         } else {
-                            Button(action: {
-                                signUpVM.sendEmailToServer()
-                                signUpVM.startCountdown()
-
-                            }, label: {
+                            Button {
+                                // 이메일 인증 버튼도 비동기 처리를 위해 Task로 감싸기
+                                Task {
+                                    if await signUpVM.sendEmailToServer() {
+                                        signUpVM.startCountdown()
+                                    } else {
+                                        alertMessage = "이메일 전송에 실패했습니다."
+                                        showAlert = true
+                                    }
+                                }
+                            } label: {
                                 Text("인증")
                                     .foregroundStyle(.maincolor)
                                     .font(.medium(16))
                                     .padding(.horizontal, 11)
-                            })
+                            }
                         }
                     }
                     .frame(width: 304, height: 46)
@@ -49,20 +55,24 @@ struct GetEmailView: View {
                     TermsOfUseButton()
                     
                     LongButton(text: "다음", color: .buttoncolor) {
+                        // 비동기 작업을 Task로 감싸서 처리
                         Task {
                             let isCodeValidResponse = await signUpVM.verifyCode()
-                            if isCodeValidResponse {
-                                isCodeValid = true
-                            } else {
-                                alertMessage = "인증번호가 틀렸습니다."
-                                showAlert = true
+                            // UI 업데이트는 메인 스레드에서 처리
+                            await MainActor.run {
+                                if isCodeValidResponse {
+                                    isCodeValid = true
+                                } else {
+                                    alertMessage = "인증번호가 틀렸습니다."
+                                    showAlert = true
+                                }
                             }
                         }
                     }
                     .padding(.bottom, 60)
                 }
             }
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .onAppear(perform: UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
             .alert(isPresented: $showAlert) {
                 Alert(title: Text("오류"), message: Text(alertMessage), dismissButton: .default(Text("확인")))

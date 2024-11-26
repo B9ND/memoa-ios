@@ -1,90 +1,119 @@
 import SwiftUI
-import UIKit
 
 struct SearchView: View {
-    @StateObject var searchVM = SearchViewModel()
-    @ObservedObject var getPostVM = GetPostViewModel()
+    @StateObject private var searchVM = SearchViewModel()
+    @ObservedObject private var getPostVM = GetPostViewModel()
+    @EnvironmentObject var myProfileVM: MyProfileViewModel
+
     @State private var toDetail = false
-    
+    @State private var selectedGrade = "1학년"
+    @State private var selectedSubjects: Set<String> = []
+    @State private var selectedSchool = ""
+    @FocusState private var isSearchFocused: Bool
+
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                Button {
-                    searchVM.posts.removeAll()
-                    searchVM.page = 0
-                    searchVM.canLoadMore = true
-                    searchVM.getPost()
-                    searchVM.addSearchItem()
-                    searchVM.saveSearches()
-                } label: {
+                Button(action: {
+                    searchVM.resetSearch()
+                    searchVM.fetchPosts()
+                }) {
                     Image(icon: .search)
                         .resizable()
                         .frame(width: 22, height: 22)
+                        .foregroundColor(.gray)
                         .padding(.leading, 12)
                 }
-                TextField("검색어를 입력하세요", text: $searchVM.searchItem) {
-                }
-                .font(.medium(16))
-                .frame(height: 60)
-                .tint(.maincolor)
+
+                TextField("검색어를 입력하세요", text: $searchVM.searchItem)
+                    .font(.system(size: 16, weight: .medium))
+                    .frame(height: 60)
+                    .tint(.maincolor)
+                    .focused($isSearchFocused)
             }
-            .frame(width: 327, height: 36)
-            .background(Color.init(uiColor: .systemGray6))
+            .frame(height: 36)
+            .background(Color(.systemGray6))
             .clipShape(RoundedRectangle(cornerRadius: 50))
-            .padding()
-            
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("최근검색어")
-                        .font(.regular(12))
-                        .foregroundStyle(.recently)
-                    Spacer()
-                    Button {
-                        searchVM.clearSearches()
-                        searchVM.saveSearches()
-                    } label: {
-                        Text("모두지우기")
-                            .font(.regular(12))
-                            .foregroundStyle(.recently)
-                    }
-                    .padding(.trailing, 30)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 12)
+            .padding(.top, 8)
+
+            HStack(spacing: 8) {
+                Button(action: {
+                    selectedSchool = selectedSchool.isEmpty ? (myProfileVM.profile?.department.school ?? "") : ""
+                }) {
+                    Text(selectedSchool.isEmpty ? (myProfileVM.profile?.department.school ?? "학교 선택") : selectedSchool)
+                        .font(.system(size: 14))
+                        .padding(.horizontal, 34)
+                        .padding(.vertical, 8)
+                        .foregroundColor(.black)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(selectedSchool.isEmpty ? Color.gray.opacity(0.5) : .maincolor, lineWidth: 1)
+                        )
                 }
-                .padding(.leading, 40)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(searchVM.recentSearchesList, id: \.self) { recentitem in
-                            Button {
-                                searchVM.searchItem = recentitem.recentSearch
-                            } label: {
-                                Text(recentitem.recentSearch)
-                            }
-                            .foregroundStyle(Color.black)
-                            .font(.regular(14))
-                            .frame(width: 102, height: 29)
-                            .padding(.horizontal, 4)
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 30)
-                                    .stroke(Color.graycolor, lineWidth: 1)
-                            }
+                .padding(.bottom, 6)
+
+                Menu {
+                    ForEach(["1학년", "2학년", "3학년"], id: \.self) { grade in
+                        Button(action: {
+                            selectedGrade = grade
+                        }) {
+                            Text(grade)
                         }
                     }
-                    .padding()
+                } label: {
+                    HStack {
+                        Text(selectedGrade)
+                            .font(.system(size: 14))
+                            .foregroundColor(.black)
+                        Image("PickerItem")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 10)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+                    .background(Color.purple.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
+                .padding(.bottom, 6)
             }
-            HStack {
-                Text(searchVM.noPost ? "재검색해주세요!" : "게시물을 검색해주세요")
-                    .font(.regular(14))
-                    .foregroundStyle(.recently)
-                Spacer()
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(myProfileVM.profile?.department.subjects ?? [], id: \.self) { subject in
+                        Button {
+                            if searchVM.selectedTags.contains(subject) {
+                                searchVM.selectedTags.removeAll { $0 == subject }
+                            } else {
+                                searchVM.selectedTags.append(subject)
+                            }
+                        } label: {
+                            Text(subject)
+                                .frame(width: 44, height: 29)
+                                .cornerRadius(8)
+                                .font(.regular(14))
+                                .foregroundColor(.black)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(searchVM.selectedTags.contains(subject) ? .maincolor : Color.gray.opacity(0.5), lineWidth: 1)
+                                )
+                        }
+                    }
+                }
+                .padding(.horizontal, 27)
+                .padding(.vertical, 4)
+                .padding(.bottom, 10)
             }
-            .padding(.horizontal, 30)
+
             GetSearchPost(searchVM: searchVM)
         }
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
-        .padding(.bottom, 63)
         .onAppear {
-            searchVM.loadSearches()
+            isSearchFocused = false
+            selectedSchool = myProfileVM.profile?.department.school ?? ""
+            selectedGrade = "\(myProfileVM.profile?.department.grade ?? 1)학년"
         }
         .onDisappear {
             searchVM.noPost = false
@@ -94,9 +123,6 @@ struct SearchView: View {
                 DetailView(getPost: detailPost)
             }
         }
+        .padding(.bottom, 63)
     }
-}
-
-#Preview {
-    SearchView()
 }
