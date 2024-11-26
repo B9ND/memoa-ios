@@ -3,7 +3,6 @@ import SwiftUI
 struct LoginView: View {
     @ObservedObject var LoginVM: LoginViewModel = .init()
     @Environment(\.dismiss) var dismiss
-    @State private var isLoginSuccess = false
     @State private var showAlert = false
     
     var body: some View {
@@ -47,9 +46,7 @@ struct LoginView: View {
                 
                 LongButton(text: "로그인", color: .buttoncolor) {
                     LoginVM.login { success in
-                        if success {
-                            isLoginSuccess = true
-                        } else {
+                        if !success {
                             print(LoginVM.loginerrorMessage ?? "로그인 실패")
                             showAlert = true
                         }
@@ -57,20 +54,17 @@ struct LoginView: View {
                 }
                 .padding(.bottom, 60)
                 .alert(isPresented: $showAlert) {
-                            Alert(
-                                title: Text("로그인 실패"),
-                                message: Text("다시 시도해 주세요."),
-                                dismissButton: .default(Text("확인"))
-                            )
-                        }
+                    Alert(
+                        title: Text("로그인 실패"),
+                        message: Text("다시 시도해 주세요."),
+                        dismissButton: .default(Text("확인"))
+                    )
+                }
             }
         }
         .onAppear(perform : UIApplication.shared.hideKeyboard)
         .edgesIgnoringSafeArea(.all)
-        .fullScreenCover(isPresented: $isLoginSuccess) {
-            MainView()
-        }
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
+        .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
     }
 }
 #Preview {

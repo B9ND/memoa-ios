@@ -1,6 +1,6 @@
 import Foundation
 
-struct SearchModel: Codable {
+struct SearchModel: Codable, HasImage {
     let id: Int
     let title: String
     let author: String
@@ -8,9 +8,7 @@ struct SearchModel: Codable {
     let tags: [String]
     let createdAt: String
     let images: [String]
-    var getImageUrl: [URL] {
-        images.compactMap { URL(string: $0) }
-    }
+    let isBookmarked: Bool
 }
 
 struct Search {

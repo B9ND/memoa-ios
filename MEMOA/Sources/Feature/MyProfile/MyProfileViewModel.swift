@@ -3,9 +3,10 @@ import Alamofire
 
 class MyProfileViewModel: ObservableObject {
     @Published var profile: MyProfileModel?
-    
     @Published var myPosts: [MyPostModel] = []
-    var canLoadMore = true
+    
+    var postExist = false
+    var isLoading = false
     
     @Published var id = 0
     @Published var detailPosts: [GetDetailPost] = []
@@ -13,6 +14,11 @@ class MyProfileViewModel: ObservableObject {
     private var refreshToken: String {
         return UserDefaults.standard.string(forKey: "refresh") ?? ""
     }
+    
+//    init() {
+//        fetchMy()
+//        //MARK: 이거 처음에 로그인했을때 안불러와짐 수정해야함
+//    }으믕으므으으으으 ㅇ
     
     //MARK: 내정보 불러오기
     func fetchMy() {
@@ -26,17 +32,15 @@ class MyProfileViewModel: ObservableObject {
         }
     }
     
-    
     //MARK: 로그아웃
     func delete() {
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(refreshToken)"
+        let parameters = [
+            "refresh": "\(refreshToken)"
         ]
-        
-        NetworkRunner.shared.request("/auth/logout", method: .delete, headers: headers) { result in
+        NetworkRunner.shared.request("/auth/logout", method: .delete, parameters: parameters) { result in
             switch result {
             case .success(_):
-                UserDefaults.setValue("access", forKey: "")
+                break
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -45,12 +49,14 @@ class MyProfileViewModel: ObservableObject {
     
     //MARK: 내 글불러오기
     func fetchMyPost(author: String) {
+        guard !isLoading else { return }
+        isLoading = true
         let parameters: [String: Any] = ["author": author]
         NetworkRunner.shared.request("/post/user", method: .get, parameters: parameters, response: [MyPostModel].self) { result in
             switch result {
             case .success(let data):
                 if data.isEmpty {
-                    self.canLoadMore = false
+                    self.postExist = true
                 } else {
                     self.myPosts.append(contentsOf: data)
                     self.id = data.first?.id ?? 0
@@ -58,6 +64,7 @@ class MyProfileViewModel: ObservableObject {
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            self.isLoading = false
         }
     }
     

@@ -51,7 +51,7 @@ struct SearchComponentView: View {
                 VStack {
                     ScrollView(.horizontal) {
                         HStack(spacing: 3) {
-                            ForEach(post.getImageUrl, id: \.self) { url in
+                            ForEach(post.imageUrls, id: \.self) { url in
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
@@ -80,7 +80,7 @@ struct SearchComponentView: View {
                         ChatButton {
                             // TODO: Handle
                         }
-                        BookmarkButton(id: .constant(post.id))
+                        BookmarkButton(isBookmark: .constant(post.isBookmarked), id: .constant(post.id))
                         Spacer()
                     }
                 }

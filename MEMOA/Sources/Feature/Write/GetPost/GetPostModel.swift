@@ -1,7 +1,7 @@
 import Foundation
 
 //MARK: 게시글(홈화면)
-struct GetPostModel: Codable {
+struct GetPostModel: Codable, HasImage {
     let id: Int
     let title: String
 //    let content: String
@@ -12,7 +12,14 @@ struct GetPostModel: Codable {
     let createdAt: String
     let images: [String]
     let isBookmarked: Bool
-    var getImageUrl: [URL] {
+}
+
+protocol HasImage {
+    var images: [String] { get }
+}
+
+extension HasImage {
+    var imageUrls: [URL] {
         images.compactMap { URL(string: $0) }
     }
 }

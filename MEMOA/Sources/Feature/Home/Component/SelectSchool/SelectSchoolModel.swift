@@ -5,6 +5,7 @@ struct SelectSchoolModel {
 }
 
 struct gradeitem: Encodable {
+    let id = UUID()
     var grade: Int
     
     init(grade: Int) {

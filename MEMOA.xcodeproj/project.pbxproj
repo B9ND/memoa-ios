@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6550D6122CA002030032A908 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6550D6112CA002030032A908 /* Alamofire */; };
+		65E9CE7C2CEB633600D032E5 /* Zoomable in Frameworks */ = {isa = PBXBuildFile; productRef = 65E9CE7B2CEB633600D032E5 /* Zoomable */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6550D6122CA002030032A908 /* Alamofire in Frameworks */,
+				65E9CE7C2CEB633600D032E5 /* Zoomable in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +80,7 @@
 			name = MEMOA;
 			packageProductDependencies = (
 				6550D6112CA002030032A908 /* Alamofire */,
+				65E9CE7B2CEB633600D032E5 /* Zoomable */,
 			);
 			productName = MEMOA;
 			productReference = 17A438AB2C9DA9F000B071CA /* MEMOA.app */;
@@ -110,6 +113,7 @@
 			mainGroup = 17A438A22C9DA9F000B071CA;
 			packageReferences = (
 				6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */,
+				65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */,
 			);
 			productRefGroup = 17A438AC2C9DA9F000B071CA /* Products */;
 			projectDirPath = "";
@@ -357,6 +361,14 @@
 				minimumVersion = 5.9.1;
 			};
 		};
+		65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ryohey/Zoomable";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -364,6 +376,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */;
 			productName = Alamofire;
+		};
+		65E9CE7B2CEB633600D032E5 /* Zoomable */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */;
+			productName = Zoomable;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

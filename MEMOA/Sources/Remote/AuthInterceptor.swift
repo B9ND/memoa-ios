@@ -29,7 +29,8 @@ class AuthInterceptor: RequestInterceptor {
             return
         }
         
-        guard response.statusCode == 403,
+//        guard response.statusCode == 401 || response.statusCode == 402 || response.statusCode == 404,
+        guard response.statusCode == 401,
               let refreshToken = UserDefaults.standard.string(forKey: "refresh") else {
             completion(.doNotRetryWithError(error))
             return
