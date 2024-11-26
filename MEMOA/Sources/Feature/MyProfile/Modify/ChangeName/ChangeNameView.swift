@@ -15,13 +15,16 @@ struct ChangeNameView: View {
             TextField("변경할 이름을 입력해주세요", text: $changeNameVM.changeName)
                 .tint(.maincolor)
                 .padding(.horizontal, 16)
-                    Rectangle()
-                        .fill(.black)
-                        .frame(width: 325,height: 1)
+            Rectangle()
+                .fill(.black)
+                .frame(width: 325,height: 1)
         }
         .padding()
         Spacer()
-        BackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
+            .onAppear {
+                changeNameVM.changeName = ""
+            }
+            .addBackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
             changeNameVM.changeUserName()
         }, bool: changeNameVM.changeName.isEmpty, Title: "이름이 변경되었어요!", SubTitle: nil, alertBool: $changeNameVM.nameAlert)

@@ -51,11 +51,11 @@ struct OtherpostComponent: View {
                 VStack {
                     ScrollView(.horizontal) {
                         HStack(spacing: 3) {
-                            ForEach(post.getImageUrl, id: \.self) { url in
+                            ForEach(post.imageUrls, id: \.self) { url in
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()
-                                        .cornerRadius(8, corners: [.allCorners])
+                                        .cornerRadius(8, corners: .allCorners)
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 220,height: 240)
                                         .padding(.leading, 10)
@@ -84,7 +84,7 @@ struct OtherpostComponent: View {
                         ChatButton {
                             // TODO: Handle
                         }
-                        BookmarkButton(id: .constant(post.id))
+                        BookmarkButton(isBookmark: .constant(post.isBookmarked), id: .constant(post.id))
                         Spacer()
                     }
                 }

@@ -10,6 +10,8 @@ class ProfileViewModel: ObservableObject {
     @Published var myPosts: [OtherPostModel] = []
     @Published var id = 0
     @Published var detailPosts: [GetDetailPost] = []
+    var postExist = false
+    var isLoading = false
     
     //MARK: 유저를 팔로우 or 취소합니다
     func follow(nickname: String) {
@@ -54,15 +56,22 @@ class ProfileViewModel: ObservableObject {
     
     //MARK: 상대방 글
     func OtherPost(author: String) {
+        guard !isLoading else { return }
+        isLoading = true
         let parameters: [String: Any] = ["author": author]
         NetworkRunner.shared.request("/post/user", method: .get, parameters: parameters, response: [OtherPostModel].self) { result in
             switch result {
             case .success(let data):
-                self.myPosts.append(contentsOf: data)
-                self.id = data.first?.id ?? 0
+                if data.isEmpty {
+                    self.postExist = true
+                } else {
+                    self.myPosts.append(contentsOf: data)
+                    self.id = data.first?.id ?? 0
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
+            self.isLoading = false
         }
     }
     

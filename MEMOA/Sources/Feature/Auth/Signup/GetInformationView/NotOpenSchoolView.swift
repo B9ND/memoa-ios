@@ -29,7 +29,7 @@ struct NotOpenSchoolView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }
 }

@@ -55,7 +55,7 @@ struct FollowView: View {
             }
         }
         Spacer()
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle(followBoard.nickname)
             .font(.medium(16))

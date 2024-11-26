@@ -59,8 +59,8 @@ struct WriteView: View {
                                             RoundedRectangle(cornerRadius: 8)
                                                 .stroke(
                                                     index < clickedTags.count && clickedTags[index]
-                                                        ? Color.maincolor
-                                                        : Color.graycolor
+                                                    ? Color.maincolor
+                                                    : Color.graycolor
                                                 )
                                         )
                                 }
@@ -175,18 +175,18 @@ struct WriteView: View {
             }
         }
         .onAppear {
-            // View가 나타날 때 clickedTags 배열 초기화
             if let profile = myProfileVM.profile {
                 clickedTags = Array(repeating: false, count: profile.department.subjects.count)
+                if let school = myProfileVM.profile {
+                    writeVM.tags.append(school.department.school)
+                    writeVM.tags.append(String("\(school.department.grade)학년"))
+                }
             }
         }
         
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+        .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
-            if let school = myProfileVM.profile {
-                writeVM.post()
-                writeVM.tags.append(school.department.school)
-            }
+            writeVM.post()
         }, bool: writeVM.disabled, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!", alertBool: $writeVM.showAlert)
     }
     

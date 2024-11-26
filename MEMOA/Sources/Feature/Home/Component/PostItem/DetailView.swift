@@ -91,7 +91,7 @@ struct DetailView: View {
                             ChatButton {
                                 // TODO: Handle
                             }
-                            BookmarkButton(id: .constant(getPost.id))
+                            BookmarkButton(isBookmark: .constant(getPost.isBookmarked), id: .constant(getPost.id))
                             Spacer()
                         }
                     }
@@ -100,7 +100,7 @@ struct DetailView: View {
             }
             .padding(.leading, 15)
             Spacer()
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+                .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
         .navigationDestination(isPresented: $toProfile) {
             ProfileView(username: .constant(getPost.author))
