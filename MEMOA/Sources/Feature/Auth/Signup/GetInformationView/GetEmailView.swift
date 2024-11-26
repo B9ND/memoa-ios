@@ -80,7 +80,7 @@ struct GetEmailView: View {
             .navigationDestination(isPresented: $isCodeValid) {
                 GetpasswordView(signUpVM: signUpVM)
             }
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }
 }

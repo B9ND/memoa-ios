@@ -9,15 +9,9 @@ struct GetSchoolView: View {
     @State private var selectGrade = 0
     @State private var selectedDepartment: Department? = nil
     @State private var departmentIDs: [String: Int] = [:]
-<<<<<<< HEAD
-    @State private var isAlertPresented = false
-    @State private var alertMessage = ""
-
-=======
     @State private var isAlertPresented = false // 알림 상태
     @State private var alertMessage = "" // 알림 메시지
-    
->>>>>>> develop
+  
     var body: some View {
         NavigationStack {
             ZStack {
@@ -107,12 +101,6 @@ struct GetSchoolView: View {
             }
             .onAppear(perform : UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
-<<<<<<< HEAD
-            .fullScreenCover(isPresented: $isSignUpSuccess) {
-                FirstView()
-            }
-=======
->>>>>>> develop
             .alert(isPresented: $isAlertPresented) {
                 Alert(title: Text("회원가입 실패"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
             }
