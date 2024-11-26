@@ -2,16 +2,18 @@ import SwiftUI
 
 //MARK: 프로필 수정
 struct ModifyView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
+    
     @EnvironmentObject private var myProfileVM: MyProfileViewModel
     @StateObject private var modifyVM = ModifyViewModel()
+    
     @State private var showAlert = false
-    @Environment(\.openURL) private var openURL
     @State private var showImagePicker = false
     @State private var changeProfileImage = true
     @State private var changeName = false
     @State private var changeDescription = false
     @State private var changeSchool = false
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
@@ -39,7 +41,7 @@ struct ModifyView: View {
                                                     .overlay {
                                                         image
                                                             .image?.resizable()
-                                                            .cornerRadius(40, corners: [.allCorners])
+                                                            .cornerRadius(40, corners: .allCorners)
                                                             .frame(width: 80, height: 80)
                                                             .padding(.top, -44)
                                                     }
@@ -56,7 +58,7 @@ struct ModifyView: View {
                                                     .overlay {
                                                         image
                                                             .image?.resizable()
-                                                            .cornerRadius(40, corners: [.allCorners])
+                                                            .cornerRadius(40, corners: .allCorners)
                                                             .frame(width: 80, height: 80)
                                                             .padding(.top, -44)
                                                     }
@@ -105,7 +107,7 @@ struct ModifyView: View {
                                     Text(profile.email)
                                         .foregroundStyle(.black)
                                         .font(.regular(12))
-                                        .padding(.bottom, 14)  
+                                        .padding(.bottom, 14)
                                 }
                                 VStack {
                                     ModifyViewbutton(text: "이름 변경", action: {
@@ -126,10 +128,8 @@ struct ModifyView: View {
                                         }
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
+                                        UserDefaults.standard.removeObject(forKey: "access")
                                         myProfileVM.delete()
-                                        withAnimation {
-                                            UserDefaults.standard.removeObject(forKey: "access")
-                                        }
                                     }, color: .red)
                                     
                                     HStack {
@@ -171,11 +171,12 @@ struct ModifyView: View {
                     //                    ChangingDepartmentView()
                 }
                 .onAppear {
+                    print(#file)
                     myProfileVM.fetchMy()
                 }
                 .ignoresSafeArea()
             }
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton(action: {
                 modifyVM.patchMy()
             }, bool: changeProfileImage, Title: "이미지 수정성공!", SubTitle: nil, alertBool: $modifyVM.imageAlert)

@@ -33,6 +33,14 @@ struct SelectitemView: View {
                                 postVM.tags.append(subject)
                                 postVM.loadPost()
                             }
+                            if selectVM.selectedSubject == "과목" {
+                                postVM.page = 0
+                                postVM.canLoadMore = true
+                                postVM.posts.removeAll()
+                                postVM.tags.removeAll()
+                                postVM.tags.append(myInformation.department.school)
+                                postVM.loadPost()
+                            }
                         }) {
                             HStack {
                                 Text(subject)
@@ -67,7 +75,7 @@ struct SelectitemView: View {
                                 postVM.canLoadMore = true
                                 postVM.posts.removeAll()
                                 postVM.tags.removeAll()
-                                postVM.tags.append(String(gradeItem.grade))
+                                postVM.tags.append(String("\(gradeItem.grade)학년"))
                                 postVM.loadPost()
                             }
                         }) {

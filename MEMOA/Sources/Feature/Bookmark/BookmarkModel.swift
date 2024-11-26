@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BookmarkModel: Codable {
+struct BookmarkModel: Codable, HasImage {
     let nickname: String
     let postId: Int
     let title: String
@@ -8,7 +8,4 @@ struct BookmarkModel: Codable {
     let createdAt: String
     let images: [String]
     let tags: [String]
-    var getImageUrl: [URL] {
-        images.compactMap { URL(string: $0) }
-    }
 }

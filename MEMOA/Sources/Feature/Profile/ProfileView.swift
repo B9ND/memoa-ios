@@ -38,12 +38,15 @@ struct ProfileView: View {
                                                     .scaledToFit()
                                                     .clipShape(Circle())
                                             } placeholder: {
-                                                ProgressView()
+                                                Circle()
+                                                    .frame(width: 90, height: 90)
+                                                    .clipShape(Circle())
+                                                    .shimmer()
                                             }
                                             .padding(.top, -44)
                                         }
                                     }
-                                
+                                    
                                     if let profile = profileVM.profile {
                                         VStack {
                                             Text(profile.nickname)
@@ -103,24 +106,40 @@ struct ProfileView: View {
                                             }
                                         }
                                         .padding(.bottom ,10)
-                                        Spacer()
                                     }
                                     
                                     Divider()
-                                    ScrollView {
-                                        LazyVStack {
-                                            ForEach(profileVM.myPosts, id: \.id) { post in
-                                                OtherpostComponent(post: post) {
-                                                    profileVM.id = post.id
-                                                    profileVM.getDetailPost()
-                                                    toDetail = true
-                                                }
-                                            }
+                                    if profileVM.postExist {
+                                        VStack {
+                                            Text("게시글이 없어요!")
+                                                .font(.bold(20))
+                                                .padding(.top, 150)
                                         }
                                         Spacer()
-                                    }
-                                    .safeAreaInset(edge: .bottom) {
-                                        Color.clear.frame(height: 97)
+                                    } else {
+                                        ScrollView {
+                                            if profileVM.isLoading {
+                                                VStack {
+                                                    ForEach(0..<10) { _ in
+                                                        ProfileShimmerView()
+                                                    }
+                                                }
+                                            } else {
+                                                LazyVStack {
+                                                    ForEach(profileVM.myPosts, id: \.id) { post in
+                                                        OtherpostComponent(post: post) {
+                                                            profileVM.id = post.id
+                                                            profileVM.getDetailPost()
+                                                            toDetail = true
+                                                        }
+                                                    }
+                                                }
+                                                Spacer()
+                                            }
+                                        }
+                                        .safeAreaInset(edge: .bottom) {
+                                            Color.clear.frame(height: 97)
+                                        }
                                     }
                                 }
                             }
@@ -129,8 +148,9 @@ struct ProfileView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarBackButtonHidden()
         .onAppear {
+            print(#file)
             profileVM.getUser(nickname: username)
             profileVM.OtherPost(author: username)
             profileVM.fetchMy()
@@ -142,6 +162,6 @@ struct ProfileView: View {
                 DetailView(getPost: detailPost)
             }
         }
-        BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+        .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }

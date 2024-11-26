@@ -51,7 +51,7 @@ struct SearchComponentView: View {
                 VStack {
                     ScrollView(.horizontal) {
                         HStack(spacing: 3) {
-                            ForEach(post.getImageUrl, id: \.self) { url in
+                            ForEach(post.imageUrls, id: \.self) { url in
                                 AsyncImage(url: url) { image in
                                     image
                                         .image?.resizable()

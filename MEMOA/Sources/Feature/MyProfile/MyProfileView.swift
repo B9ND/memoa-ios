@@ -16,6 +16,16 @@ struct MyProfileView: View {
             GeometryReader { geometry in
                 VStack {
                     Spacer()
+                    HStack {
+                        Spacer()
+                        Button {
+                            modify = true
+                        } label: {
+                            Image(icon: .setting)
+                        }
+                        .padding(.trailing)
+                    }
+                    Spacer()
                     Rectangle()
                         .fill(Color.white)
                         .frame(maxWidth:.infinity)
@@ -47,7 +57,10 @@ struct MyProfileView: View {
                                                     .scaledToFit()
                                                     .clipShape(Circle())
                                             } placeholder: {
-                                                EmptyView()
+                                                Circle()
+                                                    .frame(width: 90, height: 90)
+                                                    .clipShape(Circle())
+                                                    .shimmer()
                                             }
                                             .padding(.top, -44)
                                         }
@@ -83,39 +96,48 @@ struct MyProfileView: View {
                                 }
                                 
                                 Divider()
-                                ScrollView {
-                                    LazyVStack {
-                                        ForEach(myProfileVM.myPosts, id: \.id) { post in
-                                            MypostComponent(post: post) {
-                                                myProfileVM.id = post.id
-                                                myProfileVM.getDetailPost()
-                                                toDetail = true
-                                            }
-                                        }
+                                if myProfileVM.postExist {
+                                    VStack {
+                                        Text("게시글이 없어요!")
+                                            .font(.bold(20))
+                                            .padding(.top, 150)
                                     }
                                     Spacer()
-                                }
-                                .safeAreaInset(edge: .bottom) {
-                                    Color.clear.frame(height: 97)
+                                } else {
+                                    ScrollView {
+                                        if myProfileVM.isLoading {
+                                            VStack {
+                                                ForEach(0..<10) { _ in
+                                                    ProfileShimmerView()
+                                                }
+                                            }
+                                            .padding(.horizontal)
+                                        } else {
+                                            LazyVStack {
+                                                ForEach(myProfileVM.myPosts, id: \.id) { post in
+                                                    MypostComponent(post: post) {
+                                                        myProfileVM.id = post.id
+                                                        myProfileVM.getDetailPost()
+                                                        toDetail = true
+                                                    }
+                                                }
+                                            }
+                                            Spacer()
+                                        }
+                                    }
+                                    .safeAreaInset(edge: .bottom) {
+                                        Color.clear.frame(height: 97)
+                                    }
                                 }
                             }
                         }
                 }
-                .navigationDestination(isPresented: $modify) {
-                    ModifyView()
-                }
                 .ignoresSafeArea()
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    modify = true
-                } label: {
-                    Image(icon: .setting)
-                }
-            }
+        .navigationBarBackButtonHidden()
+        .navigationDestination(isPresented: $modify) {
+            ModifyView()
         }
         .refreshable {
             if let profile = myProfileVM.profile {
@@ -134,6 +156,9 @@ struct MyProfileView: View {
                 followerVM.getFollower(nickname: profile.nickname)
                 followingVM.getFollowing(nickname: profile.nickname)
             }
+        }
+        .onDisappear {
+            myProfileVM.myPosts.removeAll()
         }
         .navigationDestination(isPresented: $toDetail) {
             if let detailPost = myProfileVM.detailPosts.first {

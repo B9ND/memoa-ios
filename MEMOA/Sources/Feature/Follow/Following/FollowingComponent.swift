@@ -19,7 +19,7 @@ struct FollowingComponent: View {
                 AsyncImage(url: url) { image in
                     image
                         .image?.resizable()
-                        .cornerRadius(30, corners: [.allCorners])
+                        .cornerRadius(30, corners: .allCorners)
                         .frame(width: 55, height: 55)
                         .padding(.trailing, 10)
                 }

@@ -24,7 +24,7 @@ struct ChangeNameView: View {
             .onAppear {
                 changeNameVM.changeName = ""
             }
-        BackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
+            .addBackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
         CompleteButton(action: {
             changeNameVM.changeUserName()
         }, bool: changeNameVM.changeName.isEmpty, Title: "이름이 변경되었어요!", SubTitle: nil, alertBool: $changeNameVM.nameAlert)

@@ -100,7 +100,7 @@ struct DetailView: View {
             }
             .padding(.leading, 15)
             Spacer()
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+                .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
         .navigationDestination(isPresented: $toProfile) {
             ProfileView(username: .constant(getPost.author))

@@ -52,11 +52,11 @@ struct MypostComponent: View {
                     VStack {
                         ScrollView(.horizontal) {
                             HStack(spacing: 3) {
-                                ForEach(myPost.getImageUrl, id: \.self) { url in
+                                ForEach(myPost.imageUrls, id: \.self) { url in
                                     AsyncImage(url: url) { image in
                                         image
                                             .image?.resizable()
-                                            .cornerRadius(8, corners: [.allCorners])
+                                            .cornerRadius(8, corners: .allCorners)
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 220,height: 240)
                                             .padding(.leading, 10)
