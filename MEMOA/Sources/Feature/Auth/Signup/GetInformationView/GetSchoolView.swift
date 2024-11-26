@@ -9,10 +9,9 @@ struct GetSchoolView: View {
     @State private var selectGrade = 0
     @State private var selectedDepartment: Department? = nil
     @State private var departmentIDs: [String: Int] = [:]
-
     @State private var isAlertPresented = false // 알림 상태
     @State private var alertMessage = "" // 알림 메시지
-
+  
     var body: some View {
         NavigationStack {
             ZStack {
