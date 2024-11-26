@@ -11,7 +11,7 @@ class BookmarkViewModel: ObservableObject {
         NetworkRunner.shared.query("/bookmark", method: .post, parameters: ["post-id" : id], isAuthorization: true) { result in
             switch result {
             case .success():
-                self.isBoomark = true
+                self.isBoomark.toggle()
             case .failure(let error):
                 print(error.localizedDescription)
             }

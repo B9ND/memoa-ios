@@ -1,5 +1,6 @@
 import Foundation
 
+<<<<<<< HEAD
 struct searchSelectSchoolModel {
     var grade: [gradeitem]
 }
@@ -14,6 +15,9 @@ struct searchGradeItem: Encodable {
 
 //서버 응답 모델
 struct ServerResponse: Codable, Identifiable, Hashable {
+=======
+struct SearchModel: Codable, HasImage {
+>>>>>>> develop
     let id: Int
     let title: String
     let content: String
@@ -23,11 +27,23 @@ struct ServerResponse: Codable, Identifiable, Hashable {
     let createdAt: String
     let images: [String]
     let isBookmarked: Bool
+<<<<<<< HEAD
     
     // Computed property to convert image strings to URLs
     var imageUrls: [URL] {
         images.compactMap { URL(string: $0) }
     }
+=======
+}
+
+struct Search {
+    var recentSearch: [RecentSearches]
+    var searchItem: String
+}
+
+struct RecentSearches: Hashable {
+    var recentSearch: String
+>>>>>>> develop
     
     //검색 모델
     struct SearchRequest: Encodable {

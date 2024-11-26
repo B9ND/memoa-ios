@@ -8,7 +8,7 @@
 import Foundation
 
 //MARK: 게시글(detail)
-struct GetDetailPost: Codable {
+struct GetDetailPost: Codable, HasImage {
     let id: Int
     let title: String
     let content: String
@@ -18,7 +18,4 @@ struct GetDetailPost: Codable {
     let createdAt: String
     let images: [String]
     let isBookmarked: Bool
-    var getImageUrl: [URL] {
-        images.compactMap { URL(string: $0) }
-    }
 }

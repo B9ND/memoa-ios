@@ -2,16 +2,18 @@ import SwiftUI
 
 //MARK: 프로필 수정
 struct ModifyView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
+    
     @EnvironmentObject private var myProfileVM: MyProfileViewModel
     @StateObject private var modifyVM = ModifyViewModel()
+    
     @State private var showAlert = false
-    @Environment(\.openURL) private var openURL
     @State private var showImagePicker = false
     @State private var changeProfileImage = true
     @State private var changeName = false
     @State private var changeDescription = false
     @State private var changeSchool = false
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
@@ -26,8 +28,8 @@ struct ModifyView: View {
                         .frame(height: geometry.size.height * 0.95)
                         .cornerRadius(30, corners: [.topLeft, .topRight])
                         .overlay {
-                            if let profile = myProfileVM.profile {
-                                VStack {
+                            VStack {
+                                if let profile = myProfileVM.profile {
                                     ZStack {
                                         //MARK: 그대로의 이미지
                                         if let url = URL(string: profile.profileImage) {
@@ -39,7 +41,7 @@ struct ModifyView: View {
                                                     .overlay {
                                                         image
                                                             .image?.resizable()
-                                                            .cornerRadius(40, corners: [.allCorners])
+                                                            .cornerRadius(40, corners: .allCorners)
                                                             .frame(width: 80, height: 80)
                                                             .padding(.top, -44)
                                                     }
@@ -56,7 +58,7 @@ struct ModifyView: View {
                                                     .overlay {
                                                         image
                                                             .image?.resizable()
-                                                            .cornerRadius(40, corners: [.allCorners])
+                                                            .cornerRadius(40, corners: .allCorners)
                                                             .frame(width: 80, height: 80)
                                                             .padding(.top, -44)
                                                     }
@@ -101,66 +103,61 @@ struct ModifyView: View {
                                         }
                                     }
                                     .padding(.bottom, 4)
-                                    
                                     .padding(.leading, 20)
                                     Text(profile.email)
                                         .foregroundStyle(.black)
                                         .font(.regular(12))
                                         .padding(.bottom, 14)
-                                    
-                                    VStack {
-                                        ModifyViewbutton(text: "이름 변경", action: {
-                                            changeName = true
-                                        }, color: .black)
-                                        
-                                        ModifyViewbutton(text: "자기소개 변경", action: {
-                                            changeDescription = true
-                                        }, color: .black)
-                                        
-                                        ModifyViewbutton(text: "소속 변경", action: {
-                                            changeSchool = true
-                                        }, color: .black)
-                                        
-                                        ModifyViewbutton(text: "개인 정보 이용 약관", action: {
-                                            if let url = URL(string: "링크") {
-                                                openURL(url)
-                                            }
-                                        }, color: .black)
-                                        ModifyViewbutton(text: "로그아웃", action: {
-                                            myProfileVM.delete()
-                                            withAnimation {
-                                                UserDefaults.standard.removeObject(forKey: "access")
-                                            }
-                                        }, color: .red)
-                                        
-                                        HStack {
-                                            Spacer()
-                                            Button {
-                                                showAlert = true
-                                            } label: {
-                                                Text("회원탈퇴")
-                                                    .underline()
-                                                    .foregroundStyle(.red)
-                                                    .font(.regular(12))
-                                            }
-                                            .alert(isPresented: $showAlert) {
-                                                Alert(
-                                                    title: Text("정말 회원탈퇴 하시겠습니까?"),
-                                                    primaryButton: .default(Text("취소"))
-                                                    {
-                                                    },
-                                                    secondaryButton: .destructive(Text("탈퇴")) {
-                                                    }
-                                                )
-                                            }
-                                        }
-                                        .padding(.vertical, 14)
-                                        .padding(.trailing, 23)
-                                    }
-                                    
-                                    .padding()
-                                    Spacer()
                                 }
+                                VStack {
+                                    ModifyViewbutton(text: "이름 변경", action: {
+                                        changeName = true
+                                    }, color: .black)
+                                    
+                                    ModifyViewbutton(text: "자기소개 변경", action: {
+                                        changeDescription = true
+                                    }, color: .black)
+                                    
+                                    ModifyViewbutton(text: "소속 변경", action: {
+                                        changeSchool = true
+                                    }, color: .black)
+                                    
+                                    ModifyViewbutton(text: "개인 정보 이용 약관", action: {
+                                        if let url = URL(string: "링크") {
+                                            openURL(url)
+                                        }
+                                    }, color: .black)
+                                    ModifyViewbutton(text: "로그아웃", action: {
+                                        UserDefaults.standard.removeObject(forKey: "access")
+                                        myProfileVM.delete()
+                                    }, color: .red)
+                                    
+                                    HStack {
+                                        Spacer()
+                                        Button {
+                                            showAlert = true
+                                        } label: {
+                                            Text("회원탈퇴")
+                                                .underline()
+                                                .foregroundStyle(.red)
+                                                .font(.regular(12))
+                                        }
+                                        .alert(isPresented: $showAlert) {
+                                            Alert(
+                                                title: Text("정말 회원탈퇴 하시겠습니까?"),
+                                                primaryButton: .default(Text("취소"))
+                                                {
+                                                },
+                                                secondaryButton: .destructive(Text("탈퇴")) {
+                                                }
+                                            )
+                                        }
+                                    }
+                                    .padding(.vertical, 14)
+                                    .padding(.trailing, 23)
+                                }
+                                .padding()
+                                Spacer()
                             }
                         }
                 }
@@ -171,11 +168,15 @@ struct ModifyView: View {
                     ChangeDesciptionView(changeDescriptionVM: modifyVM)
                 }
                 .navigationDestination(isPresented: $changeSchool) {
-//                    ChangingDepartmentView()
+                    //                    ChangingDepartmentView()
+                }
+                .onAppear {
+                    print(#file)
+                    myProfileVM.fetchMy()
                 }
                 .ignoresSafeArea()
             }
-            BackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             CompleteButton(action: {
                 modifyVM.patchMy()
             }, bool: changeProfileImage, Title: "이미지 수정성공!", SubTitle: nil, alertBool: $modifyVM.imageAlert)

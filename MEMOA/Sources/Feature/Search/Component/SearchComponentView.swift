@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct OtherpostComponent: View {
+struct SearchComponentView: View {
     @State private var toDetail = false
     @State private var showingAlert = false
     @State private var toProfile = false
-    let post: OtherPostModel
-    let action: () -> Void
+    var post: SearchModel
+    var action: () -> Void
     
     var body: some View {
         Button {
@@ -26,7 +26,7 @@ struct OtherpostComponent: View {
                             }
                         }
                     }
-                    .padding(.leading, 24)
+                    
                     VStack(alignment: .leading) {
                         HStack {
                             Text(post.author)
@@ -68,18 +68,14 @@ struct OtherpostComponent: View {
                 }
                 
                 VStack {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(post.tags, id: \.self) { tag in
-                                Text("#\(tag)")
-                                    .font(.regular(12))
-                                    .foregroundStyle(Color.timecolor)
-                            }
-                            Spacer()
+                    HStack {
+                        ForEach(post.tags, id: \.self) { tag in
+                            Text("#\(tag)")
+                                .font(.regular(12))
+                                .foregroundStyle(Color.timecolor)
                         }
+                        Spacer()
                     }
-                    .scrollIndicators(.hidden)
-                    
                     HStack {
                         ChatButton {
                             // TODO: Handle
@@ -95,5 +91,4 @@ struct OtherpostComponent: View {
         }
     }
 }
-
 
