@@ -185,9 +185,10 @@ struct WriteView: View {
         }
         
         .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
-        CompleteButton(action: {
+        .completeButton(isAlert: $writeVM.showAlert, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!" , action: {
             writeVM.post()
-        }, bool: writeVM.disabled, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!", alertBool: $writeVM.showAlert)
+        }, isComplete: writeVM.disabled)
+        
     }
     
     //MARK: 넣을 이미지

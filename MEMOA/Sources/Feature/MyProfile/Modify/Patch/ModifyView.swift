@@ -129,6 +129,7 @@ struct ModifyView: View {
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
                                         UserDefaults.standard.removeObject(forKey: "access")
+                                        UserDefaults.standard.removeObject(forKey: "refresh")
                                         myProfileVM.delete()
                                     }, color: .red)
                                     
@@ -142,15 +143,8 @@ struct ModifyView: View {
                                                 .foregroundStyle(.red)
                                                 .font(.regular(12))
                                         }
-                                        .alert(isPresented: $showAlert) {
-                                            Alert(
-                                                title: Text("정말 회원탈퇴 하시겠습니까?"),
-                                                primaryButton: .default(Text("취소"))
-                                                {
-                                                },
-                                                secondaryButton: .destructive(Text("탈퇴")) {
-                                                }
-                                            )
+                                        .alert("아직 준비중인 기능입니다.", isPresented: $showAlert) {
+                                            Button("OK", role: .cancel) {}
                                         }
                                     }
                                     .padding(.vertical, 14)
@@ -167,19 +161,18 @@ struct ModifyView: View {
                 .navigationDestination(isPresented: $changeDescription) {
                     ChangeDesciptionView(changeDescriptionVM: modifyVM)
                 }
-                .navigationDestination(isPresented: $changeSchool) {
-                    //                    ChangingDepartmentView()
+                .alert("아직 준비중인 기능입니다.", isPresented: $changeSchool) {
+                    Button("OK", role: .cancel) {}
                 }
                 .onAppear {
-                    print(#file)
                     myProfileVM.fetchMy()
                 }
                 .ignoresSafeArea()
             }
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
-            CompleteButton(action: {
+            .completeButton(isAlert: $modifyVM.imageAlert, Title: "이미지 수정성공!", SubTitle: nil, action: {
                 modifyVM.patchMy()
-            }, bool: changeProfileImage, Title: "이미지 수정성공!", SubTitle: nil, alertBool: $modifyVM.imageAlert)
+            }, isComplete: true)
         }
     }
 }

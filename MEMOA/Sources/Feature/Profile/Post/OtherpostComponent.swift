@@ -81,9 +81,7 @@ struct OtherpostComponent: View {
                     .scrollIndicators(.hidden)
                     
                     HStack {
-                        ChatButton {
-                            // TODO: Handle
-                        }
+                        ChatButton()
                         BookmarkButton(isBookmark: .constant(post.isBookmarked), id: .constant(post.id))
                         Spacer()
                     }

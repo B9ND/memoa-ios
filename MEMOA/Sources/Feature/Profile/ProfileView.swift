@@ -86,22 +86,9 @@ struct ProfileView: View {
                                                             .stroke(Color.graycolor, lineWidth: 1)
                                                     }
                                             } else {
-                                                Button {
+                                                FollowButton(follow: profileVM.followed) {
                                                     profileVM.followed.toggle()
                                                     profileVM.follow(nickname: username)
-                                                } label: {
-                                                    Text(profileVM.followed ? "언팔로우" : "팔로우")
-                                                        .font(.regular(10))
-                                                        .frame(width: 87, height: 21)
-                                                        .background(profileVM.followed ? Color.white : Color.maincolor)
-                                                        .cornerRadius(8)
-                                                        .foregroundStyle(profileVM.followed ? .black : .white)
-                                                        .overlay {
-                                                            if profileVM.followed {
-                                                                RoundedRectangle(cornerRadius: 10)
-                                                                    .stroke(Color.graycolor, lineWidth: 1)
-                                                            }
-                                                        }
                                                 }
                                             }
                                         }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6550D6122CA002030032A908 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6550D6112CA002030032A908 /* Alamofire */; };
+		65512A272CF6F16300939411 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 65512A262CF6F16300939411 /* Kingfisher */; };
 		65E9CE7C2CEB633600D032E5 /* Zoomable in Frameworks */ = {isa = PBXBuildFile; productRef = 65E9CE7B2CEB633600D032E5 /* Zoomable */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65512A272CF6F16300939411 /* Kingfisher in Frameworks */,
 				6550D6122CA002030032A908 /* Alamofire in Frameworks */,
 				65E9CE7C2CEB633600D032E5 /* Zoomable in Frameworks */,
 			);
@@ -81,6 +83,7 @@
 			packageProductDependencies = (
 				6550D6112CA002030032A908 /* Alamofire */,
 				65E9CE7B2CEB633600D032E5 /* Zoomable */,
+				65512A262CF6F16300939411 /* Kingfisher */,
 			);
 			productName = MEMOA;
 			productReference = 17A438AB2C9DA9F000B071CA /* MEMOA.app */;
@@ -114,6 +117,7 @@
 			packageReferences = (
 				6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */,
 				65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */,
+				65512A252CF6F16300939411 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 17A438AC2C9DA9F000B071CA /* Products */;
 			projectDirPath = "";
@@ -273,7 +277,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MEMOA/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = C4S7HKU287;
+				DEVELOPMENT_TEAM = 688647KH4L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MEMOA/Info.plist;
@@ -306,7 +310,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MEMOA/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = C4S7HKU287;
+				DEVELOPMENT_TEAM = 688647KH4L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MEMOA/Info.plist;
@@ -361,6 +365,14 @@
 				minimumVersion = 5.9.1;
 			};
 		};
+		65512A252CF6F16300939411 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.1;
+			};
+		};
 		65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ryohey/Zoomable";
@@ -376,6 +388,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */;
 			productName = Alamofire;
+		};
+		65512A262CF6F16300939411 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65512A252CF6F16300939411 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		65E9CE7B2CEB633600D032E5 /* Zoomable */ = {
 			isa = XCSwiftPackageProductDependency;
