@@ -1,14 +1,13 @@
 import SwiftUI
 
-
 struct FirstView: View {
-    
     @State private var toLogin = false
     @State private var toSignUp = false
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
+            LinearGradient(gradient: Gradient(
+                colors: [Color.darkmaincolor, Color.maincolor]),
                            startPoint: .top, endPoint: .bottom)
             .overlay (
                 Image(icon: .cloud)

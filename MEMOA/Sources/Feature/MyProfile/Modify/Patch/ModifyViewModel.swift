@@ -18,7 +18,8 @@ class ModifyViewModel: ObservableObject {
     @Published var changeDescription: String = ""
     @Published var imageAlert = false
     @Published var nameAlert = false
-    @Published var descriptionAlert = false    
+    @Published var descriptionAlert = false
+    
     //MARK: 이미지 url 불러오기
     func getImageUrl() {
         guard let image else {

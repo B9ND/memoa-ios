@@ -19,3 +19,9 @@ extension UIApplication: @retroactive UIGestureRecognizerDelegate {
         return false
     }
 }
+
+extension View {
+    func hideKeyBoard() -> some View {
+        self.onAppear(perform : UIApplication.shared.hideKeyboard)
+    }
+}

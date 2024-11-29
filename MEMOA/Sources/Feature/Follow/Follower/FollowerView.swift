@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FollowerView: View {
     @StateObject var followerVM = FollowerViewModel()
-    //TODO: 이거수정
     let id : String
     
     var body: some View {

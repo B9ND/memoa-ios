@@ -22,6 +22,7 @@ struct ImageDetailView: View {
                     .zoomable()
             }
         }
+        .enableNavigationSwipe()
         .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
     }
 }

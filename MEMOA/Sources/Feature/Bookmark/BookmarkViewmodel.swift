@@ -1,12 +1,12 @@
 import Foundation
 
 class BookmarkViewModel: ObservableObject {
-    @Published var isBoomark = false
-    @Published var noExist: Bool = false
-    @Published var canLoadMore = false
     @Published var posts: [BookmarkModel] = []
-    @Published var id = 0
     @Published var detailPosts: [GetDetailPost] = []
+    @Published var id = 0
+    @Published var isBoomark = false
+    @Published var noExist = false
+    @Published var canLoadMore = false
     
     func bookmark(id: Int) {
         NetworkRunner.shared.query("/bookmark", method: .post, parameters: ["post-id" : id], isAuthorization: true) { result in

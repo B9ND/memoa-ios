@@ -1,9 +1,11 @@
 import SwiftUI
+
 struct AuthBackground: View {
-    
+
     var body: some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color.darkmaincolor, Color.maincolor]),
+            gradient: Gradient(
+                colors: [Color.darkmaincolor, Color.maincolor]),
                        startPoint: .top, endPoint: .bottom)
         .overlay (
             Image(icon: .cloud)

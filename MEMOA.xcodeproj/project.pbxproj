@@ -9,7 +9,21 @@
 /* Begin PBXBuildFile section */
 		6550D6122CA002030032A908 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6550D6112CA002030032A908 /* Alamofire */; };
 		65E9CE7C2CEB633600D032E5 /* Zoomable in Frameworks */ = {isa = PBXBuildFile; productRef = 65E9CE7B2CEB633600D032E5 /* Zoomable */; };
+		65F40BBE2CF99AE400816B59 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 65F40BBD2CF99AE400816B59 /* Kingfisher */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		65F40CE92CF9BB0B00816B59 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		17A438AB2C9DA9F000B071CA /* MEMOA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MEMOA.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -25,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F40BBE2CF99AE400816B59 /* Kingfisher in Frameworks */,
 				6550D6122CA002030032A908 /* Alamofire in Frameworks */,
 				65E9CE7C2CEB633600D032E5 /* Zoomable in Frameworks */,
 			);
@@ -68,6 +83,8 @@
 				17A438A72C9DA9F000B071CA /* Sources */,
 				17A438A82C9DA9F000B071CA /* Frameworks */,
 				17A438A92C9DA9F000B071CA /* Resources */,
+				65F40CE92CF9BB0B00816B59 /* Copy Files */,
+				65F40CEB2CF9BED200816B59 /* Run Periphery */,
 			);
 			buildRules = (
 			);
@@ -81,6 +98,7 @@
 			packageProductDependencies = (
 				6550D6112CA002030032A908 /* Alamofire */,
 				65E9CE7B2CEB633600D032E5 /* Zoomable */,
+				65F40BBD2CF99AE400816B59 /* Kingfisher */,
 			);
 			productName = MEMOA;
 			productReference = 17A438AB2C9DA9F000B071CA /* MEMOA.app */;
@@ -114,6 +132,7 @@
 			packageReferences = (
 				6550D6102CA002030032A908 /* XCRemoteSwiftPackageReference "alamofire" */,
 				65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */,
+				65F40BBC2CF99AE400816B59 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 17A438AC2C9DA9F000B071CA /* Products */;
 			projectDirPath = "";
@@ -133,6 +152,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		65F40CEB2CF9BED200816B59 /* Run Periphery */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Periphery";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which periphery >/dev/null; then\n    periphery scan --workspace \"${PROJECT_NAME}.xcworkspace\" --scheme \"${TARGET_NAME}\" --output \"${BUILD_DIR}/periphery-report.json\" || exit 1\nelse\n    echo \"warning: Periphery not installed. Install it with 'brew install peripheryapp/periphery/periphery'.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		17A438A72C9DA9F000B071CA /* Sources */ = {
@@ -369,6 +409,14 @@
 				kind = branch;
 			};
 		};
+		65F40BBC2CF99AE400816B59 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -381,6 +429,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 65E9CE7A2CEB633600D032E5 /* XCRemoteSwiftPackageReference "Zoomable" */;
 			productName = Zoomable;
+		};
+		65F40BBD2CF99AE400816B59 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65F40BBC2CF99AE400816B59 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

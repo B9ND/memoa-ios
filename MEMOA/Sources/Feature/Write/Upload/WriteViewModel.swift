@@ -39,7 +39,7 @@ class WriteViewModel: ObservableObject {
             images: images,
             isReleased: isReleased
         ), response: GetPostModel.self, isAuthorization: true) { result in
-            if case .success(_) = result {
+            if case .success = result {
                 self.showAlert = true
                 self.reissueAttempted = false
             }
@@ -83,18 +83,16 @@ class WriteViewModel: ObservableObject {
 
         // 자리 표시자 순환 처리
         while let range = updatedText.range(of: "📷") { // "📷" 찾기
-            if let endRange = updatedText.range(of: "!", range: range.upperBound..<updatedText.endIndex) { // "!"로 끝나는지 확인
-                // 남아있는 postContent와 매칭
-                if imageIndex < postContent.count {
-                    updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: postContent[imageIndex])
-                    imageIndex += 1 // 다음 이미지 처리
-                } else {
-                    // 남아있는 postContent가 없는 경우 자리 표시자 삭제
-                    updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: "")
-                }
-            } else {
+            guard let endRange = updatedText.range(of: "!", range: range.upperBound..<updatedText.endIndex) else { // "!"로 끝나는지 확인
                 print("유효하지 않은 자리 표시자 발견")
                 break
+            }
+
+            if imageIndex < postContent.count {
+                updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: postContent[imageIndex])
+                imageIndex += 1 // 다음 이미지 처리
+            } else {
+                updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: "")
             }
         }
 

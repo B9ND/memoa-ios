@@ -2,7 +2,6 @@ import SwiftUI
 
 //MARK: 프로필 수정
 struct ModifyView: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     
     @EnvironmentObject private var myProfileVM: MyProfileViewModel
@@ -169,10 +168,11 @@ struct ModifyView: View {
                 }
                 .ignoresSafeArea()
             }
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
-            .completeButton(isAlert: $modifyVM.imageAlert, Title: "이미지 수정성공!", SubTitle: nil, action: {
+            .completeButton(isAlert: $modifyVM.imageAlert, Title: "이미지 수정성공!", SubTitle: nil, isComplete: modifyVM.imageUrl.isEmpty, action: {
                 modifyVM.patchMy()
-            }, isComplete: modifyVM.imageUrl.isEmpty)
+            })
         }
     }
 }

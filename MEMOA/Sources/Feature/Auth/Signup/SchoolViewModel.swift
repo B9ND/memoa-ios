@@ -2,13 +2,12 @@ import SwiftUI
 import Alamofire
 
 class SchoolViewModel: ObservableObject {
-    @Published var serverUrl = ServerUrl.shared
     @Published var request = SchoolModel()
-    @Published var isLoading = false
-    @Published var errorMessage: String?
-    @Published var getSchool: [School] = []
-    @Published var schoolName = ""
     @Published var selectedSchoolDepartments: [Department] = []
+    @Published var getSchool: [School] = []
+    @Published var errorMessage: String?
+    @Published var schoolName = ""
+    @Published var isLoading = false
     
     func resetSchoolList() {
         getSchool = []

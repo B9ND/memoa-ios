@@ -3,13 +3,12 @@ import SwiftUI
 struct GetSchoolView: View {
     @StateObject var schoolVM = SchoolViewModel()
     @ObservedObject var signUpVM: SignUpViewModel
-    @Environment(\.dismiss) var dismiss
+    @State private var selectedDepartment: Department? = nil
+    @State private var alertMessage = ""
+    @State private var selectGrade = 0
     @State private var toLogin = false
     @State private var toSelectSchoolView = false
-    @State private var selectGrade = 0
-    @State private var selectedDepartment: Department? = nil
     @State private var showAlert = false
-    @State private var alertMessage = ""
     
     @State private var departmentIDs: [String: Int] = [:]
     
@@ -100,7 +99,7 @@ struct GetSchoolView: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.fraction(0.85)])
             }
-            .onAppear(perform: UIApplication.shared.hideKeyboard)
+            .hideKeyBoard()
             .edgesIgnoringSafeArea(.all)
             .alert("회원가입", isPresented: $showAlert) {
                 Button("확인", role: .cancel) {}
@@ -110,6 +109,7 @@ struct GetSchoolView: View {
             .navigationDestination(isPresented: $toLogin, destination: {
                 LoginView()
             })
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }

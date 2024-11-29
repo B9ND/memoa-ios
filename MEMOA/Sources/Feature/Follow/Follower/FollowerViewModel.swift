@@ -8,7 +8,6 @@
 import Foundation
 
 class FollowerViewModel: ObservableObject {
-    
     @Published var followers: [FollowerModel] = []
     @Published var isFollowed = false
     

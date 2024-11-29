@@ -2,10 +2,9 @@ import SwiftUI
 
 struct GetEmailView: View {
     @StateObject private var signUpVM = SignUpViewModel()
-    @Environment(\.dismiss) var dismiss
-    @State private var showAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
+    @State private var showAlert = false
     @State private var isCodeValid = false
     @State private var isEmailValid = false
     
@@ -91,7 +90,7 @@ struct GetEmailView: View {
                     .padding(.bottom, 60)
                 }
             }
-            .onAppear(perform: UIApplication.shared.hideKeyboard)
+            .hideKeyBoard()
             .edgesIgnoringSafeArea(.all)
             .alert(alertTitle, isPresented: $showAlert) {
                 Button("확인", role: .cancel) {}
@@ -101,6 +100,7 @@ struct GetEmailView: View {
             .navigationDestination(isPresented: $isCodeValid) {
                 GetPasswordView(signUpVM: signUpVM)
             }
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }

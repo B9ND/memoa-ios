@@ -151,6 +151,7 @@ struct ProfileView: View {
                 DetailView(getPost: detailPost)
             }
         }
+        .enableNavigationSwipe()
         .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
     }
 }

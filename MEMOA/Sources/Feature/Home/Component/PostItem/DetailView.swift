@@ -10,7 +10,6 @@ import Kingfisher
 
 //MARK: 게시물 자세히
 struct DetailView: View {
-    @Environment(\.dismiss) private var dismiss
     @State private var showingAlert = false
     @State private var toProfile = false
     let getPost: GetDetailPost
@@ -101,6 +100,7 @@ struct DetailView: View {
             }
             .padding(.leading, 15)
             Spacer()
+                .enableNavigationSwipe()
                 .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
         }
         .navigationDestination(isPresented: $toProfile) {

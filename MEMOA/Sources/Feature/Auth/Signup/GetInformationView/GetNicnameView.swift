@@ -2,7 +2,6 @@ import SwiftUI
 
 struct GetNicknameView: View {
     @ObservedObject var signUpVM: SignUpViewModel
-    @Environment(\.dismiss) var dismiss
     @State private var toGetSchoolView = false
     
     var body: some View {
@@ -21,8 +20,9 @@ struct GetNicknameView: View {
                     .padding(.bottom, 60)
                 }
             }
-            .onAppear(perform: UIApplication.shared.hideKeyboard)
+            .hideKeyBoard()
             .edgesIgnoringSafeArea(.all)
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
             .navigationDestination(isPresented: $toGetSchoolView) {
                 GetSchoolView(signUpVM: signUpVM)

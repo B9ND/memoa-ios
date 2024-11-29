@@ -2,7 +2,6 @@ import SwiftUI
 
 struct NotOpenSchoolView: View {
     @ObservedObject var signUpVM: SignUpViewModel
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
@@ -29,6 +28,7 @@ struct NotOpenSchoolView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
     }

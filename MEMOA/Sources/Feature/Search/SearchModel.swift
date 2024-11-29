@@ -12,8 +12,7 @@ struct searchGradeItem: Encodable {
     }
 }
 
-//서버 응답 모델
-struct ServerResponse: Codable, Identifiable, Hashable {
+struct ServerResponse: Codable, Identifiable, Hashable, HasImage {
     let id: Int
     let title: String
     let content: String
@@ -23,11 +22,6 @@ struct ServerResponse: Codable, Identifiable, Hashable {
     let createdAt: String
     let images: [String]
     let isBookmarked: Bool
-    
-    // Computed property to convert image strings to URLs
-    var imageUrls: [URL] {
-        images.compactMap { URL(string: $0) }
-    }
     
     //검색 모델
     struct SearchRequest: Encodable {

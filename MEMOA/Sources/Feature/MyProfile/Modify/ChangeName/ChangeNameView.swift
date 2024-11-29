@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ChangeNameView: View {
     @ObservedObject var changeNameVM: ModifyViewModel
+    
     var body: some View {
         VStack {
             TextField("변경할 이름을 입력해주세요", text: $changeNameVM.changeName)
@@ -24,10 +25,11 @@ struct ChangeNameView: View {
             .onAppear {
                 changeNameVM.changeName = ""
             }
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .hideKeyBoard()
+            .enableNavigationSwipe()
             .addBackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
-            .completeButton(isAlert: $changeNameVM.nameAlert, Title: "이름이 변경되었어요!", SubTitle: nil, action: {
+            .completeButton(isAlert: $changeNameVM.nameAlert, Title: "이름이 변경되었어요!", SubTitle: nil, isComplete: changeNameVM.changeName.isEmpty, action: {
                 changeNameVM.changeUserName()
-            }, isComplete: changeNameVM.changeName.isEmpty)
+            })
     }
 }

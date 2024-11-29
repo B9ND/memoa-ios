@@ -2,10 +2,10 @@ import SwiftUI
 
 //팔로워 수
 struct Myfollower: View {
-    var board: followModel
     @State private var toFollower = false
     @State private var toFollowing = false
     @State private var isNavigation = false
+    var board: followModel
     let text: String
 
     var body: some View {

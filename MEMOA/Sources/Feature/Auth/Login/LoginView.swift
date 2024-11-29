@@ -2,7 +2,6 @@ import SwiftUI
 
 struct LoginView: View {
     @ObservedObject var LoginVM: LoginViewModel = .init()
-    @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
     
     var body: some View {
@@ -54,18 +53,19 @@ struct LoginView: View {
                 }
                 .padding(.bottom, 60)
                 .alert("로그인 실패", isPresented: $showAlert, actions: {
-                                    Button("확인", role: .cancel) {}
-                                }, message: {
-                                    Text("다시 시도해 주세요")
-                                })
+                    Button("확인", role: .cancel) {}
+                }, message: {
+                    Text("다시 시도해 주세요")
+                })
             }
         }
         .onDisappear {
             LoginVM.email = ""
             LoginVM.password = ""
         }
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
+        .hideKeyBoard()
         .edgesIgnoringSafeArea(.all)
+        .enableNavigationSwipe()
         .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
     }
 }

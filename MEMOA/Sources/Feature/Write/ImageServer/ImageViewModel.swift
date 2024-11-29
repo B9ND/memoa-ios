@@ -6,7 +6,6 @@ import Alamofire
 class ImageViewModel: ObservableObject {
     @Published var image: UIImage?
     @Published var imageUrl: String?
-    let serverUrl = ServerUrl.shared
     
     func getImageUrl(completion: @escaping(String?) -> Void) {
         guard let image else {

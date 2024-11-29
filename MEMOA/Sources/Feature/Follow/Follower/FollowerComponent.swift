@@ -10,8 +10,9 @@ import SwiftUI
 struct FollowerComponent: View {
     @StateObject private var myInformation = MyProfileViewModel()
     @State var follower: FollowerModel
-    let action: () -> Void
     @State private var toProfile = false
+    let action: () -> Void
+    
     var body: some View {
         HStack {
             Button  {

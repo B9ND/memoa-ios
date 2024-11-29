@@ -48,8 +48,8 @@ extension View {
         isAlert: Binding<Bool>,
         Title: String,
         SubTitle: String?,
-        action: @escaping () -> Void,
-        isComplete: Bool
+        isComplete: Bool,
+        action: @escaping () -> Void
     ) -> some View {
         self.modifier(
             CompleteButton(

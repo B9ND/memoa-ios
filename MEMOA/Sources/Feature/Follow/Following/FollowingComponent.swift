@@ -12,6 +12,7 @@ struct FollowingComponent: View {
     @State var following : FollowingModel
     @State private var toProfile = false
     let action: () -> Void
+    
     var body: some View {
         HStack {
             Button  {

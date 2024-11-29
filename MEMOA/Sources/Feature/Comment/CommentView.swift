@@ -19,6 +19,7 @@ struct CommentView: View {
         .padding(.vertical, 14)
         Spacer()
         PostCommentCell()
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
     }
 }

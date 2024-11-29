@@ -2,7 +2,6 @@ import Foundation
 import Alamofire
 
 class GetPostViewModel: ObservableObject {
-    let serverUrl = ServerUrl.shared
     
     //MARK: getPostModel
     @Published var posts: [GetPostModel] = []

@@ -43,10 +43,8 @@ struct WriteView: View {
                                         clickedTags[index].toggle()
                                         if clickedTags[index] {
                                             writeVM.tags.append(subject)
-                                        } else {
-                                            if let tagIndex = writeVM.tags.firstIndex(of: subject) {
-                                                writeVM.tags.remove(at: tagIndex)
-                                            }
+                                        } else if let tagIndex = writeVM.tags.firstIndex(of: subject) {
+                                            writeVM.tags.remove(at: tagIndex)
                                         }
                                     }
                                 } label: {
@@ -110,7 +108,7 @@ struct WriteView: View {
                 ZStack {
                     HStack {
                         // 스위치 컴포넌트
-                        Switch(bool: $writeVM.isReleased)
+                        Switch(isChange: $writeVM.isReleased)
                             .padding(.bottom, 4)
                             .padding(.horizontal, 28)
                         //MARK: 이미지
@@ -134,7 +132,7 @@ struct WriteView: View {
                             }
                             //MARK: url 받았을때만 insert image됨
                             imageVM.getImageUrl { imageUrl in
-                                guard let imageUrl = imageUrl else {
+                                guard let imageUrl else {
                                     showingAlert = true
                                     return
                                 }
@@ -147,7 +145,7 @@ struct WriteView: View {
                 }
             }
         }
-        .onAppear(perform : UIApplication.shared.hideKeyboard)
+        .hideKeyBoard()
         
         ScrollView(.horizontal) {
             HStack(spacing: 3) {
@@ -158,7 +156,7 @@ struct WriteView: View {
                                 .image?.resizable()
                                 .cornerRadius(8, corners: .allCorners)
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 105,height: 115)
+                                .frame(width: 105, height: 115)
                                 .padding(.leading, 10)
                         }
                         Button {
@@ -183,11 +181,11 @@ struct WriteView: View {
                 }
             }
         }
-        
+        .enableNavigationSwipe()
         .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
-        .completeButton(isAlert: $writeVM.showAlert, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!" , action: {
+        .completeButton(isAlert: $writeVM.showAlert, Title: "업로드 성공", SubTitle: "게시글이 성공적으로 업로드되었어요!" , isComplete: writeVM.disabled, action: {
             writeVM.post()
-        }, isComplete: writeVM.disabled)
+        })
     }
 }
 

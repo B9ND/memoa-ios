@@ -10,6 +10,7 @@ import SwiftUI
 //MARK: 유저 소개 수정
 struct ChangeDesciptionView: View {
     @ObservedObject var changeDescriptionVM: ModifyViewModel
+    
     var body: some View {
         VStack {
             TextField("변경할 자기소개 입력해주세요", text: $changeDescriptionVM.changeDescription)
@@ -24,10 +25,11 @@ struct ChangeDesciptionView: View {
             .onAppear {
                 changeDescriptionVM.changeDescription = ""
             }
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .hideKeyBoard()
+            .enableNavigationSwipe()
             .addBackButton(text: "자기소개 변경", systemImageName: "chevron.left", fontcolor: .black)
-            .completeButton(isAlert: $changeDescriptionVM.descriptionAlert, Title: "자기소개가 변경되었어요!", SubTitle: nil, action: {
+            .completeButton(isAlert: $changeDescriptionVM.descriptionAlert, Title: "자기소개가 변경되었어요!", SubTitle: nil, isComplete: changeDescriptionVM.changeDescription.isEmpty, action: {
                 changeDescriptionVM.changeUserDescription()
-            }, isComplete: changeDescriptionVM.changeDescription.isEmpty)
+            })
     }
 }

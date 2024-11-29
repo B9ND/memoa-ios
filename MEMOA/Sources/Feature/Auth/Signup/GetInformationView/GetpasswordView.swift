@@ -2,7 +2,6 @@ import SwiftUI
 
 struct GetPasswordView: View {
     @ObservedObject var signUpVM: SignUpViewModel
-    @Environment(\.dismiss) var dismiss
     @State private var toGetNicknameView = false
     @State private var isPasswordValid = false
     
@@ -59,8 +58,9 @@ struct GetPasswordView: View {
                     .padding(.bottom, 60)
                 }
             }
-            .onAppear(perform: UIApplication.shared.hideKeyboard)
+            .hideKeyBoard()
             .edgesIgnoringSafeArea(.all)
+            .enableNavigationSwipe()
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
             .navigationDestination(isPresented: $toGetNicknameView) {
                 GetNicknameView(signUpVM: signUpVM)

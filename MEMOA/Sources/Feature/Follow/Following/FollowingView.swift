@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FollowingView: View {
     @StateObject var followingVM = FollowingViewModel()
-    //TODO: 이거수정
     let id : String
     
     var body: some View {
