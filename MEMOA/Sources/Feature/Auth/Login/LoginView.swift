@@ -53,14 +53,16 @@ struct LoginView: View {
                     }
                 }
                 .padding(.bottom, 60)
-                .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("로그인 실패"),
-                        message: Text("다시 시도해 주세요."),
-                        dismissButton: .default(Text("확인"))
-                    )
-                }
+                .alert("로그인 실패", isPresented: $showAlert, actions: {
+                                    Button("확인", role: .cancel) {}
+                                }, message: {
+                                    Text("다시 시도해 주세요")
+                                })
             }
+        }
+        .onDisappear {
+            LoginVM.email = ""
+            LoginVM.password = ""
         }
         .onAppear(perform : UIApplication.shared.hideKeyboard)
         .edgesIgnoringSafeArea(.all)

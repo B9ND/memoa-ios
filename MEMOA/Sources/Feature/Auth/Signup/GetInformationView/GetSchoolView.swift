@@ -1,17 +1,18 @@
 import SwiftUI
 
-
 struct GetSchoolView: View {
     @StateObject var schoolVM = SchoolViewModel()
-    @StateObject var signUpVM = SignUpViewModel()
+    @ObservedObject var signUpVM: SignUpViewModel
     @Environment(\.dismiss) var dismiss
+    @State private var toLogin = false
     @State private var toSelectSchoolView = false
     @State private var selectGrade = 0
     @State private var selectedDepartment: Department? = nil
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
     @State private var departmentIDs: [String: Int] = [:]
-    @State private var isAlertPresented = false // 알림 상태
-    @State private var alertMessage = "" // 알림 메시지
-  
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -24,7 +25,6 @@ struct GetSchoolView: View {
                         .font(.bold(16))
                         .padding(.bottom, 15)
                     
-                    // 학년 선택 버튼
                     HStack {
                         GradeSelectButton(grade: 1, selectedGrade: $selectGrade)
                         GradeSelectButton(grade: 2, selectedGrade: $selectGrade)
@@ -36,7 +36,6 @@ struct GetSchoolView: View {
                         schoolVM.updateDepartments(for: newGrade)
                     }
                     
-                    // 학교 선택 버튼
                     Button(action: { toSelectSchoolView = true }) {
                         HStack {
                             Image(icon: .textfiledimage)
@@ -78,18 +77,20 @@ struct GetSchoolView: View {
                     
                     TermsOfUseButton()
                     LongButton(text: "회원가입", color: .buttoncolor) {
-                        print(signUpVM.email, signUpVM.password, signUpVM.nickname)
                         Task {
                             signUpVM.departmentId = selectedDepartment?.id
-                            let result = await signUpVM.signup()
-                            DispatchQueue.main.async {
-                                if !result {
-                                    alertMessage = signUpVM.signupErrorMessage ?? "회원가입 실패"
-                                    isAlertPresented = true
-                                }
+                            switch await signUpVM.signup() {
+                            case .success(_):
+                                showAlert = true
+                                alertMessage = "회원가입이 완료되었습니다."
+                                toLogin = true
+                            case .failure(let error):
+                                showAlert = true
+                                alertMessage = error.localizedDescription
                             }
                         }
                     }
+                    .disabled(selectedDepartment == nil || selectGrade == 0 || schoolVM.schoolName.isEmpty)
                     .padding(.bottom, 60)
                 }
             }
@@ -99,12 +100,17 @@ struct GetSchoolView: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.fraction(0.85)])
             }
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .onAppear(perform: UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
-            .alert(isPresented: $isAlertPresented) {
-                Alert(title: Text("회원가입 실패"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+            .alert("회원가입", isPresented: $showAlert) {
+                Button("확인", role: .cancel) {}
+            } message: {
+                Text(alertMessage)
             }
+            .navigationDestination(isPresented: $toLogin, destination: {
+                LoginView()
+            })
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
-        .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
     }
 }

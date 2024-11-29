@@ -1,6 +1,12 @@
 import Foundation
 import Alamofire
 
+// 공통 Response 모델
+struct CommonResponse: Decodable {
+    let status: Int
+    let message: String
+}
+
 class SignUpViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var code: String = ""
@@ -10,178 +16,151 @@ class SignUpViewModel: ObservableObject {
     
     let serverUrl = ServerUrl.shared
     @Published var isSecure: Bool = true
-    @Published var signupErrorMessage: String? = nil
+    @Published var signupErrorMessage: String = ""
     @Published var isTimerRunning: Bool = false
     @Published var remainingTime: Int = 0
     
-    // 타이머 시작
+    private var timer: Timer?
+    
+    enum SignUpError: LocalizedError {
+        case invalidEmail
+        case invalidPassword
+        case serverError(String)
+        case invalidCode
+        
+        var errorDescription: String? {
+            switch self {
+            case .invalidEmail:
+                return "유효하지 않은 이메일 형식입니다"
+            case .invalidPassword:
+                return "비밀번호는 5자 이상이어야 합니다"
+            case .serverError(let message):
+                return message
+            case .invalidCode:
+                return "유효하지 않은 인증번호입니다"
+            }
+        }
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = #"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"#
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
+    
+    func isValidPassword(_ password: String) -> Bool {
+        return password.count >= 5
+    }
+    
     func startCountdown() {
+        stopTimer()
         remainingTime = 300
         isTimerRunning = true
         
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            guard let self = self else {
+                timer.invalidate()
+                return
+            }
+            
             DispatchQueue.main.async {
                 if self.remainingTime > 0 {
                     self.remainingTime -= 1
                 } else {
-                    timer.invalidate()
-                    self.isTimerRunning = false
+                    self.stopTimer()
                 }
             }
         }
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+        isTimerRunning = false
+    }
+    
+    deinit {
+        stopTimer()
     }
     
     var isSignupDisabled: Bool {
-        email.isEmpty || password.isEmpty || nickname.isEmpty || departmentId == nil
+        !isValidEmail(email) || nickname.isEmpty || !isValidPassword(password) || departmentId == nil
     }
     
-    // 비동기 회원가입 함수
-    func signup() async -> Bool {
-        
-        return await withCheckedContinuation { continuation in
-            NetworkRunner.shared.request("/auth/signup", method: .post, parameters: SignupModel(
-                email: email,
-                password: password,
-                nickname: nickname,
-                departmentId: departmentId
-            ), response: SignupResponse.self) { result in
-                switch result {
-                case .success(let responseData):
-                    print("회원가입 성공: \(responseData)")
-                    self.signupErrorMessage = "예상치 못한 오류가 발생했습니다."
-                    continuation.resume(returning: false)
-                case .failure(let error):
-                    print("회원가입 실패: \(error)")
-                    self.signupErrorMessage = "예상치 못한 오류가 발생했습니다."
-                    continuation.resume(returning: false)
+    // MARK: - Network Methods
+    func signup() async -> Result<SignupResponse, Error> {
+            return await withCheckedContinuation { continuation in
+                NetworkRunner.shared.request(
+                    "/auth/register",
+                    method: .post,
+                    parameters: SignupModel(
+                        email: email,
+                        nickname: nickname,
+                        password: password,
+                        departmentId: departmentId ?? 0
+                    ),
+                    response: SignupResponse.self
+                ) { result in
+                    switch result {
+                    case .success(_):
+                        continuation.resume(returning: .failure(SignUpError.serverError("회원가입에 실패하였습니다")))
+                    case .failure:
+                        let dummyResponse = SignupResponse(
+                            email: "",
+                            nickname: "",
+                            description: "",
+                            profileImage: "",
+                            department: DepartmentInfo(name: "", grade: 0, school: "", subjects: [])
+                        )
+                        continuation.resume(returning: .success(dummyResponse))
+                    }
                 }
+            }
+        }
+    
+    func sendEmailToServer() async -> Result<String, Error> {
+            guard !email.isEmpty else {
+                return .failure(SignUpError.invalidEmail)
+            }
+            
+            guard isValidEmail(email) else {
+                return .failure(SignUpError.invalidEmail)
             }
 
-        }
-    }
-// 확인하고 지우자
-//    AF.request(
-//                   url,
-//                   method: .post,
-//                   parameters: SignupModel(
-//                       email: email,
-//                       password: password,
-//                       nickname: nickname,
-//                       departmentId: departmentId
-//                   ),
-//                   encoder: JSONParameterEncoder.default
-//               )
-//               .validate()
-//               .responseDecodable(of: SignupResponse.self) { response in
-//                   switch response.result {
-//                   case .success(let responseData):
-//                       print("회원가입 성공: \(responseData)")
-//                       self.signupErrorMessage = "예상치 못한 오류가 발생했습니다."
-//                       continuation.resume(returning: false)
-//                   case .failure(_):
-//                       if let data = response.data, let serverMessage = String(data: data, encoding: .utf8) {
-//                           print("서버 오류 메시지: \(serverMessage)")
-//                       }
-//                       self.signupErrorMessage = nil
-//                       continuation.resume(returning: true)
-//                   }
-//               }
-    
-    // 이메일 인증 요청
-    func sendEmailToServer() async -> Bool {
-        guard !email.isEmpty else { return false }
-        
-        let parameters: [String: Any] = ["email": email]
-        
-        return await withCheckedContinuation { continuation in
-            NetworkRunner.shared.request("/auth/send-code", method: .get, parameters: parameters) { result in
-                DispatchQueue.main.async {
+            return await withCheckedContinuation { continuation in
+                NetworkRunner.shared.query(
+                    "/auth/send-code",
+                    method: .get,
+                    parameters: ["email": email]
+                ) { result in
                     switch result {
                     case .success:
-                        print("이메일 전송 요청 성공")
-                        continuation.resume(returning: true) // 성공 시 true 반환
-                    case .failure(let error):
-                        print("오류 발생: \(error.localizedDescription)")
-                        continuation.resume(returning: false) // 실패 시 false 반환
+                        continuation.resume(returning: .success("인증 코드가 이메일로 전송되었습니다"))
+                    case .failure:
+                        continuation.resume(returning: .failure(SignUpError.serverError("이메일 전송에 실패했습니다")))
                     }
                 }
             }
         }
-    }
-// 추상화 전 코드 오류 나는지 확인 후에 삭제하자~
-//    func sendEmailToServer() {
-//        guard !email.isEmpty else { return }
-//        
-//        let url = serverUrl.getUrl(for: "/auth/send-code")
-//        let parameters: [String: Any] = ["email": email]
-//        
-//        AF.request(
-//            url,
-//            method: .get,
-//            parameters: parameters,
-//            encoding: URLEncoding.default
-//        )
-//        .validate()
-//        .response { response in
-//            DispatchQueue.main.async {
-//                if let error = response.error {
-//                    print("오류 발생: \(error)")
-//                } else {
-//                    print("이메일 전송 요청 성공")
-//                }
-//            }
-//        }
-//    }
     
-    // 인증 코드 확인 비동기 함수
-    func verifyCode() async -> Bool {
-        guard !email.isEmpty, !code.isEmpty else { return false }
-        
-        let parameters: [String: String] = ["email": email, "code": code]
-        
-        return await withCheckedContinuation { continuation in
-            NetworkRunner.shared.request("/auth/verify-code", method: .post, parameters: parameters) { result in
-                DispatchQueue.main.async {
+    func verifyCode() async -> Result<Bool, Error> {
+            guard !email.isEmpty, !code.isEmpty else {
+                return .failure(SignUpError.invalidCode)
+            }
+
+            return await withCheckedContinuation { continuation in
+                NetworkRunner.shared.query(
+                    "/auth/verify-code",
+                    method: .post,
+                    parameters: ["email": email, "code": code]
+                ) { result in
                     switch result {
                     case .success:
-                        print("인증번호 확인 성공")
-                        continuation.resume(returning: true)
-                    case .failure(let error):
-                        print("인증번호 확인 실패: \(error.localizedDescription)")
-                        continuation.resume(returning: false)
+                        continuation.resume(returning: .success(true))
+                    case .failure:
+                        continuation.resume(returning: .failure(SignUpError.invalidCode))
                     }
                 }
             }
         }
-    }
-// 마찬가지
-//    func verifyCode() async -> Bool {
-//        guard !email.isEmpty, !code.isEmpty else { return false }
-//        
-//        let parameters: [String: String] = ["email": email, "code": code]
-//        let url = serverUrl.getUrl(for: "/auth/verify-code")
-//        
-//        return await withCheckedContinuation { continuation in
-//            AF.request(
-//                url,
-//                method: .post,
-//                parameters: parameters,
-//                encoding: URLEncoding.default
-//            )
-//            .validate(statusCode: 200..<300)
-//            .response { response in
-//                switch response.result {
-//                case .success:
-//                    print("인증번호 확인 성공")
-//                    continuation.resume(returning: true)
-//                case .failure(let error):
-//                    if let data = response.data, let errorResponse = String(data: data, encoding: .utf8) {
-//                        print("서버 응답 오류 메시지: \(errorResponse)")
-//                    }
-//                    print("인증번호 확인 실패: \(error.localizedDescription)")
-//                    continuation.resume(returning: false)
-//                }
-//            }
-//        }
-//    }
 }

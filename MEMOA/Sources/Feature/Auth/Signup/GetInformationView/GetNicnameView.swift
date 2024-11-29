@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct GetNicnameView: View {
-    @StateObject var signUpVM = SignUpViewModel()
+struct GetNicknameView: View {
+    @ObservedObject var signUpVM: SignUpViewModel
     @Environment(\.dismiss) var dismiss
     @State private var toGetSchoolView = false
     
@@ -17,15 +17,16 @@ struct GetNicnameView: View {
                     LongButton(text: "다음", color: .buttoncolor) {
                         toGetSchoolView = true
                     }
+                    .disabled(signUpVM.nickname.isEmpty)
                     .padding(.bottom, 60)
                 }
             }
-            .onAppear(perform : UIApplication.shared.hideKeyboard)
+            .onAppear(perform: UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
-                .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
-                .navigationDestination(isPresented: $toGetSchoolView) {
-                    GetSchoolView(signUpVM: signUpVM)
-                }
+            .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
+            .navigationDestination(isPresented: $toGetSchoolView) {
+                GetSchoolView(signUpVM: signUpVM)
+            }
         }
     }
 }

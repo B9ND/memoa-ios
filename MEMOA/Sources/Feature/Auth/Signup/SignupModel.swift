@@ -2,15 +2,9 @@ import SwiftUI
 
 struct SignupModel: Encodable {
     var email: String = ""
-    var code : String = ""
-    var password : String = ""
-    var nickname : String = ""
-    var departmentId: Int? = nil
-    
-    var isSecure: Bool = true
-    
-    var isTimerRunning = false
-    var remainingTime = 0
+    var nickname: String = ""  // code 위치에서 이동
+    var password: String = ""
+    var departmentId: Int? = nil  // nickname 위치에서 이동
 }
 
 struct SignupResponse: Decodable {
