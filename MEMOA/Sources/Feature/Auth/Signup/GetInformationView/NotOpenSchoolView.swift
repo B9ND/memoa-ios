@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct NotOpenSchoolView: View {
-    @StateObject var signUpVM = SignUpViewModel()
+    @ObservedObject var signUpVM: SignUpViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {

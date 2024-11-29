@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct GetEmailView: View {
-    @StateObject var signUpVM = SignUpViewModel()
+    @StateObject private var signUpVM = SignUpViewModel()
     @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
+    @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var isCodeValid = false
+    @State private var isEmailValid = false
     
     var body: some View {
         NavigationStack {
@@ -19,6 +21,11 @@ struct GetEmailView: View {
                         TextField("이메일을 입력하세요", text: $signUpVM.email)
                             .foregroundColor(.black)
                             .tint(.maincolor)
+                            .autocorrectionDisabled(true)
+                            .autocapitalization(.none)
+                            .onChange(of: signUpVM.email) { newValue in
+                                isEmailValid = signUpVM.isValidEmail(newValue)
+                            }
                         
                         if signUpVM.isTimerRunning {
                             Text("\(signUpVM.remainingTime)초")
@@ -27,21 +34,26 @@ struct GetEmailView: View {
                                 .padding(.horizontal, 11)
                         } else {
                             Button {
-                                // 이메일 인증 버튼도 비동기 처리를 위해 Task로 감싸기
                                 Task {
-                                    if await signUpVM.sendEmailToServer() {
+                                    switch await signUpVM.sendEmailToServer() {
+                                    case .success(let message):
+                                        alertTitle = "알림"
+                                        alertMessage = message
+                                        showAlert = true
                                         signUpVM.startCountdown()
-                                    } else {
-                                        alertMessage = "이메일 전송에 실패했습니다."
+                                    case .failure(let error):
+                                        alertTitle = "오류"
+                                        alertMessage = error.localizedDescription
                                         showAlert = true
                                     }
                                 }
                             } label: {
                                 Text("인증")
-                                    .foregroundStyle(.maincolor)
+                                    .foregroundStyle(isEmailValid ? .maincolor : .gray)
                                     .font(.medium(16))
                                     .padding(.horizontal, 11)
                             }
+                            .disabled(!isEmailValid)
                         }
                     }
                     .frame(width: 304, height: 46)
@@ -49,36 +61,45 @@ struct GetEmailView: View {
                     .cornerRadius(8)
                     .padding(.bottom, 2)
                     
+                    if !signUpVM.email.isEmpty && !isEmailValid {
+                        Text("유효한 이메일 주소를 입력해주세요")
+                            .foregroundColor(.white)
+                            .font(.medium(10))
+                    }
+                    
                     CustomTextField(text: $signUpVM.code, placeholder: "인증번호 6자리를 입력하세요")
                     
                     Spacer()
                     TermsOfUseButton()
                     
                     LongButton(text: "다음", color: .buttoncolor) {
-                        // 비동기 작업을 Task로 감싸서 처리
                         Task {
-                            let isCodeValidResponse = await signUpVM.verifyCode()
-                            // UI 업데이트는 메인 스레드에서 처리
-                            await MainActor.run {
-                                if isCodeValidResponse {
-                                    isCodeValid = true
-                                } else {
-                                    alertMessage = "인증번호가 틀렸습니다."
-                                    showAlert = true
-                                }
+                            switch await signUpVM.verifyCode() {
+                            case .success(_):
+                                alertTitle = "성공"
+                                alertMessage = "인증이 완료되었습니다"
+                                showAlert = true
+                                isCodeValid = true
+                            case .failure(let error):
+                                alertTitle = "오류"
+                                alertMessage = error.localizedDescription
+                                showAlert = true
                             }
                         }
                     }
+                    .disabled(signUpVM.code.isEmpty || !isEmailValid)
                     .padding(.bottom, 60)
                 }
             }
             .onAppear(perform: UIApplication.shared.hideKeyboard)
             .edgesIgnoringSafeArea(.all)
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("오류"), message: Text(alertMessage), dismissButton: .default(Text("확인")))
+            .alert(alertTitle, isPresented: $showAlert) {
+                Button("확인", role: .cancel) {}
+            } message: {
+                Text(alertMessage)
             }
             .navigationDestination(isPresented: $isCodeValid) {
-                GetpasswordView(signUpVM: signUpVM)
+                GetPasswordView(signUpVM: signUpVM)
             }
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .white)
         }
