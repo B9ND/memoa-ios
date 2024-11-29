@@ -99,7 +99,7 @@ struct MypostComponent: View {
                             Spacer()
                         }
                     }
-                    .padding(.horizontal, 70)
+                    .padding(.leading, 70)
                     Divider()
                     Spacer()
                 }

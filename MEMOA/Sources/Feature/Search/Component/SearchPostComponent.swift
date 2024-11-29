@@ -1,12 +1,12 @@
 import SwiftUI
 import Kingfisher
 
-//MARK: 게시글
-struct UploadComponentView: View {
+//MARK: 검색게시글
+struct SearchPostComponent: View {
     @State private var toDetail = false
     @State private var showingAlert = false
     @State private var toProfile = false
-    let post: GetPostModel
+    let post: ServerResponse
     let action: () -> Void
     
     var body: some View {

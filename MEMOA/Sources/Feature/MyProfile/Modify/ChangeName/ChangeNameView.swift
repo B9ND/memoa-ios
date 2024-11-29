@@ -24,6 +24,7 @@ struct ChangeNameView: View {
             .onAppear {
                 changeNameVM.changeName = ""
             }
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
             .addBackButton(text: "이름 변경", systemImageName: "chevron.left", fontcolor: .black)
             .completeButton(isAlert: $changeNameVM.nameAlert, Title: "이름이 변경되었어요!", SubTitle: nil, action: {
                 changeNameVM.changeUserName()

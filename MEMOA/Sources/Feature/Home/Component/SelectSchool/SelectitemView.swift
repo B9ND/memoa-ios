@@ -18,6 +18,13 @@ struct SelectitemView: View {
                 .frame(minHeight: 29)
                 .background(Color.picker)
                 .cornerRadius(8)
+                .onAppear {
+                    postVM.page = 0
+                    postVM.canLoadMore = true
+                    postVM.tags.removeAll()
+                    postVM.tags.append(myInformation.department.school)
+                    postVM.loadPost()
+                }
                 
                 //과목선택
                 Menu {

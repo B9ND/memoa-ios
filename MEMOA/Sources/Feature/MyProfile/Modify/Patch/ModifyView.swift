@@ -129,8 +129,8 @@ struct ModifyView: View {
                                     }, color: .black)
                                     ModifyViewbutton(text: "로그아웃", action: {
                                         UserDefaults.standard.removeObject(forKey: "access")
-                                        UserDefaults.standard.removeObject(forKey: "refresh")
                                         myProfileVM.delete()
+                                        UserDefaults.standard.removeObject(forKey: "refresh")
                                     }, color: .red)
                                     
                                     HStack {
@@ -172,7 +172,7 @@ struct ModifyView: View {
             .addBackButton(text: "뒤로가기", systemImageName: "chevron.left", fontcolor: .black)
             .completeButton(isAlert: $modifyVM.imageAlert, Title: "이미지 수정성공!", SubTitle: nil, action: {
                 modifyVM.patchMy()
-            }, isComplete: true)
+            }, isComplete: modifyVM.imageUrl.isEmpty)
         }
     }
 }

@@ -27,17 +27,19 @@ struct BookmarkComponentView: View {
                         toProfile = true
                     } label: {
                         if let url = URL(string: post.profileImage) {
-                            KFImage(url)
-                                .placeholder { _ in
-                                    Circle()
-                                        .fill(Color.black)
-                                        .cornerRadius(30)
-                                        .frame(width: 37, height: 37)
-                                        .shimmer()
-                                }
-                                .resizable()
-                                .cornerRadius(30)
-                                .frame(width: 37, height: 37)
+                            NavigationLink(destination: ProfileView(username: .constant(post.nickname))) {
+                                KFImage(url)
+                                    .placeholder { _ in
+                                        Circle()
+                                            .fill(Color.black)
+                                            .cornerRadius(30)
+                                            .frame(width: 37, height: 37)
+                                            .shimmer()
+                                    }
+                                    .resizable()
+                                    .cornerRadius(30)
+                                    .frame(width: 37, height: 37)
+                            }
                         }
                     }
                     .padding(.leading, 24)
@@ -102,7 +104,7 @@ struct BookmarkComponentView: View {
                     }
                     .scrollIndicators(.hidden)
                 }
-                .padding(.horizontal, 70)
+                .padding(.leading, 70)
                 Divider()
                 Spacer()
             }

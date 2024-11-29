@@ -2,7 +2,6 @@ import SwiftUI
 
 struct GetSearchPost: View {
     @ObservedObject var searchVM: SearchViewModel
-    @ObservedObject var getPostVM = GetPostViewModel()
     @State private var toDetail = false
     
     var body: some View {
@@ -19,26 +18,15 @@ struct GetSearchPost: View {
                     .padding(.top, 100)
                 } else {
                     LazyVStack {
-                        ForEach(searchVM.posts, id: \.self) { serverResponse in
-                            let post = GetPostModel(
-                                id: serverResponse.id,
-                                title: serverResponse.title,
-                                author: serverResponse.author,
-                                authorProfileImage: serverResponse.authorProfileImage,
-                                tags: serverResponse.tags,
-                                createdAt: serverResponse.createdAt,
-                                images: serverResponse.images,
-                                isBookmarked: serverResponse.isBookmarked
-                            )
-                            
-                            UploadComponentView(post: post) {
-                                getPostVM.id = post.id
-                                getPostVM.getDetailPost()
+                        ForEach(searchVM.posts, id: \.id) { post in
+                            SearchPostComponent(post: post, action: {
+                                searchVM.id = post.id
+                                searchVM.getDetailPost()
                                 toDetail = true
-                            }
+                            })
                             
                             if searchVM.isLoading {
-                                ProgressView()
+                                ShimmerView()
                             } else {
                                 GeometryReader { geometry in
                                     Color.clear
@@ -63,7 +51,7 @@ struct GetSearchPost: View {
             }
         }
         .navigationDestination(isPresented: $toDetail) {
-            if let detailPost = getPostVM.detailPosts.first {
+            if let detailPost = searchVM.detailPosts.first {
                 DetailView(getPost: detailPost)
             }
         }

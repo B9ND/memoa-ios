@@ -10,9 +10,9 @@ import Kingfisher
 
 //MARK: 게시물 자세히
 struct DetailView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var showingAlert = false
     @State private var toProfile = false
-    @Environment(\.dismiss) private var dismiss
     let getPost: GetDetailPost
     
     var body: some View {
@@ -62,15 +62,17 @@ struct DetailView: View {
                                 .replacingOccurrences(of: "✔★", with: "")
                                 .replacingOccurrences(of: "✔", with: "")
                             if let url = URL(string: imageUrl) {
-                                KFImage(url)
-                                    .placeholder { _ in
-                                        ProgressView()
-                                    }
-                                    .resizable()
-                                    .cornerRadius(8)
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 220, height: 240)
-                                    .padding(.leading, 10)
+                                NavigationLink(destination: ImageDetailView(imageUrl: imageUrl)) {
+                                    KFImage(url)
+                                        .placeholder { _ in
+                                            ProgressView()
+                                        }
+                                        .resizable()
+                                        .cornerRadius(8)
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 220, height: 240)
+                                        .padding(.leading, 10)
+                                }
                             }
                         } else {
                             Text(line)
