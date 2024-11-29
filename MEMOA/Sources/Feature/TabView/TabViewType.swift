@@ -5,7 +5,7 @@ enum TabViewType: CaseIterable {
     case search
     case plus
     case bookmark
-    case profil
+    case profile
     
     var image: String {
         switch self {
@@ -17,7 +17,7 @@ enum TabViewType: CaseIterable {
             return "Plus"
         case .bookmark:
             return "Bookmark"
-        case .profil:
+        case .profile:
             return "Profil"
         }
     }
@@ -32,7 +32,7 @@ enum TabViewType: CaseIterable {
             return "Plus"
         case .bookmark:
             return "ClickBookmark"
-        case .profil:
+        case .profile:
             return "ClickProfil"
         }
     }
@@ -47,7 +47,7 @@ enum TabViewType: CaseIterable {
             "메모작성"
         case .bookmark:
             "북마크"
-        case .profil:
+        case .profile:
             "프로필"
         }
     }

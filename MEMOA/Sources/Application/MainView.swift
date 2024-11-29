@@ -12,7 +12,7 @@ struct MainView: View {
             case .home: HomeView()
             case .search: SearchView()
             case .bookmark: BookmarkView()
-            case .profil: MyProfileView()
+            case .profile: MyProfileView()
             case .plus: EmptyView()
             }
             
