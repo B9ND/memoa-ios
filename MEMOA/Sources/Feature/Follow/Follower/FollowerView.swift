@@ -16,7 +16,12 @@ struct FollowerView: View {
         ScrollView {
             VStack {
                 ForEach(followerVM.followers, id: \.email) { follower in
-                    FollowerComponent(follower: follower)
+                    FollowerComponent(
+                        follower: follower,
+                        action: {
+                            followerVM.follow(nickname: follower.nickname)
+                        }
+                    )
                 }
             }
         }

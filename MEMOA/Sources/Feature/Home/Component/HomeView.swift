@@ -63,10 +63,6 @@ struct HomeView: View {
                     Color.clear.frame(height: 97)
                 }
                 .onAppear {
-                    if let information = myProfileVM.profile {
-                        getPostVM.tags.append(information.department.school)
-                    }
-                    getPostVM.loadPost()
                     if getPostVM.posts.isEmpty {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             withAnimation {
@@ -76,12 +72,10 @@ struct HomeView: View {
                     }
                 }
                 .refreshable {
-                    if !getPostVM.canLoadMore {
-                        getPostVM.page = 0
-                        getPostVM.canLoadMore = true
-                        getPostVM.posts.removeAll()
-                        getPostVM.loadPost()
-                    }
+                    getPostVM.page = 0
+                    getPostVM.canLoadMore = true
+                    getPostVM.posts.removeAll()
+                    getPostVM.loadPost()
                 }
             }
         }

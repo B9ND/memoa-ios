@@ -8,16 +8,16 @@
 import SwiftUI
 //MARK: 채팅버튼
 struct ChatButton: View {
-    let action: () -> Void
+    @State private var chatAlert = false
     var body: some View {
         Button {
-            action()
+            chatAlert = true
         } label: {
             Image(.chat)
                 .foregroundStyle(.timecolor)
         }
-//        .navigationDestination(isPresented: $toChat) {
-//            CommentView()
-//        }
+        .alert("아직 준비중인 기능입니다.", isPresented: $chatAlert) {
+            Button("OK", role: .cancel) {}
+        }
     }
 }

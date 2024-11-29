@@ -11,4 +11,5 @@ struct FollowingModel: Codable {
     var email: String
     var nickname: String
     var profileImage: String
+    var isFollowed: Bool
 }

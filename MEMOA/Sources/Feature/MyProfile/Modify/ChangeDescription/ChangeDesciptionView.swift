@@ -24,9 +24,10 @@ struct ChangeDesciptionView: View {
             .onAppear {
                 changeDescriptionVM.changeDescription = ""
             }
+            .onAppear(perform : UIApplication.shared.hideKeyboard)
             .addBackButton(text: "자기소개 변경", systemImageName: "chevron.left", fontcolor: .black)
-        CompleteButton(action: {
-            changeDescriptionVM.changeUserDescription()
-        }, bool: changeDescriptionVM.changeDescription.isEmpty, Title: "자기소개가 변경되었어요!", SubTitle: nil, alertBool: $changeDescriptionVM.descriptionAlert)
+            .completeButton(isAlert: $changeDescriptionVM.descriptionAlert, Title: "자기소개가 변경되었어요!", SubTitle: nil, action: {
+                changeDescriptionVM.changeUserDescription()
+            }, isComplete: changeDescriptionVM.changeDescription.isEmpty)
     }
 }

@@ -28,10 +28,10 @@ public struct MEMOAShimmer<C: View>: View {
             )
             .onAppear {
                 withAnimation (
-                    .linear(duration: 0.8)
+                    .linear(duration: 0.1)
                 ) {
-//                    startPoint = .init(x: 1, y: 1)
-//                    endPoint = .init(x: 2.2, y: 2.2)
+                    startPoint = .init(x: 1, y: 1)
+                    endPoint = .init(x: 2.2, y: 2.2)
                 }
             }
     }

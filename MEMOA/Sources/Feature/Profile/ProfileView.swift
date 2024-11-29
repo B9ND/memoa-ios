@@ -20,8 +20,7 @@ struct ProfileView: View {
                             .fill(Color.white)
                             .frame(maxWidth:.infinity)
                             .frame(height: geometry.size.height * 0.95)
-                            .cornerRadius(30, corners: .topLeft)
-                            .cornerRadius(30, corners: .topRight)
+                            .cornerRadius(30, corners: [.topLeft, .topRight])
                             .overlay {
                                 VStack {
                                     ZStack {
@@ -31,19 +30,22 @@ struct ProfileView: View {
                                             .padding(.top, -44)
                                         if let profile = profileVM.profile,
                                            let url = URL(string: profile.profileImage) {
-                                            AsyncImage(url: url) { image in
-                                                image
-                                                    .resizable()
-                                                    .frame(width: 90, height: 90)
-                                                    .scaledToFit()
-                                                    .clipShape(Circle())
-                                            } placeholder: {
-                                                Circle()
-                                                    .frame(width: 90, height: 90)
-                                                    .clipShape(Circle())
-                                                    .shimmer()
+                                            NavigationLink(destination: ImageDetailView(imageUrl: profile.profileImage)) {
+                                                AsyncImage(url: url) { image in
+                                                    image
+                                                        .resizable()
+                                                        .frame(width: 90, height: 90)
+                                                        .scaledToFit()
+                                                        .clipShape(Circle())
+                                                } placeholder: {
+                                                    Circle()
+                                                        .fill(Color.black)
+                                                        .frame(width: 90, height: 90)
+                                                        .clipShape(Circle())
+                                                        .shimmer()
+                                                }
+                                                .padding(.top, -44)
                                             }
-                                            .padding(.top, -44)
                                         }
                                     }
                                     
@@ -86,22 +88,9 @@ struct ProfileView: View {
                                                             .stroke(Color.graycolor, lineWidth: 1)
                                                     }
                                             } else {
-                                                Button {
+                                                FollowButton(follow: profileVM.followed) {
                                                     profileVM.followed.toggle()
                                                     profileVM.follow(nickname: username)
-                                                } label: {
-                                                    Text(profileVM.followed ? "언팔로우" : "팔로우")
-                                                        .font(.regular(10))
-                                                        .frame(width: 87, height: 21)
-                                                        .background(profileVM.followed ? Color.white : Color.maincolor)
-                                                        .cornerRadius(8)
-                                                        .foregroundStyle(profileVM.followed ? .black : .white)
-                                                        .overlay {
-                                                            if profileVM.followed {
-                                                                RoundedRectangle(cornerRadius: 10)
-                                                                    .stroke(Color.graycolor, lineWidth: 1)
-                                                            }
-                                                        }
                                                 }
                                             }
                                         }

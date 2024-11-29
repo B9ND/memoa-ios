@@ -24,6 +24,15 @@ struct BookmarkView: View {
                         .font(.bold(20))
                 }
             }
+            if bookmarkVM.canLoadMore {
+                VStack {
+                    Image(icon: .loading)
+                        .resizable()
+                        .frame(width: 136, height: 136)
+                    Text("북마크를 불러올 수 없어요!")
+                        .font(.bold(20))
+                }
+            }
         }
         ScrollView {
             VStack {

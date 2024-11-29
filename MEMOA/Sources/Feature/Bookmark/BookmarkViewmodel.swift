@@ -3,6 +3,7 @@ import Foundation
 class BookmarkViewModel: ObservableObject {
     @Published var isBoomark = false
     @Published var noExist: Bool = false
+    @Published var canLoadMore = false
     @Published var posts: [BookmarkModel] = []
     @Published var id = 0
     @Published var detailPosts: [GetDetailPost] = []
@@ -31,6 +32,7 @@ class BookmarkViewModel: ObservableObject {
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                self.canLoadMore = true
             }
         }
     }

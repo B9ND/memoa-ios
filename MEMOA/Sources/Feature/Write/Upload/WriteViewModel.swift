@@ -1,6 +1,5 @@
 import Foundation
 import _PhotosUI_SwiftUI
-import Alamofire
 
 struct WritePostRequest: Encodable {
     let title: String
@@ -23,8 +22,6 @@ class WriteViewModel: ObservableObject {
     var getImageUrl: [URL] {
         images.compactMap { URL(string: $0) }
     }
-    
-    let serverUrl = ServerUrl.shared
     private var reissueAttempted = false
     
     var disabled: Bool {
@@ -49,25 +46,60 @@ class WriteViewModel: ObservableObject {
         }
     }
     
-    //콘텐츠의 텍스트를 Postupload의 텍스트와 교체
+    //MARK: 삽입할 이미지
+    func insertComment() {
+        let mutableAttributedText = NSMutableAttributedString(attributedString: content.text)
+        let commentString = NSAttributedString(string: "\n📷\(images.count)번째 이미지가 들어갈 자리에요!\n\n")
+        mutableAttributedText.append(commentString)
+        
+        mutableAttributedText.addAttributes([
+            .font: UIFont(name: "Pretendard-Medium", size: 15)!
+        ], range: NSMakeRange(0, mutableAttributedText.length))
+        content.text = mutableAttributedText
+    }
+    
+    //MARK: 삭제할 이미지
+    func deleteComment(index: Int) {
+        let commentString = "\n📷\(index + 1)번째 이미지가 들어갈 자리에요!\n\n"
+        let mutableAttributedText = NSMutableAttributedString(attributedString: content.text)
+        
+        if let range = mutableAttributedText.string.range(of: commentString) {
+            let nsRange = NSRange(range, in: mutableAttributedText.string)
+            mutableAttributedText.deleteCharacters(in: nsRange)
+            
+            if index < postContent.count {
+                postContent.remove(at: index)
+            }
+        }
+        content.text = mutableAttributedText
+    }
+
+    //MARK: change 함수 업데이트
     func change() {
         let text = content.text.string
         
         var updatedText = text
-        var imageCount = 0
-        
-        while let range = updatedText.range(of: "📷") { // 📷 이모지 위치 찾기
+        var imageIndex = 0 // postContent와 동기화된 인덱스
+
+        // 자리 표시자 순환 처리
+        while let range = updatedText.range(of: "📷") { // "📷" 찾기
             if let endRange = updatedText.range(of: "!", range: range.upperBound..<updatedText.endIndex) { // "!"로 끝나는지 확인
-                // "📷"로 시작하고 "!"로 끝나는 부분을 잘라냄
-                let nextIndex = imageCount < postContent.count ? imageCount : postContent.count - 1
-                updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: postContent[nextIndex])
-                imageCount += 1 // 다음 요소를 위한 카운트 증가
+                // 남아있는 postContent와 매칭
+                if imageIndex < postContent.count {
+                    updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: postContent[imageIndex])
+                    imageIndex += 1 // 다음 이미지 처리
+                } else {
+                    // 남아있는 postContent가 없는 경우 자리 표시자 삭제
+                    updatedText.replaceSubrange(range.lowerBound..<endRange.upperBound, with: "")
+                }
             } else {
-                print("이미지 아님 인식처리 x")
+                print("유효하지 않은 자리 표시자 발견")
                 break
             }
         }
-        content.text = NSMutableAttributedString(string: updatedText) // 콘텐츠 텍스트 업데이트
+
+        // 최종 업데이트된 텍스트를 적용
+        content.text = NSMutableAttributedString(string: updatedText)
     }
 }
 

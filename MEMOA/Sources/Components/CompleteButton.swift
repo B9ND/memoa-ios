@@ -7,37 +7,60 @@
 
 import SwiftUI
 
-struct CompleteButton: View {
+struct CompleteButton: ViewModifier {
+    @Binding var alertBool: Bool
+    @Environment(\.dismiss) private var dismiss
     let action: () -> Void
     let bool: Bool
     let Title: String
     let SubTitle: String?
-    @Binding var alertBool: Bool
-    @Environment(\.dismiss) private var dismiss
-    var body: some View {
-        HStack {
-            EmptyView()
-        }
-        .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    action()
-                }) {
-                    HStack {
-                        Text("완료")
-                        .font(.bold(16))
-                        .foregroundStyle(bool ? Color.graycolor : .maincolor)
-                        .padding(.trailing, 14)
+    
+    func body(content: Content) -> some View {
+        content
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        action()
+                    }) {
+                        HStack {
+                            Text("완료")
+                                .font(.bold(16))
+                                .foregroundStyle(bool ? Color.graycolor : .maincolor)
+                                .padding(.trailing, 14)
+                        }
                     }
+                    .disabled(bool)
                 }
-                .disabled(bool)
             }
-        }
-        .alert(isPresented: $alertBool) {
-            Alert(title: Text(Title), message: Text(SubTitle ?? ""), dismissButton: .default(Text("확인")){
-                dismiss()
+            .alert("\(Title)", isPresented: $alertBool, actions: {
+                Button("확인") {
+                    dismiss()
+                }
+            }, message: {
+                Text("\(SubTitle ?? "")")
             })
-        }
     }
 }
+
+extension View {
+    func completeButton(
+        isAlert: Binding<Bool>,
+        Title: String,
+        SubTitle: String?,
+        action: @escaping () -> Void,
+        isComplete: Bool
+    ) -> some View {
+        self.modifier(
+            CompleteButton(
+                alertBool: isAlert,
+                action: action,
+                bool: isComplete,
+                Title: Title,
+                SubTitle: SubTitle
+            )
+        )
+    }
+}
+
+

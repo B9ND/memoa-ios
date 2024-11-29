@@ -12,6 +12,10 @@ class SearchViewModel: ObservableObject {
     @Published var error: Error?
     @Published var selectedTags: [String] = []
     
+    
+    @Published var id = 0
+    @Published var detailPosts: [GetDetailPost] = []
+    
     private let size: Int32 = 10
     private var cancellables = Set<AnyCancellable>()
     
@@ -77,6 +81,14 @@ class SearchViewModel: ObservableObject {
                 print("Error: \(error)")
                 self.error = error
                 self.noPost = true
+            }
+        }
+    }
+    
+    func getDetailPost() {
+        NetworkRunner.shared.request("/post/\(id)", response: GetDetailPost.self) { result in
+            if case .success(let data) = result {
+                self.detailPosts = [data]
             }
         }
     }

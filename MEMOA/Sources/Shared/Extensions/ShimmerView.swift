@@ -55,7 +55,7 @@ struct ShimmerView: View {
                         .shimmer()
                 }
             }
-            .padding(.leading, 70)
+            .padding(.leading, 140)
         }
         
         VStack {

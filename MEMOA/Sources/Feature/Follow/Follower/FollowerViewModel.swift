@@ -10,6 +10,7 @@ import Foundation
 class FollowerViewModel: ObservableObject {
     
     @Published var followers: [FollowerModel] = []
+    @Published var isFollowed = false
     
     func getFollower(nickname: String) {
         let parameters: [String: Any] = ["nickname": nickname]
@@ -17,6 +18,18 @@ class FollowerViewModel: ObservableObject {
             switch result {
             case .success(let data):
                 self.followers = data
+                self.isFollowed = data.first(where: { $0.nickname == nickname })?.isFollowed ?? false
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func follow(nickname: String) {
+        NetworkRunner.shared.query("/follow", method: .post, parameters: ["nickname" : nickname], isAuthorization: true) { result in
+            switch result {
+            case .success():
+                self.isFollowed.toggle()
             case .failure(let error):
                 print(error.localizedDescription)
             }

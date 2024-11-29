@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 //MARK: 게시물 자세히
 struct DetailView: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var showingAlert = false
     @State private var toProfile = false
-    @Environment(\.dismiss) private var dismiss
     let getPost: GetDetailPost
     
     var body: some View {
@@ -21,12 +22,13 @@ struct DetailView: View {
                     toProfile = true
                 } label: {
                     if let url = URL(string: getPost.authorProfileImage) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .image?.resizable()
-                                .cornerRadius(30)
-                                .frame(width: 37, height: 37)
-                        }
+                        KFImage(url)
+                            .placeholder { _ in
+                                ProgressView()
+                            }
+                            .resizable()
+                            .cornerRadius(30)
+                            .frame(width: 37, height: 37)
                     }
                 }
                 .padding(.leading, 4)
@@ -60,15 +62,16 @@ struct DetailView: View {
                                 .replacingOccurrences(of: "✔★", with: "")
                                 .replacingOccurrences(of: "✔", with: "")
                             if let url = URL(string: imageUrl) {
-                                AsyncImage(url: url) { image in
-                                    image
+                                NavigationLink(destination: ImageDetailView(imageUrl: imageUrl)) {
+                                    KFImage(url)
+                                        .placeholder { _ in
+                                            ProgressView()
+                                        }
                                         .resizable()
                                         .cornerRadius(8)
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 220, height: 240)
                                         .padding(.leading, 10)
-                                } placeholder: {
-                                    ProgressView()
                                 }
                             }
                         } else {
@@ -88,9 +91,7 @@ struct DetailView: View {
                             Spacer()
                         }
                         HStack {
-                            ChatButton {
-                                // TODO: Handle
-                            }
+                            ChatButton()
                             BookmarkButton(isBookmark: .constant(getPost.isBookmarked), id: .constant(getPost.id))
                             Spacer()
                         }

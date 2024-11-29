@@ -28,7 +28,8 @@ struct MainView: View {
                                         if tab == .plus {
                                             isNavigatingToWriteView = true
                                         } else {
-                                            selectedtab = tab                                        }
+                                            selectedtab = tab
+                                        }
                                     } label: {
                                         TabViewCell(type: tab, isSelected: selectedtab == tab)
                                     }
@@ -45,7 +46,6 @@ struct MainView: View {
             WriteView()
         }
         .onAppear {
-            print(#file)
             myProfileVM.fetchMy()
         }
     }

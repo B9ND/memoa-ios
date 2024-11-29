@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct OtherpostComponent: View {
     @State private var toDetail = false
@@ -18,12 +19,17 @@ struct OtherpostComponent: View {
                         toProfile = true
                     } label: {
                         if let url = URL(string: post.authorProfileImage) {
-                            AsyncImage(url: url) { image in
-                                image
-                                    .image?.resizable()
-                                    .cornerRadius(30)
-                                    .frame(width: 37, height: 37)
-                            }
+                            KFImage(url)
+                                .placeholder { _ in
+                                    Circle()
+                                        .fill(Color.black)
+                                        .cornerRadius(30)
+                                        .frame(width: 37, height: 37)
+                                        .shimmer()
+                                }
+                                .resizable()
+                                .cornerRadius(30)
+                                .frame(width: 37, height: 37)
                         }
                     }
                     .padding(.leading, 24)
@@ -52,14 +58,20 @@ struct OtherpostComponent: View {
                     ScrollView(.horizontal) {
                         HStack(spacing: 3) {
                             ForEach(post.imageUrls, id: \.self) { url in
-                                AsyncImage(url: url) { image in
-                                    image
-                                        .image?.resizable()
-                                        .cornerRadius(8, corners: .allCorners)
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 220,height: 240)
-                                        .padding(.leading, 10)
-                                }
+                                KFImage(url)
+                                    .placeholder { _ in
+                                        Rectangle()
+                                            .fill(Color.black)
+                                            .cornerRadius(8, corners: .allCorners)
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 220,height: 240)
+                                            .shimmer()
+                                    }
+                                    .resizable()
+                                    .cornerRadius(8, corners: .allCorners)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 220,height: 240)
+                                    .padding(.leading, 10)
                             }
                         }
                         .padding(.horizontal, 70)
@@ -81,14 +93,12 @@ struct OtherpostComponent: View {
                     .scrollIndicators(.hidden)
                     
                     HStack {
-                        ChatButton {
-                            // TODO: Handle
-                        }
+                        ChatButton()
                         BookmarkButton(isBookmark: .constant(post.isBookmarked), id: .constant(post.id))
                         Spacer()
                     }
                 }
-                .padding(.horizontal, 70)
+                .padding(.leading, 70)
                 Divider()
                 Spacer()
             }

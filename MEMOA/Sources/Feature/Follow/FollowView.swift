@@ -50,7 +50,7 @@ struct FollowView: View {
             
             if toFollower {
                 FollowerView(id: followBoard.nickname)
-            } else if toFollowing {
+            } else  {
                 FollowingView(id: followBoard.nickname)
             }
         }

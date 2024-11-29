@@ -12,6 +12,7 @@ struct Myfollowing: View {
         Button {
             isNavigation = true
             toFollowing = true
+            toFollower = false
         } label: {
             VStack {
                 Text(board.number)
